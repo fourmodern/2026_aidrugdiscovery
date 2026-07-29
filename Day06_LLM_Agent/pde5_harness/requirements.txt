@@ -1,0 +1,11 @@
+# PDE5 저해제 탐색 하네스 — 핵심 의존성
+# 무-날조 원칙: 아래 미설치 시 각 스크립트는 수치를 만들지 않고 graceful 폴백한다.
+
+rdkit                       # 물성/QED/SA/Lipinski (mol_properties.py). pip: rdkit (구버전은 rdkit-pypi)
+chembl-webresource-client   # ChEMBL CHEMBL1827 활성물질 조회 (chembl_actives.py)
+requests                    # UniProt/RCSB REST (target_lookup.py, mol_utils.py)
+
+# --- 옵션(도킹 단계 docking.py 사용 시) ---
+# smina 또는 vina 바이너리는 pip이 아닌 별도 설치(Dockerfile 참조).
+# MDAnalysis                # 구조 정렬/박스 계산(고급). mol_utils.py 경량 파서는 불필요.
+# openbabel                 # 리간드 포맷 변환(conda 권장: conda install -c conda-forge openbabel)
