@@ -25,8 +25,18 @@
 ## 실행 환경
 
 - 모든 노트북은 **Google Colab**에서 바로 실행됩니다(각 노트북 첫 셀에서 필요한 패키지 자동 설치).
-- GPU 필요: `t111_esm3`, `qwen_tcga`(필수), `t110_esm2`(권장). Colab 메뉴 > 런타임 > 런타임 유형 변경 > T4 GPU.
-- 일부 노트북(LLM Co-Scientist, MolT5 등)은 외부 API 키가 필요할 수 있습니다. 각 노트북 안내를 따르세요.
+- Colab 메뉴 > 런타임 > 런타임 유형 변경 > T4 GPU 로 GPU를 켤 수 있습니다.
+
+| 노트북 | GPU | API 키 / 로그인 | 내려받는 용량 | 비고 |
+|---|---|---|---|---|
+| `t042_molt5` | 선택 (CPU 가능) | 불필요 | 약 6GB (molt5-large 2종) | CPU에서 프롬프트 1건당 약 15초 |
+| `t110_esm2` | 권장 (CPU 가능) | 불필요 | 약 2.6GB (PepMLM-650M) | CPU에서 binder 1개당 약 40초 |
+| `t111_esm3` | 선택 (CPU 가능) | 불필요 | 약 2.8GB (esm3-sm-open-v1) | CPU에서 각 생성 단계 15초 내외 |
+| `t050_rag` | **강력 권장** | 불필요 (기본 Qwen3) | 약 3.9GB + PDF 27MB | Gemma를 쓰려면 HF 라이선스 동의 + 토큰 필요 |
+| `T004_llm_coscientist` | 불필요 | **Google Gemini API 키 필수** | — | https://aistudio.google.com/app/apikey |
+| `qwen_tcga` | **필수** | 불필요 | 대용량 | 심화 자료 |
+
+- API 키는 노트북 안에서 `getpass` 로 입력하며 파일에 저장되지 않습니다.
 
 ## 출처
 

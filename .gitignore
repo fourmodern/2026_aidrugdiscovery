@@ -1,3 +1,8 @@
 .ipynb_checkpoints/
 __pycache__/
 .env
+
+# 노트북 실행 시 생성되는 산출물 (커밋하지 않음)
+Day06_LLM_Agent/human-nutrition-text.pdf
+Day06_LLM_Agent/text_chunks_and_embeddings_df.csv
+Day06_LLM_Agent/temp_paired_sequence.fasta
