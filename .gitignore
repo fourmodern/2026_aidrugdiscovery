@@ -6,3 +6,7 @@ __pycache__/
 Day06_LLM_Agent/human-nutrition-text.pdf
 Day06_LLM_Agent/text_chunks_and_embeddings_df.csv
 Day06_LLM_Agent/temp_paired_sequence.fasta
+**/notebooks/wiki/
+**/agent_report.md
+**/outputs/*.json
+**/outputs/*.md
