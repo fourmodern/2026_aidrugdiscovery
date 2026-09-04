@@ -177,8 +177,8 @@ def main() -> int:
          [(f"n = 30 에서 얻었던 ρ = {col['old_design']['spearman_top_pose']:+.3f} 는 재현되지 "
            f"않았고, 그 이유로 제시했던 골격 교란 설명마저 검정 결과 기각되었다 "
            f"(옛 데이터에서 골격 통제 시 감쇠 "
-           f"{col['old_design']['attenuation_from_scaffold_control']:.1%})", T_BODY, INK)],
-         align=PP_ALIGN.CENTER, h=20)
+           f"{col['old_design']['attenuation_from_scaffold_control']:.1%})",
+           T_BODY + 4, INK, True)], align=PP_ALIGN.CENTER, h=22)
     y += 66
     y += pic(s, "fig01_graphical_abstract.png", M, y, FULLW)
     ytop = y + 2
@@ -220,6 +220,18 @@ def main() -> int:
                  f"{dk['n_docked']}/{dk['n_attempted']} 성공. 자세는 공결정 리간드를 참조하지 "
                  f"않는 점수 1위를 주 결과로 썼다.", T_BODY, INK)]], space=4)
 
+    y += head(s, CX[0], y, COLW, "2b", "사전 기준 대비 판정", ORANGE)
+    y += kv(s, CX[0], y, COLW,
+            [("① 정량 예측   Q² ≥ 0.3",
+              f"{tc['models']['single_vina_score']['Q2_loo']:+.3f}   미달" if tc else "—", ORANGE),
+             ("② 선별   AUC ≥ 0.7", f"{ACI['all']['auc']}   미달", ORANGE),
+             ("② 선별   순열 p < 0.05", f"{T['perm_p']}   미달", ORANGE),
+             ("③ 골격 통제 후 60% 유지", "판정 불가", ORANGE),
+             ("④ 병목 특정   후보 제거", "4건 제거", GREEN)], lw=0.70)
+    y += text(s, CX[0], y, COLW,
+              [[("③ 은 원상관 자체가 유의하지 않아 “유지” 를 물을 수 없다. "
+                 "④ 는 두 갈래에서 각각 2건씩이며 하나로 세지 않는다.", T_SMALL, GREY)]]) + 4
+    ends = [y]                          # 단별 최하단
     # ══ 2단 ════════════════════════════════════════════════════════
     y = ytop
     y += head(s, CX[1], y, COLW, "3", "재도킹 대조 — 병목 찾기")
@@ -232,16 +244,10 @@ def main() -> int:
     y += text(s, CX[1], y, COLW,
               [[("탐색은 결정 자세를 찾아낸다. 채점이 그것을 1위로 올리지 못한다. 두 대조를 "
                  "합쳐 하나의 숫자로 보고하면 이 구분이 사라진다.", T_BODY, INK)]]) + 6
-    y += head(s, CX[1], y, COLW, "4", "원인 후보를 실험으로 제거", GREEN)
+    y += head(s, CX[1], y, COLW, "4", "C2 실패 원인을 실험으로 제거", GREEN)
     y += kv(s, CX[1], y, COLW,
-            [("탐색 깊이 4 → 128", "C2 0% 고정" if sw else "—", GREEN),
-             ("프로토네이션 2×2", "4 조건 점수 동일" if prot else "—", GREEN),
-             ("골격 교란 (옛 데이터)",
-              f"감쇠 {col['old_design']['attenuation_from_scaffold_control']:.1%}" if col else "—",
-              GREEN),
-             ("프로토콜 (옛 30건 재도킹)",
-              f"점수 상관 {oldp['spearman_between_protocols']:+.3f}" if oldp else "—", GREEN)],
-            lw=0.58)
+            [("탐색 깊이 4 → 128 (32배)", "C2 전 구간 0%" if sw else "—", GREEN),
+             ("프로토네이션 2×2", "4 조건 점수 동일" if prot else "—", GREEN)], lw=0.60)
     y += text(s, CX[1], y, COLW,
               [[("프로토네이션이 왜 무효였는지까지 확인했다. ", T_BODY, INK),
                 ("기본 Vina 함수에는 정전기 항이 없다", T_BODY, ORANGE, True),
@@ -249,26 +255,46 @@ def main() -> int:
                  "거리 밖이라 항 값이 움직이지 않았다.", T_BODY, INK)]]) + 6
     y += pic(s, "fig08_exhaustiveness.png", CX[1], y, COLW)
 
+    y += head(s, CX[1], y, COLW, "5", "별개 질문 — 비재현", GREY)
+    y += kv(s, CX[1], y, COLW,
+            [("골격 교란 (옛 데이터에 통제)",
+              f"감쇠 {col['old_design']['attenuation_from_scaffold_control']:.1%}" if col else "—",
+              GREY),
+             ("프로토콜 (옛 30건 재도킹)",
+              f"점수 상관 {oldp['spearman_between_protocols']:+.3f}" if oldp else "—", GREY)],
+            lw=0.62)
+    y += text(s, CX[1], y, COLW,
+              [[("n=30 의 ", T_BODY, INK),
+                (f"ρ = {col['old_design']['spearman_top_pose']:+.3f}", T_BODY, INK, True),
+                (" 는 재현되지 않았다. 초안은 골격 교란 때문이라 적었으나 검정 결과 "
+                 "기각됐다. ", T_BODY, INK),
+                ("위 두 검정은 C2 실패가 아니라 이 비재현을 대상으로 한 것", T_BODY, ORANGE, True),
+                ("이며, 4번 절의 두 검정과 하나로 세지 말아야 한다.", T_BODY, INK)]]) + 6
+
+    ends.append(y)
     # ══ 3단 ════════════════════════════════════════════════════════
     y = ytop
-    y += head(s, CX[2], y, COLW, "5", "결과 — 골격 통제 후")
-    y += pic(s, "fig05_forest.png", CX[2], y, COLW)
+    y += head(s, CX[2], y, COLW, "6", "결과 — 골격 통제 후")
+    y += pic(s, "fig05_forest.png", CX[2] + COLW * 0.05, y, COLW * 0.90)
     y += kv(s, CX[2], y, COLW,
             [("전체 순위상관", f"{T['spearman']:+.3f}", ORANGE),
              ("골격 통제 편상관", f"{T['partial_spearman_controlling_tanimoto']:+.3f}", ORANGE),
              ("골격+크기 동시 통제", f"{T['partial_spearman_controlling_both']:+.3f}", ORANGE),
              ("교차검증 Q² (단일 점수)",
-              f"{tc['models']['single_vina_score']['Q2_loo']:+.3f}" if tc else "—", ORANGE),
-             ("순열 검정 p", f"{T['perm_p']}", ORANGE)], lw=0.58)
+              f"{tc['models']['single_vina_score']['Q2_loo']:+.3f}" if tc else "—", ORANGE)],
+            lw=0.58)
+    y += text(s, CX[2], y, COLW,
+              [[("위 넷은 모두 상관·Q² 값이다. ", T_SMALL, GREY),
+                (f"순열 검정 p = {T['perm_p']}", T_BODY, ORANGE, True),
+                (" 로 유의하지 않다.", T_SMALL, GREY)]]) + 4
     y += text(s, CX[2], y, COLW,
               [[(f"near 대역만 유의하다 (ρ = {wb['near']['spearman']:+.3f}, "
                  f"p = {wb['near']['perm_p']}). ", T_BODY, INK),
-                ("그러나 가설로만 남긴다", T_BODY, ORANGE, True),
-                (f" — AUC {ACI['near']['auc']} 의 신뢰구간 "
-                 f"[{ACI['near']['ci95'][0]:.2f}, {ACI['near']['ci95'][1]:.2f}] 이 기준 0.7 을 "
-                 f"포함하고, 전수(census)인 약함 칸을 빼면 상관이 "
-                 f"{NSEN['drop_weak_cell']['spearman']:+.3f} 로 떨어진다.", T_BODY, INK)]]) + 6
-    y += head(s, CX[2], y, COLW, "6", "해석의 상한 — 자세 타당도", ORANGE)
+                ("가설로만 남긴다", T_BODY, ORANGE, True),
+                (f" — AUC 신뢰구간 [{ACI['near']['ci95'][0]:.2f}, "
+                 f"{ACI['near']['ci95'][1]:.2f}] 이 기준 0.7 을 포함하고, 전수 칸을 빼면 "
+                 f"{NSEN['drop_weak_cell']['spearman']:+.3f} 로 떨어진다.", T_BODY, INK)]]) + 4
+    y += head(s, CX[2], y, COLW, "6b", "해석의 상한 — 자세 타당도", ORANGE)
     y += kv(s, CX[2], y, COLW,
             [("1위 자세 MCS-RMSD 중앙값", f"{PV['all']['median_rmsd']:.2f} Å", ORANGE),
              ("2 Å 기준 통과 (전체)", f"{PV['all']['frac_under_threshold']:.1%}", ORANGE),
@@ -276,25 +302,28 @@ def main() -> int:
             lw=0.62)
     y += text(s, CX[2], y, COLW,
               [[(f"점수를 매긴 자세의 {1 - PV['all']['frac_under_threshold']:.0%} 가 C2 를 "
-                 f"실패시킨 것과 같은 기준 밖이다. “신호 없음” 은 대부분 틀린 자세에 "
-                 f"매긴 점수에 대한 진술이며, 이것이 모든 상관 해석의 상한을 정한다.",
-                 T_BODY, INK)]]) + 6
+                 f"실패시킨 것과 같은 기준 밖이다 — 이것이 모든 상관 해석의 상한이다.",
+                 T_BODY, INK)]]) + 4
     y += head(s, CX[2], y, COLW, "7", "결론", NAVY)
     y += panel(s, CX[2], y, COLW,
                [[("· 정량 예측은 실패했다.", T_BODY + 2, INK, True),
                  (f" Q² 는 세 모델 모두 0 근처로 기준 0.3 에 한참 미달한다.", T_BODY, INK)],
                 [("· 선별도 전체적으로는 작동하지 않았다.", T_BODY + 2, INK, True),
-                 (" 한 대역에서만 신호가 있고 그 신호는 전수 칸 하나에 얹혀 있다.", T_BODY, INK)],
-                [("· 네 후보를 실험으로 제거했다.", T_BODY + 2, INK, True),
-                 (" 남은 것은 물 제거·강체 수용체·단일 배좌·holo 편향·채점 함수 자체다.",
+                 (" 한 대역의 신호는 전수 칸 하나에 얹혀 있다.", T_BODY, INK)],
+                [("· 두 갈래에서 각각 두 후보씩 제거했다.", T_BODY + 2, INK, True),
+                 (" C2 실패는 탐색 깊이·프로토네이션, 비재현은 골격 교란·프로토콜. "
+                  "남은 것은 물 제거·강체 수용체·단일 배좌·holo 편향·채점 함수 자체다.",
                   T_BODY, INK)],
                 [("· 벤치마크의 골격 분포를 통제하라.", T_BODY + 2, GREEN, True),
-                 (" 다만 본 연구에서 그 통제가 바꾼 몫은 거의 0 이었다는 사실도 함께 적어야 "
-                  "정직하다.", T_BODY, INK)],
+                 (" 다만 여기서 그 통제가 바꾼 몫은 거의 0 이었다.", T_BODY, INK)],
                 [("· 자세가 어디에 놓였는지 먼저 보고하라.", T_BODY + 2, GREEN, True),
-                 (" 그 비율 없이 상관값만 보면 무엇을 측정했는지 알 수 없다.", T_BODY, INK)]],
+                 (" 그 비율 없이 상관값만 보면 무엇을 측정했는지 알 수 없다.", T_BODY, INK)],
+                [("· “신호 없음” 은 귀무를 채택한 것이 아니다.", T_BODY + 2, NAVY, True),
+                 (f" 신뢰구간 상한이 {T['ci95'][1]:+.2f} 이므로 |ρ| ≲ "
+                  f"{abs(T['ci95'][0]):.2f} 인 관계는 배제하지 못한다. 기각하지 못한 것이지 "
+                  f"없다고 보인 것이 아니다.", T_BODY, INK)]],
                line=NAVY, lw=1.6, space=6)
-    bottom = y
+    ends.append(y); bottom = max(ends)
 
     # ── 하단 띠 ─────────────────────────────────────────────────────
     box(s, 0, H - 32, W, 32, fill=NAVY, shape=MSO_SHAPE.RECTANGLE)
@@ -312,8 +341,9 @@ def main() -> int:
     prs.save(str(out))
     fill = bottom / (H - 32)
     print(f"{out}")
-    print(f"  A0 {W}×{H} mm · 도형 {len(s.shapes)}개 · 최하단 콘텐츠 {bottom:.0f} mm "
-          f"(채움 {fill:.0%})")
+    print(f"  A0 {W}×{H} mm · 도형 {len(s.shapes)}개 · 채움 {fill:.0%}")
+    print("  단별 최하단: " + " · ".join(f"{i+1}단 {e:.0f}mm" for i, e in enumerate(ends))
+          + f"  (한계 {H - 40:.0f}mm)")
     if bottom > H - 40:
         print("  경고: 콘텐츠가 하단 띠를 침범한다")
     elif fill < 0.80:
