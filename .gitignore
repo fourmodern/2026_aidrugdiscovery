@@ -13,3 +13,6 @@ Day06_LLM_Agent/pde5_figures/
 **/agent_report.md
 **/outputs/*.json
 **/outputs/*.md
+Day06_LLM_Agent/wiki/
+Day06_LLM_Agent/orpo_model/
+Day06_LLM_Agent/outputs/
