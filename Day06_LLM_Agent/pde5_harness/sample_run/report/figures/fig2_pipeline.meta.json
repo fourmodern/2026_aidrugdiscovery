@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/run_stdout.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:48:34.102531Z",
+  "source_sha256": "a3ba8468fddc8355",
+  "note": "구조 모식도 — 수치는 단계 수와 레코드 수만"
+}

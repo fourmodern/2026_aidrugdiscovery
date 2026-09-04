@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/run_stdout.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:48:34.523873Z",
+  "source_sha256": "a3ba8468fddc8355",
+  "note": "단계별 잔존 건수 — 실측"
+}

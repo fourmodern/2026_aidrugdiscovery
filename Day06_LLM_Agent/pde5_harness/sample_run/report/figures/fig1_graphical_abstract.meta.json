@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/run_stdout.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:48:33.887112Z",
+  "source_sha256": "a3ba8468fddc8355",
+  "note": "개념도 — 수치는 실측 n 요약만 포함"
+}

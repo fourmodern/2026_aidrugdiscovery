@@ -16,3 +16,7 @@ Day06_LLM_Agent/notebooks/pde5_figures/
 Day06_LLM_Agent/notebooks/wiki/
 Day06_LLM_Agent/orpo_model/
 Day06_LLM_Agent/outputs/
+
+# OMC 런타임 상태 (커밋하지 않음)
+.omc/
+**/.omc/

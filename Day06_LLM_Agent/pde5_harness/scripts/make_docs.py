@@ -127,9 +127,9 @@ def build_pptx(blocks, base: Path, out: Path):
     s = prs.slides.add_slide(BLANK)
     bg = s.shapes.add_shape(1, PIn(0), PIn(0), PIn(13.333), PIn(7.5))
     bg.fill.solid(); bg.fill.fore_color.rgb = P_NAVY; bg.line.fill.background()
-    _tb(s, 0.8, 0.55, 11.8, 1.0, ["파일로 강제되는 계약이 신약탐색 에이전트의 산출을 바꾸는가"],
+    _tb(s, 0.8, 0.55, 11.8, 1.0, ["검증 게이트를 갖춘 신약탐색 에이전트 하네스의 단일 실행 기록"],
         size=25, color=P_WHITE, bold=True)
-    _tb(s, 0.8, 1.45, 11.8, 0.5, ["PDE5A 저해제 선별 하네스의 단일 실행 사례"],
+    _tb(s, 0.8, 1.45, 11.8, 0.5, ["그리고 그 게이트 중 둘이 반증 불가능했다는 발견"],
         size=13, color=PRGB(0x9F, 0xC5, 0xE0))
     ga = (base / "figures/fig1_graphical_abstract.png").resolve()
     if ga.exists(): s.shapes.add_picture(str(ga), PIn(1.15), PIn(2.15), width=PIn(11.0))
@@ -167,10 +167,27 @@ def build_pptx(blocks, base: Path, out: Path):
             ["QED 내림차순 상위 6건. 값은 전부 RDKit 산출값이며 사람이 적은 수치가 없다."],
             size=11, color=P_GREY)
 
+    # 한계 — 본문이 철회한 것을 덱에서도 밝힌다
+    s = new("한계", "이 실행이 말하지 않는 것")
+    _tb(s, 0.9, 1.7, 11.6, 3.4,
+        ["1.  대조군이 없다.",
+         "     문서-전용 조건을 실행하지 않았으므로 '문서보다 코드가 낫다'는 비교 주장은 하지 않는다.",
+         "",
+         "2.  수정 후에도 selectivity 검사 5개가 이 실행에서는 공허하게 통과한다.",
+         "     파이프라인이 SMILES 를 넘기지 않아 입력 의존 검사가 발동하지 않는다.",
+         "",
+         "3.  단일 실행이며 반복이 없다. 통계 추론을 하지 않았다.",
+         "",
+         "4.  화합물 10건은 정렬 미지정 조회의 앞부분이고 단일 화학형 계열에 가깝다."],
+        size=13, color=P_NAVY)
+    _tb(s, 0.9, 5.5, 11.6, 0.9,
+        ["게이트 통과는 규약 준수를 뜻할 뿐 화합물이 유망하다는 뜻이 아니다."],
+        size=11, color=P_GREY)
+
     # 결론
     s = new("결론", "정리")
     _tb(s, 0.9, 1.7, 11.6, 3.2,
-        ["1.  게이트는 문서가 아니라 코드여야 강제된다.",
+        ["1.  통과만 본 게이트는 검증된 것이 아니다.",
          "     단, 호출자가 반환값을 검사할 때만이다. 본 실행에서는 4단계 중 3단계만 그랬다.",
          "",
          "2.  강제되었다고 기준이 옳은 것은 아니다.",
@@ -180,7 +197,7 @@ def build_pptx(blocks, base: Path, out: Path):
          "     스크립트가 스스로 '데모 임계(교육용)'라고 밝힌 값이다."],
         size=14, color=P_NAVY)
     _tb(s, 0.9, 5.4, 11.6, 1.0,
-        ["본 보고의 모든 수치는 도구 산출값이다. 산출되지 않은 양은 산출되지 않았다고 적었다."],
+        ["본 보고의 결과 수치는 도구 산출값이다. 서술문과 절 제목은 사람이 작성했다."],
         size=11, color=P_GREY)
     prs.save(out)
     return len(prs.slides._sldIdLst)
@@ -197,6 +214,15 @@ def main():
     ns = build_pptx(blocks, md.parent, out / "report_pde5.pptx")
     print(f"  docx: 그림 {ni}장 · 표 {nt}개")
     print(f"  pptx: 슬라이드 {ns}장")
+
+    # 신선도 검사 — 리뷰에서 "절차를 넣었다고 했는데 코드가 없다" 는 지적을 받아 실제로 구현.
+    # 본문이나 그림이 문서보다 새로우면 배포본이 철회된 주장을 담을 수 있다.
+    figs = list((md.parent / "figures").glob("*.png"))
+    base = max([md.stat().st_mtime] + [f.stat().st_mtime for f in figs])
+    stale = [d.name for d in out.glob("report_pde5*") if d.stat().st_mtime < base]
+    if stale:
+        raise SystemExit(f"[신선도 실패] 본문·그림보다 오래된 산출물: {stale} — 재생성이 필요합니다.")
+    print(f"  신선도: 산출물 전부 본문·그림보다 최신 (검사 대상 {len(list(out.glob('report_pde5*')))}건)")
 
 
 if __name__ == "__main__":

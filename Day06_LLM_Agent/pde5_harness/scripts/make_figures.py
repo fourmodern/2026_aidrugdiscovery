@@ -87,7 +87,7 @@ def fig1_graphical_abstract(out: Path, src: Path, n_props: int, n_pass: int):
             ha="center", fontsize=8.6, fontweight="bold", color=OI["vermil"])
     ax.text(0.5, 0.185,
             "UniProt O76074 lookup  ·  ChEMBL CHEMBL1827 actives  ·  RDKit descriptors\n"
-            "Prose and environment strings are human-written. Unavailable quantities are reported as unavailable.",
+            "Prose is human-written; environment strings are captured by script. Unavailable quantities are reported as unavailable.",
             ha="center", fontsize=6.8, color="#444444", linespacing=1.6)
     p = out / "fig1_graphical_abstract.png"
     fig.savefig(p, bbox_inches="tight", facecolor="white"); plt.close(fig)

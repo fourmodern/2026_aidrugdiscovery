@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/run_stdout.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:48:34.381348Z",
+  "source_sha256": "a3ba8468fddc8355",
+  "note": "RDKit 실계산값 산점도"
+}
