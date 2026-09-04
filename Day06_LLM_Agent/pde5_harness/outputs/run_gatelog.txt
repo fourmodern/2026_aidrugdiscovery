@@ -1,0 +1,4 @@
+[VERIFY-GATE:target-lookup] PASSED
+[VERIFY-GATE:chembl-actives] PASSED
+[VERIFY-GATE:mol-properties] PASSED
+[VERIFY-GATE:selectivity-check] PASSED

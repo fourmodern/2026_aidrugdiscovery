@@ -1,0 +1,17 @@
+# 비밀 — 절대 커밋 금지
+.env
+.env.*
+*.key
+*.pem
+
+# 로컬 환경
+.venv/
+__pycache__/
+*.pyc
+
+# 외부에서 내려받은 공식 프로토콜 사본 (design_esmfold2.py --fetch-protocol 이 재생성)
+vendor/
+
+# 산출물
+outputs/*
+!outputs/.gitignore

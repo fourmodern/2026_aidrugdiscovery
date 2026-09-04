@@ -1,0 +1,134 @@
+== PDE5 harness 순차 실행 (검증 게이트) ==
+
+{
+  "accession": "O76074",
+  "gene": "PDE5A",
+  "protein": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+  "function": "Plays a role in signal transduction by regulating the intracellular concentration of cyclic nucleotides. This phosphodiesterase catalyzes the specific hydrolysis of cGMP to 5'-GMP (PubMed:15489334, PubMed:9714779). Specifically regulates nitric-oxide-generated cGMP (PubMed:15489334)",
+  "length": 875
+}
+활성물질 10건 조회
+[
+  {
+    "smiles": "CCCOc1ccc(S(=O)(=O)N(CC)CCN(C)C)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 534.7,
+    "logP": 2.11,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 122.5,
+    "QED": 0.378,
+    "SA": 2.95,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CCCOc1ccccc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 356.4,
+    "logP": 2.54,
+    "HBD": 1,
+    "HBA": 4,
+    "TPSA": 81.9,
+    "QED": 0.736,
+    "SA": 2.54,
+    "Ro5_pass": true,
+    "gate_pass": true
+  },
+  {
+    "smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(CCN(C)C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 575.7,
+    "logP": 1.4,
+    "HBD": 1,
+    "HBA": 8,
+    "TPSA": 125.8,
+    "QED": 0.364,
+    "SA": 2.93,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CC(C)COc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 532.7,
+    "logP": 1.72,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 122.5,
+    "QED": 0.469,
+    "SA": 2.88,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CCCCCCn1c(=O)n(C)c(=O)c2[nH]c(-c3cc(S(=O)(=O)N4CCN(C)CC4)ccc3OCC)nc21",
+    "MW": 532.7,
+    "logP": 2.01,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 122.5,
+    "QED": 0.396,
+    "SA": 2.69,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 518.6,
+    "logP": 1.47,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 122.5,
+    "QED": 0.479,
+    "SA": 2.83,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CCCCOc1ccccc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 370.5,
+    "logP": 2.93,
+    "HBD": 1,
+    "HBA": 4,
+    "TPSA": 81.9,
+    "QED": 0.648,
+    "SA": 2.53,
+    "Ro5_pass": true,
+    "gate_pass": true
+  },
+  {
+    "smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C(=O)N(C)C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 575.7,
+    "logP": 1.52,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 142.8,
+    "QED": 0.429,
+    "SA": 2.97,
+    "Ro5_pass": true,
+    "gate_pass": false
+  },
+  {
+    "smiles": "CCCOc1ccc(S(N)(=O)=O)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+    "MW": 435.5,
+    "logP": 1.18,
+    "HBD": 2,
+    "HBA": 6,
+    "TPSA": 142.1,
+    "QED": 0.571,
+    "SA": 2.75,
+    "Ro5_pass": true,
+    "gate_pass": true
+  },
+  {
+    "smiles": "CCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)(C)C)c2[nH]1",
+    "MW": 518.6,
+    "logP": 1.47,
+    "HBD": 1,
+    "HBA": 7,
+    "TPSA": 122.5,
+    "QED": 0.524,
+    "SA": 2.89,
+    "Ro5_pass": true,
+    "gate_pass": true
+  }
+]
+
+순차 실행 완료. 보고서 작성은 Claude Code report-writer 스킬로 수행하세요.
