@@ -91,7 +91,7 @@
   "provenance": {
     "source": "PyMOL 좌표 기반 접촉 계산",
     "query": "CHEMBL1916483, cutoff 4.0 A",
-    "timestamp": "2026-09-04T16:19:02.453005Z"
+    "timestamp": "2026-09-04T16:41:11.412915Z"
   },
   "verification": {
     "passed": true,

@@ -4,11 +4,12 @@
       "n": 30,
       "spearman_top_pose": -0.538,
       "perm_p": 0.00285,
-      "partial_controlling_tanimoto": -0.534,
-      "spearman_score_vs_tanimoto": -0.125,
-      "perm_p_score_vs_tanimoto": 0.50747,
-      "spearman_potency_vs_tanimoto": 0.372,
-      "attenuation_from_scaffold_control": 0.0081
+      "partial_controlling_tanimoto": -0.532,
+      "spearman_score_vs_tanimoto": -0.131,
+      "perm_p_score_vs_tanimoto": 0.48923,
+      "spearman_potency_vs_tanimoto": 0.366,
+      "attenuation_from_scaffold_control": 0.0124,
+      "tanimoto_rounding_note": "Tanimoto 를 반올림하지 않은 값이다. 3자리로 자르면 감쇠가 0.8% 로 바뀐다 — 어느 쪽이든 '거의 0' 이라는 결론은 같지만 수치는 하나로 고정한다."
     },
     "new_overall_spearman": -0.079,
     "test_1_design": {
@@ -41,12 +42,12 @@
       ]
     },
     "verdict": "표본 설계만으로는 설명되지 않는다: 옛 설계를 새 데이터에 적용해도 옛 상관이 재현되지 않는다. 화합물 집합 또는 프로토콜 차이가 남는다",
-    "what_this_refutes": "이전 판은 '옛 상관은 골격 유사성이 만든 것'이라고 적었다. 옛 데이터에서 골격을 통제해도 상관은 0.8% 밖에 줄지 않으므로 그 설명은 성립하지 않는다."
+    "what_this_refutes": "이전 판은 '옛 상관은 골격 유사성이 만든 것'이라고 적었다. 옛 데이터에서 골격을 통제해도 상관은 1.2% 밖에 줄지 않으므로 그 설명은 성립하지 않는다."
   },
   "provenance": {
     "source": "옛/새 산출물 재분석 (새 도킹 없음)",
     "query": "draws=4000, seed=42",
-    "timestamp": "2026-09-04T16:10:53.251403Z"
+    "timestamp": "2026-09-04T16:37:58.797546Z"
   },
   "verification": {
     "passed": true,

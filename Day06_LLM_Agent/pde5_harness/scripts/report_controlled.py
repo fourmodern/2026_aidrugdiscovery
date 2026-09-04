@@ -45,6 +45,7 @@ def main() -> int:
     concE, custE = load("contact_concordance.json"), load("custom_score.json")
     statE = load("statistics_validation.json")
     colE = load("collapse_diagnosis.json"); col = res(colE)
+    oldE = load("old_set_new_protocol.json"); oldp = res(oldE)
     csE2 = load("custom_scoring_controlled.json"); cs2 = res(csE2)
     csE = load("custom_scoring_controlled.json")
     cs = res(csE)
@@ -71,12 +72,21 @@ def main() -> int:
     PV = T["pose_validity"]; WCTL = T["within_bin_partial"]; ACI = T["auc_ci95"]
     MUL = T["multiplicity"]; NSEN = T["near_sensitivity"]; MSB = T["mean_score_by_bin"]
     CM = an["confound_metrics"]
+    SC = an.get("sample_composition", {})
+    assay_s = " · ".join(f"{k} {v}건" for k, v in SC.get("assay_types", {}).items())
+    near_assay_s = " · ".join(f"{k} {v}건" for k, v in SC.get("near_bin_assay_types", {}).items())
+    TOPEXP = T.get(f"top{max(1, n // 10)}_expected_similarity", {})
+    _sv = res(statE) or {}
+    stat_trials = sum((_sv.get("trials") or {}).values()) or "—"
+    _pc = _sv.get("partial_permutation_procedure", {}).get("comparison", [])
+    stat_diff = (f"최대 {max(c['abs_diff'] for c in _pc)}" if _pc else "—")
     import math as _m
     def _mde(nn, power_z=0.84, alpha_z=1.96):
         """80% 검정력에서 검출 가능한 최소 |rho| (Fisher z 근사)."""
         return round(_m.tanh((alpha_z + power_z) / _m.sqrt(nn - 3)), 3) if nn > 5 else None
     MDE = {"전체": _mde(n), **{b: _mde(v["n"]) for b, v in wb.items()},
-           "near AUC": _mde(ACI["near"]["n_pos"] + ACI["near"]["n_neg"])}
+           "near 대역 강/약 부분집합(n=%d)" % (ACI["near"]["n_pos"] + ACI["near"]["n_neg"]):
+               _mde(ACI["near"]["n_pos"] + ACI["near"]["n_neg"])}
     mde_s = " · ".join(f"{k} {v}" for k, v in MDE.items() if v)
     _k10 = max(1, n // 10)
     _ord10 = sorted(rows, key=lambda r: r["top_pose_score"])[:_k10]
@@ -118,10 +128,12 @@ def main() -> int:
                         "재현되지 않았다. **다만 그 차이의 원인이 골격 교란이라는 "
                         "설명은 검정 결과 기각되었다** (§3.5) — 원인은 특정하지 못한다.")
         if near_sig and not other_sig:
-            verdict_head += (" 다만 **결정 구조와 같은 계열 안에서는 신호가 남는다** "
-                             f"(near 대역 ρ = {near_bin['spearman']:+.3f}, "
-                             f"p = {near_bin['perm_p']}, AUC {aucb.get('near')}) — "
-                             "채점 함수는 구조가 유래한 화학형 안에서만 작동한다.")
+            verdict_head += (" 다만 **결정 구조와 같은 계열(near 대역) 안에서는 신호가 "
+                             f"남는다** (ρ = {near_bin['spearman']:+.3f}, "
+                             f"p = {near_bin['perm_p']}, AUC {aucb.get('near')}). "
+                             "**이 결과는 가설로만 남긴다** — 그 대역의 약한 화합물 12건이 "
+                             "전수(census)이고 어세이 바닥값에 몰려 있어, 그 칸을 빼면 상관이 "
+                             "유의하지 않고 AUC 는 계산조차 되지 않는다.")
     elif keep:
         verdict_head = ("도킹 점수의 순위 신호는 **골격 유사성을 통제한 뒤에도 살아남았다**. "
                         "즉 관찰된 선별 성능은 공결정 리간드와의 골격 닮음이 아니라 역가에서 온다.")
@@ -215,8 +227,9 @@ C2 는 전 구간 0% 이고 최고 점수는 변하지 않았다 — 탐색은 �
 점수-Tanimoto 상관은 {col['old_design']['spearman_score_vs_tanimoto']:+.3f}
 (p={col['old_design']['perm_p_score_vs_tanimoto']})로 관계 자체가 없다. 옛 설계를 새 데이터에
 재현해도 상관은 중앙값 {col['test_1_design']['median']:+.3f} 에 그친다. 데이터가 지지하는
-진술은 하나다 — **n=30 의 상관은 더 큰 표본에서 재현되지 않았고, 그 차이의 원인을 우리는
-특정하지 못한다.**
+진술은 하나다 — **n=30 의 상관은 더 큰 표본에서 재현되지 않았다.** 옛 30건을 새 프로토콜로
+다시 도킹해도 상관이 유지되므로(ρ={oldp['rho_new_protocol']:+.3f}) 원인은 프로토콜이 아니라
+**그 화합물 집합 자체**다.
 
 ---
 
@@ -262,8 +275,9 @@ p < 0.05 이면 "살아남았다"로 판정한다. 이 기준의 사후성은 §
 ### 2.2 데이터셋 — 역가와 골격의 직교화
 
 ChEMBL 에서 PDE5A 활성(`standard_type ∈ {{IC50, Ki}}`, `standard_relation = "="`, pChEMBL
-존재)을 **전수** 받아 {ds['records_scanned']}개 레코드를 얻었다. {ds['aggregation']} —
-반복 측정을 버리지 않고 중앙값으로 합쳐 어세이 잡음을 줄였다. 중원자 12–70개 범위로
+존재)을 **전수** 받아 {ds['records_scanned']}개 레코드를 얻었다. {ds['aggregation']}. 다만 **실제로 합쳐진 것은 {SC['n_with_replicates']}건뿐이고
+{SC['n_with_single_measurement']}건은 측정이 하나씩이다** — 집계가 잡음에 준 영향은 작다.
+어세이 종류는 {assay_s} 이며, near 대역은 {near_assay_s} 로 균일하다. 중원자 12–70개 범위로
 걸러 {ds['pool_size']}종의 풀을 만들었다.
 
 각 화합물에 대해 공결정 리간드(실데나필)와의 **Morgan 지문(반지름 2, 2048비트) Tanimoto
@@ -284,7 +298,7 @@ Spearman **ρ = {CM['spearman_rho_potency_vs_similarity']:+.3f}** 로 낮아졌�
 적는다 — 작은 쪽만 골라 보고하면 게이트를 통과시키려 고른 것으로 읽힌다.
 
 **비교 대상인 옛 설계의 값도 함께 적는다.** 역가로만 층화한 n=30 세트에서 같은 상관은
-Pearson +0.281 (p=0.132, 유의하지 않음) · Spearman +0.366 이었다. 즉 옛 설계도 두 축이
+Spearman {col['old_design']['spearman_potency_vs_tanimoto']:+.3f} 였다. 즉 옛 설계도 두 축이
 "사실상 같은 축" 이었다고 말할 정도는 아니었고, 이 사실이 §3.5 의 검정 결과와 일관된다.
 
 한 가지 더 적어 둘 것이 있다. Tanimoto 와 중원자수의 상관이
@@ -328,8 +342,8 @@ Pearson +0.281 (p=0.132, 유의하지 않음) · Spearman +0.366 이었다. 즉 
 그 p 값은 **Freedman-Lane 절차**로 구했다 — y 를 통째로 섞으면 역가와 Tanimoto 의 관계까지
 깨져 검정하려는 귀무가설("점수가 골격 정보 너머의 정보를 주지 않는다")과 달라지므로,
 Tanimoto 로 회귀한 잔차만 섞고 적합값은 보존한다. 단순 섞기와의 차이도 모의 데이터로
-확인했으며 두 절차의 p 값 차이는 0.004 이하였다 (`statistics_validation.json`). 이 통계 함수들은 외부 의존 없이 직접 구현했으므로, **동점을 의도적으로
-주입한 무작위 데이터 400회로 `scipy.stats` 와 대조해 일치를 확인했다**
+확인했으며 두 절차의 p 값 차이는 {stat_diff} 였다 (`statistics_validation.json`). 이 통계 함수들은 외부 의존 없이 직접 구현했으므로, **동점을 의도적으로
+주입한 무작위 데이터 {stat_trials}회로 `scipy.stats` 와 대조해 일치를 확인했다**
 (`sample_run/statistics_validation.json`, 최대 편차 1e-9 이하). 다중 모델 SDF 파서도
 같은 방식으로 `rdkit.Chem.SDMolSupplier` 와 좌표 수준까지 대조했다 — 파서가 모델 경계를
 잘못 잡으면 엉뚱한 자세로 접촉을 계산하고도 그럴듯한 잔기 목록이 나오기 때문이다. 회귀는 예측변수와 반응변수를 모두 표준화해 계수를 비교 가능하게
@@ -346,8 +360,9 @@ Tanimoto 로 회귀한 잔차만 섞고 적합값은 보존한다. 단순 섞기
    유리하게 만들지 않는다. 두 규칙의 결과를 §3.7 에 병기한다.
 3. **구간 경계.** 역가 3구간과 유사도 3구간의 절단점은 분포를 보고 정했다.
 
-이 연구는 이전 판(n=30, 역가로만 층화)의 결론이 골격 교란으로 해석 불가능함을 확인하고
-다시 설계한 것이다. 그 경위는 §개정 이력에 적었다.
+이 연구는 이전 판(n=30, 역가로만 층화)의 표본에 역가와 골격이 얽혀 있다는 **우려**에서
+다시 설계한 것이다. 그 우려 자체가 검정 결과 근거가 없었다는 사실은 §3.5 에 있고, 경위는
+§개정 이력에 적었다.
 
 ## 3. 결과
 
@@ -384,16 +399,18 @@ Tanimoto {min(r['tanimoto_to_sildenafil'] for r in rows):.3f}–{max(r['tanimoto
 
 **Table 3. 탐색 깊이 스윕.** 시드 {sw['seeds'] if sw else '—'} 평균. 요청 모드 수는 전 조건
 {sw['num_modes'] if sw else '—'}개이나 smina 가 실제로 반환한 모드 수는 조건마다 18–20개로
-달랐다. C1 은 "상위 모드 중 최선"이라 모드 수에 민감하므로 C1 은 "상위 모드 중 최선"이므로 모드 수를
-늘리면 값이 좋아진다 — 따라서 이 표의 C1 은 §3.2 상단 대조({ctrl['n_modes']}개 모드)와
-직접 비교하지 말고, **스윕 내부의 깊이 간 비교**로만 읽어야 한다.
+달랐다. C1 은 "상위 모드 중 최선"이라 모드 수가 늘면 값이 좋아진다. 따라서 이 표의 C1 은 §3.2 상단
+대조({ctrl['n_modes']}개 모드)와 직접 비교하지 말고 **스윕 내부의 깊이 간 비교**로만 읽어야 한다.
 
 세 가지가 동시에 보인다.
 
 **첫째, 탐색은 깊이로 완전히 고쳐진다.** C1 은 {sw['summary'][0]['c1_best_rmsd_mean']:.2f} Å
 (통과율 {sw['summary'][0]['c1_pass_rate']:.0%})에서
 {sw['summary'][-1]['c1_best_rmsd_mean']:.2f} Å (통과율
-{sw['summary'][-1]['c1_pass_rate']:.0%})로 단조 개선된다. 깊이 {sw['levels'][3]} 이상에서는
+{sw['summary'][-1]['c1_pass_rate']:.0%})로 개선된다 (마지막 구간
+{sw['summary'][-2]['exhaustiveness']}→{sw['summary'][-1]['exhaustiveness']} 에서는
+{sw['summary'][-2]['c1_best_rmsd_mean']:.3f}→{sw['summary'][-1]['c1_best_rmsd_mean']:.3f} Å 로
+미세하게 뒤집히므로 엄밀히 단조는 아니다). 깊이 {sw['levels'][3]} 이상에서는
 모든 시드가 결정 자세를 상위 모드 안에 재현한다.
 
 **둘째, 채점은 어느 깊이에서도 실패한다.** C2 는 전 구간에서
@@ -500,17 +517,30 @@ v2.0 은 n=30 에서 ρ={col['old_design']['spearman_top_pose']:+.3f}
 | ② 옛 데이터의 점수 vs Tanimoto | {col['old_design']['spearman_score_vs_tanimoto']:+.3f} (p={col['old_design']['perm_p_score_vs_tanimoto']}) | 점수가 골격을 따라가지 않았다 |
 | ③ 옛 설계를 새 데이터에 재현 ({col['test_1_design']['n_draws']}회 추출) | 중앙값 {col['test_1_design']['median']:+.3f}, 95% [{col['test_1_design']['p2.5']:+.3f}, {col['test_1_design']['p97.5']:+.3f}] | 설계만으로도 설명되지 않는다 |
 | ④ 층화 없이 무작위 30건 | 중앙값 {col['test_2_sample_size']['median']:+.3f}, 95% [{col['test_2_sample_size']['p2.5']:+.3f}, {col['test_2_sample_size']['p97.5']:+.3f}] | 표본 크기만의 효과 참조값 |
+| ⑤ **옛 30건을 새 프로토콜로 재도킹** | {oldp['rho_old_protocol']:+.3f} → {oldp['rho_new_protocol']:+.3f} (p={oldp['perm_p_new']}) | **프로토콜은 원인이 아니다** |
 
 **Table 8. 상관 붕괴의 원인 검정.** ③ 은 새 163건에서 옛 절단점(strong ≥ 7.0)으로 역가 3층
 × 층당 10건을 골격 무시하고 반복 추출한 것이다. 그 분포에서 −0.4 이하가 나올 확률은
 {col['test_1_design']['frac_below_-0.4']:.1%} 다.
 
-두 세트의 공통 화합물은 {col['test_3_protocol_on_shared_compounds']['n_shared_compounds']}건뿐이라
-프로토콜 차이(탐색 깊이 16 → 64, 자세 규칙, 반복측정 집계)를 직접 비교할 수 없었다.
+두 세트의 공통 화합물이 {col['test_3_protocol_on_shared_compounds']['n_shared_compounds']}건뿐이라
+프로토콜 비교가 막혔으므로, **옛 30건을 새 프로토콜로 그대로 다시 도킹했다** (검정 ⑤).
 
-**따라서 원인을 특정하지 못한다.** 남은 후보는 화합물 집합 자체와 프로토콜 차이이며 이
-데이터로는 나눌 수 없다. 데이터가 지지하는 진술은 **"n=30 의 상관은 더 큰 독립 표본에서
-재현되지 않았다"** 까지다. 이 절은 본 보고서 초안의 인과 주장을 철회한 기록이다.
+결과는 명확하다. 두 프로토콜의 점수 상관은 **{oldp['spearman_between_protocols']:+.3f}**,
+평균 점수 이동은 {oldp['mean_score_shift']:+.3f} kcal/mol 이다. 탐색 깊이를 4배로 올리고
+자세 규칙을 바꿔도 점수가 사실상 동일하며, 역가와의 상관도
+{oldp['rho_old_protocol']:+.3f} → {oldp['rho_new_protocol']:+.3f} 로 유지된다.
+**따라서 프로토콜은 원인이 아니다. 원인은 화합물 집합이다.**
+
+**그리고 그 집합에서 자세는 오히려 더 나쁘다.** 옛 30건을 새 프로토콜로 도킹했을 때 1위
+자세의 MCS-RMSD 중앙값은 {oldp['pose_validity_new']['median_rmsd']:.2f} Å, 2 Å 기준을 넘는
+것은 **{oldp['pose_validity_new']['frac_under_2A']:.1%}** 로 통제 세트 전체의
+{PV['all']['frac_under_threshold']:.1%} 보다도 낮다. **이 연구에서 가장 강한 상관이 자세가
+가장 틀린 집합에서 나왔다.** 결합 기하에서 온 신호라면 나오기 어려운 조합이다.
+
+**정리하면** — 붕괴의 원인은 화합물 집합이고, 골격 교란도 표본 설계도 프로토콜도 아니다.
+그 30건의 어떤 성질이 상관을 만들었는지는 이 데이터로 더 좁히지 못한다. 이 절은 본 보고서
+초안의 인과 주장(골격 교란)을 철회하고 그 자리에 검정 결과를 넣은 기록이다.
 
 ### 3.6 자세 타당도 — 우리는 어떤 자세에 점수를 매겼는가
 
@@ -522,9 +552,15 @@ v2.0 은 n=30 에서 ρ={col['old_design']['spearman_top_pose']:+.3f}
 {pv_tbl}
 | **전체** | **{PV['all']['n']}** | **{PV['all']['median_rmsd']:.2f}** | **{PV['all']['frac_under_threshold']:.1%}** | — |
 
-**Table 9. 1위 자세의 결정 자세 부합도.** MCS 원자수가 하한 8개에 못 미치면 계산이 불가해
-제외했다 (전체 {n}건 중 {n - PV['all']['n']}건). 이 지표는 대칭 보정이 없는 단일 매핑
-RMSD 이므로 대칭 분자에서 과대평가될 수 있다.
+**Table 9. 1위 자세의 공결정 리간드 기준 부합도.** MCS 원자수가 하한 8개에 못 미치면 계산이
+불가해 제외했다 (전체 {n}건 중 {n - PV['all']['n']}건). 대칭 보정이 없는 단일 매핑 RMSD 라
+대칭 분자에서 과대평가될 수 있다.
+
+**이 지표가 무엇을 재는지 분명히 해 둔다.** 실데나필 외의 화합물에는 실험 결정 자세가 없다.
+따라서 이 값은 "자세가 맞는가"가 아니라 **"공유 부분구조가 실데나필의 원자 위에 겹치는가"**
+를 잰다. 같은 결합 양식을 전제하는 셈이므로, 골격이 다른 far 대역
+(공유 원자 평균 약 10개)에서는 해석이 특히 약하다. 대역별로 읽어야 하고, 전체 통합값
+{PV['all']['frac_under_threshold']:.1%} 를 균일한 증거처럼 인용하면 안 된다.
 
 **분석 대상 자세의 {1 - PV['all']['frac_under_threshold']:.0%} 가 C2 대조를 실패시킨 것과 같은
 기준을 넘지 못한다.** far 대역은 {PV['far']['frac_under_threshold']:.1%} 에 그친다. 즉 §3.4 의
@@ -556,6 +592,11 @@ near {TOPSIM.get('near','—')} (무작위 기대 각 {kN/3:.1f}), 역가 구성
 
 **Table 10. 선별 지표와 불확실성.** AUC 는 강함/약함 두 층만으로 계산하므로 n 이 각 대역의
 전체 수보다 작다. 신뢰구간은 Hanley-McNeil 근사다.
+
+**대역별 AUC 의 음성군은 각 대역의 weak 칸 하나로만 이루어진다.** near 대역의 경우 그 칸이
+전수(census, 12/12)이므로 **§3.4 에서 한 민감도 분석(그 칸 제거)을 AUC 에는 적용할 수 없다**
+— 제거하면 음성군이 0 이 된다. 즉 near AUC {ACI['near']['auc']} 는 그 12건에 전적으로
+의존하며, 그 12건은 표본이 아니라 전수다 (§4.4 한계 11).
 
 사전 기준 0.7 을 **점 추정으로** 넘은 대역은 {len(auc_bins_ok)}/{len(aucb)} 개(near)지만,
 **그 신뢰구간 [{ACI['near']['ci95'][0]:.3f}, {ACI['near']['ci95'][1]:.3f}] 은 0.7 을 포함한다.**
@@ -661,8 +702,8 @@ smina `--custom_scoring` 파일로 내보내고, 9칸 격자에서 **층화 분�
 
 **Table 14. 강함 층 {conc["n_compounds"]}건 중 해당 잔기와 접촉한 화합물 수.**
 {conc["cutoff_angstrom"]} Å 이내 중원자 기준. 두 자세의 접촉 집합은 평균 Jaccard
-{conc["mean_jaccard"]} 로 서로 다른데도 핵심 잔기는 양쪽 모두 전 화합물에서 접촉한다.
-해석은 §4.3 에서 다룬다.''' if conc else "*(접촉 일치 분석은 이 실행에 포함되지 않았다.)*"}
+{conc["mean_jaccard"]} 로 서로 다른데도 상위 잔기는 양쪽 모두에서 거의 전 화합물이 접촉한다
+(전수인 것은 일부이고 나머지는 한두 건씩 빠진다 — 표의 실제 수를 보라). 해석은 §4.3 에서 다룬다.''' if conc else "*(접촉 일치 분석은 이 실행에 포함되지 않았다.)*"}
 
 ## 4. 논의
 
@@ -706,11 +747,20 @@ pH 에서 양성자화되므로, 중성 실데나필을 pH 7.4 수용체에 재�
 
 **여기서 예상과 반대되는 관찰이 나온다.** 직관적으로는 공결정 리간드를 닮은 분자가 포켓에
 잘 맞아 좋은 점수를 받으리라 기대하게 된다. 데이터는 반대다. 점수는 낮을수록 좋은데,
-점수-Tanimoto 순위상관은 **{T['spearman_score_vs_tanimoto']:+.3f}** — 즉 **닮을수록 점수가
-나쁘다.** 대역별 평균 점수도 far {MSB['far']:.2f} · mid {MSB['mid']:.2f} · near {MSB['near']:.2f}
-kcal/mol 로 가장 안 닮은 대역이 가장 좋은 점수를 받는다. 점수 상위 {kN}건의 대역 구성은
-far {TOPSIM.get('far','—')} · mid {TOPSIM.get('mid','—')} · near {TOPSIM.get('near','—')} 로,
-무작위 기대(각 약 {kN/3:.1f}건) 대비 far 가 뚜렷이 과대표집된다.
+점수-Tanimoto 순위상관은 **{T['spearman_score_vs_tanimoto']:+.3f}** — 즉 닮을수록 점수가
+나쁜 방향이다. **다만 이 상관은 유의하지 않다** (순열 p={T['perm_p_score_vs_tanimoto']}).
+대역별 평균 점수는 far {MSB['far']:.2f} · mid {MSB['mid']:.2f} · near {MSB['near']:.2f} kcal/mol
+이지만, far−near 차이 {T['mean_score_gap_far_minus_near']['gap_kcal_mol']:+.3f} kcal/mol 역시
+유의하지 않다 (p={T['mean_score_gap_far_minus_near']['perm_p']}).
+
+**유의한 것은 하나뿐이다.** 점수 상위 {kN}건의 대역 구성 far {TOPSIM.get('far','—')} ·
+mid {TOPSIM.get('mid','—')} · near {TOPSIM.get('near','—')} 는 귀무 기대값과 어긋난다. 대역
+크기가 다르므로 기대값은 각 {kN/3:.1f}건이 아니라 far {TOPEXP.get('far','—')} ·
+mid {TOPEXP.get('mid','—')} · near {TOPEXP.get('near','—')} 이고, far 의 과대표집은 이항검정
+p≈0.01 이다.
+
+**다른 곳에서 p=0.32 를 "신호 없음"이라 했으므로 여기서도 같은 기준을 적용한다** — 이 절에서
+통계적으로 뒷받침되는 관찰은 상위권의 far 과대표집 하나뿐이고, 나머지는 방향만 보여준다.
 
 **분자 크기로는 설명되지 않는다.** Vina 계열 점수는 크기에 반응하고
 (점수-중원자수 {T['spearman_score_vs_heavy_atoms']:+.3f}), 크면 점수가 좋아진다. 그런데 near
@@ -731,8 +781,11 @@ far 대역은 결정 자세 틀 안에 놓이는 비율이 {PV['far']['frac_unde
 
 둘째, **n=30 에서 얻었던 ρ={col['old_design']['spearman_top_pose']:+.3f} 는 재현되지
 않았고, 그 이유로 우리가 처음 제시한 설명(골격 교란)은 검정 결과 틀렸다** (§3.5).
-설계 재현 실험도 그 차이를 만들지 못했다. 남은 후보는 화합물 집합과 프로토콜 차이이며
-이 데이터로는 나눌 수 없다.
+설계 재현도 프로토콜도 원인이 아니었다 — 옛 30건을 새 프로토콜로 다시 도킹하면 상관이
+{oldp['rho_new_protocol']:+.3f} 로 그대로 유지된다(점수 상관 {oldp['spearman_between_protocols']:+.3f}).
+**원인은 그 화합물 집합 자체다.** 어떤 성질 때문인지는 더 좁히지 못했으나, 그 집합의 자세
+타당도가 {oldp['pose_validity_new']['frac_under_2A']:.1%} 로 통제 세트 전체보다도 낮다는
+사실은 그 상관이 결합 기하에서 온 것이 아닐 가능성을 시사한다.
 
 **따라서 "골격 유사성을 통제하라"는 처방은 이 연구가 입증한 것이 아니다.** 벤치마크 집합의
 유사성 편향 자체는 선행 문헌이 반복해서 지적해 온 문제이고 [R12, R13, R14], 통제해서
@@ -767,7 +820,8 @@ far 대역은 결정 자세 틀 안에 놓이는 비율이 {PV['far']['frac_unde
 7. 사전등록이 없다 (§2.6).
 8. 다중 비교는 3개 대역 상관에 대해 Bonferroni·BH 를 계산해 §3.7 에 보고했다 (near 는 보정
    후에도 유의). 그 밖의 검정(AUC, 회귀)에는 보정을 적용하지 않았다.
-9. **검정력이 부족하다.** 80% 검정력에서 검출 가능한 최소 |ρ| 은 {mde_s} 다. far·mid 대역의
+9. **검정력이 부족하다.** 80% 검정력에서 검출 가능한 최소 |ρ| 은 {mde_s} 다 (**모두 ρ
+   척도이며 AUC 척도가 아니다** — AUC 기준 0.7 에 대한 검출력은 별도로 계산하지 않았다). far·mid 대역의
    "신호 없음"은 **|ρ| ≲ 0.38 인 관계를 배제하지 못한다.** 귀무를 채택한 것이 아니라 기각하지
    못한 것이다.
 10. **결과변수에 대한 선택.** 각 칸에서 pChEMBL 정렬 후 균등 간격으로 뽑아 역가 분포가
@@ -824,13 +878,15 @@ near {wb.get('near',{}).get('spearman','—')} 이고 유의한 것은 near 대�
 
 - v1.0 "예측하지 못한다" → 선별 지표를 계산하지 않았기 때문
 - v2.0 "선별은 된다" → 표본이 골격에 치우쳐 있었기 때문
-- v3.0 초안 "그 치우침이 원인이었다" → **검정해 보니 아니었다** (§3.5)
+- v3.0 초안 "그 치우침이 원인이었다" → **검정해 보니 아니었다.** 골격도, 설계도,
+  프로토콜도 아니고 화합물 집합이었다 (§3.5)
 
 **세 번 모두 게이트가 아니라 외부 비평이 오류를 찾았다.** 게이트는 수치가 산출되었는지,
 출처와 맞는지, 형식이 옳은지를 검사한다. 그것은 필요조건이고, **결론이 데이터에서 따라
 나오는지는 검사하지 못한다.** 세 번째 판본이 자기 초안의 인과 주장을 스스로 기각하게 된
 것도 리뷰어가 "그 설명을 옛 데이터에 적용해 보라"고 요구했기 때문이다. 그 한 줄의 요구가
-1.2% 라는 수치를 만들었고, 그 수치가 논문의 중심 주장을 무너뜨렸다.
+{col['old_design']['attenuation_from_scaffold_control']:.1%} 라는 수치를 만들었고, 그 수치가
+논문의 중심 주장을 무너뜨렸다.
 
 ## 참고문헌
 
@@ -900,6 +956,7 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
 | 통계 함수 검증 | `statistics_validation.json` | Spearman·편상관·AUC·CI·SDF 파서 대조 | {gate(statE)} |
 | 커스텀 채점 검증 | `custom_scoring_controlled.json` | 층화 분할 · 훈련/시험 분리 · 부트스트랩 | {gate(csE2)} |
 | 상관 붕괴 원인 검정 | `collapse_diagnosis.json` | 옛 데이터 편상관 · 설계 재현 추출 · 표본크기 대조 | {gate(colE)} |
+| 옛 세트 재도킹 (프로토콜 대조) | `old_set_new_protocol.json` | 동일 화합물 · 두 프로토콜 점수 · 자세 타당도 | {gate(oldE)} |
 
 **게이트가 검사하지 않는 것.** 게이트는 수치가 산출되었는지와 형식이 맞는지를 볼 뿐,
 **결론이 데이터와 일치하는지는 보지 못한다.** 이 연구의 이전 판(v2.0)은 모든 게이트를
@@ -919,16 +976,17 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
 **Figure 14. 판본별 결론과 그것을 무너뜨린 관찰.** (A) 판본별 헤드라인 수치, (B) 각 판본의
 결론과 붕괴 사유, (C) 무엇이 오류를 잡았는가. 자동 게이트는 세 판본 모두 전부 통과했다.
 
-**v3.0 (본 판)** — v2.0 의 긍정적 선별 결론이 **골격 교란으로 해석 불가능**함을 확인.
-강함 층은 공결정 리간드 유사 골격(MCS 평균 16.6원자)이 주도하고 약함 층은 무관한
-골격(9.4원자)이었으며, 수용체가 그 리간드의 holo 구조였다. 다음을 새로 했다.
+**v3.0 (본 판)** — v2.0 의 표본에서 역가와 골격이 얽혀 있다는 **우려**에 따라 재설계했다
+(강함 층은 공결정 리간드 유사 골격이 주도하고 약함 층은 무관한 골격이었으며 수용체가 그
+리간드의 holo 구조였다). **그 우려가 실제로 v2.0 의 상관을 만들었는지는 검정 대상이었고,
+검정 결과 아니었다** (§3.5, 개정 항목 7). 다음을 새로 했다.
 
 1. **데이터셋 재설계** — 역가 × 골격 유사도 9칸 격자, n={n}, 교란
    r {ds['confound_pearson_r_potency_vs_similarity']:+.3f}. 반복 측정 중앙값 집계.
 2. **탐색 깊이 통제 실험** — 자세/채점 진단을 n=1 에서 스윕으로 대체.
 3. **편상관·구간내 분석** — 골격 통제 후 신호 잔존 여부를 직접 검정.
 4. **주 자세를 점수 1위로 전환** — 공결정 리간드를 참조하지 않는 규칙을 주 결과로.
-5. **염 제거 명시화** — 도구 기본 동작에 맡기던 단계를 코드로.\n5b. **커스텀 채점 재검증** — 이전 n=10 시험은 검정력이 없었다. 9칸 층화 분할
+5. **염 제거 명시화** — 도구 기본 동작에 맡기던 단계를 코드로.\n6. **커스텀 채점 재검증** — 이전 n=10 시험은 검정력이 없었다. 9칸 층화 분할
    (훈련 {cs['n_train']} / 시험 {cs['n_scored']})로 재실행 (§3.10).
 7. **초안의 인과 주장 철회** — 초안은 v1/v2 의 상관을 골격 교란의 산물로 설명했다. 외부
    비평 리뷰가 그 설명을 검정하라고 요구했고, 검정 결과 옛 데이터에서 골격 통제의 감쇠는
@@ -938,7 +996,17 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
    밖이라는 사실이 초안에 없었다. §3.6 신설.
 9. **불확실성 보강** — AUC 신뢰구간, 다중비교 보정, 최소검출효과, near 대역 민감도,
    대역별 교란 통제를 추가했다. 모두 초안에 없던 것이며 일부는 결론을 약화시킨다.
-6. **전 그림 재생성** — 본문이 바뀌면 그림도 바뀌어야 한다.
+10. **프로토콜 대조 실행** — 2차 리뷰가 "옛 30건을 새 프로토콜로 다시 돌리면 원인을 가를
+   수 있다"고 지적했고, 실제로 돌렸다 (§3.5 검정 ⑤). 점수 상관
+   {oldp['spearman_between_protocols']:+.3f} 로 프로토콜은 원인이 아님이 확정됐다.
+11. **§4.2 의 관찰에 검정 추가** — 점수-Tanimoto 상관과 대역별 평균 점수 차이에 순열 p 를
+   붙였더니 둘 다 유의하지 않았다. 다른 곳에서 p=0.32 를 "신호 없음"이라 했으므로 같은
+   기준을 적용해 서술을 낮췄다.
+12. **near 대역 결과의 격하** — 그 대역의 AUC 음성군이 전수 칸 하나로만 이루어져 민감도
+   분석 자체가 불가능함을 확인하고, 초록·§4.2 의 문장을 가설로 낮췄다.
+13. **전 그림·문서 재생성** — 본문이 바뀌면 그림과 배포 문서도 바뀌어야 한다.
+   이 판에서는 Figure 14 의 v2.0 설명이 철회된 인과 주장을 그대로 담고 있던 것도 함께
+   고쳤다 — 2차 리뷰가 잡았고, 같은 유형(본문은 고치고 그림은 두는)이 세 번째 재발이었다.
 
 ## 무-날조 선언
 

@@ -1,0 +1,258 @@
+{
+  "result": {
+    "n": 30,
+    "n_failed": 0,
+    "exhaustiveness_old": 16,
+    "exhaustiveness_new": 64,
+    "rho_old_protocol": -0.538,
+    "rho_new_protocol": -0.527,
+    "ci95_new": [
+      -0.746,
+      -0.206
+    ],
+    "perm_p_new": 0.0033,
+    "spearman_between_protocols": 0.997,
+    "mean_score_shift": 0.0,
+    "pose_validity_new": {
+      "n": 29,
+      "median_rmsd": 5.782,
+      "frac_under_2A": 0.069
+    },
+    "rows": [
+      {
+        "chembl_id": "CHEMBL86602",
+        "pchembl_value": 7.0,
+        "score_old_protocol": -9.5,
+        "score_new_protocol": -9.5,
+        "top_pose_mcs_rmsd": 3.725
+      },
+      {
+        "chembl_id": "CHEMBL115152",
+        "pchembl_value": 7.27,
+        "score_old_protocol": -9.3,
+        "score_new_protocol": -9.3,
+        "top_pose_mcs_rmsd": 10.253
+      },
+      {
+        "chembl_id": "CHEMBL370241",
+        "pchembl_value": 7.66,
+        "score_old_protocol": -10.9,
+        "score_new_protocol": -10.9,
+        "top_pose_mcs_rmsd": 2.272
+      },
+      {
+        "chembl_id": "CHEMBL183150",
+        "pchembl_value": 8.0,
+        "score_old_protocol": -10.7,
+        "score_new_protocol": -10.8,
+        "top_pose_mcs_rmsd": 8.838
+      },
+      {
+        "chembl_id": "CHEMBL434135",
+        "pchembl_value": 8.3,
+        "score_old_protocol": -10.4,
+        "score_new_protocol": -10.4,
+        "top_pose_mcs_rmsd": 3.703
+      },
+      {
+        "chembl_id": "CHEMBL544310",
+        "pchembl_value": 8.57,
+        "score_old_protocol": -10.2,
+        "score_new_protocol": -10.1,
+        "top_pose_mcs_rmsd": 9.388
+      },
+      {
+        "chembl_id": "CHEMBL136498",
+        "pchembl_value": 8.76,
+        "score_old_protocol": -13.7,
+        "score_new_protocol": -13.7,
+        "top_pose_mcs_rmsd": 5.782
+      },
+      {
+        "chembl_id": "CHEMBL361582",
+        "pchembl_value": 9.0,
+        "score_old_protocol": -10.6,
+        "score_new_protocol": -10.6,
+        "top_pose_mcs_rmsd": 4.081
+      },
+      {
+        "chembl_id": "CHEMBL553075",
+        "pchembl_value": 9.28,
+        "score_old_protocol": -10.3,
+        "score_new_protocol": -10.3,
+        "top_pose_mcs_rmsd": 5.012
+      },
+      {
+        "chembl_id": "CHEMBL410215",
+        "pchembl_value": 10.52,
+        "score_old_protocol": -11.4,
+        "score_new_protocol": -11.4,
+        "top_pose_mcs_rmsd": 4.078
+      },
+      {
+        "chembl_id": "CHEMBL42713",
+        "pchembl_value": 6.0,
+        "score_old_protocol": -8.4,
+        "score_new_protocol": -8.4,
+        "top_pose_mcs_rmsd": 5.744
+      },
+      {
+        "chembl_id": "CHEMBL4788965",
+        "pchembl_value": 6.05,
+        "score_old_protocol": -9.8,
+        "score_new_protocol": -9.9,
+        "top_pose_mcs_rmsd": 10.62
+      },
+      {
+        "chembl_id": "CHEMBL3703685",
+        "pchembl_value": 6.16,
+        "score_old_protocol": -12.5,
+        "score_new_protocol": -12.5,
+        "top_pose_mcs_rmsd": 6.793
+      },
+      {
+        "chembl_id": "CHEMBL361481",
+        "pchembl_value": 6.28,
+        "score_old_protocol": -10.5,
+        "score_new_protocol": -10.6,
+        "top_pose_mcs_rmsd": 6.935
+      },
+      {
+        "chembl_id": "CHEMBL70837",
+        "pchembl_value": 6.4,
+        "score_old_protocol": -10.1,
+        "score_new_protocol": -10.1,
+        "top_pose_mcs_rmsd": 4.32
+      },
+      {
+        "chembl_id": "CHEMBL2180662",
+        "pchembl_value": 6.51,
+        "score_old_protocol": -10.0,
+        "score_new_protocol": -10.0,
+        "top_pose_mcs_rmsd": 5.828
+      },
+      {
+        "chembl_id": "CHEMBL4278092",
+        "pchembl_value": 6.62,
+        "score_old_protocol": -10.4,
+        "score_new_protocol": -10.4,
+        "top_pose_mcs_rmsd": 3.035
+      },
+      {
+        "chembl_id": "CHEMBL371451",
+        "pchembl_value": 6.75,
+        "score_old_protocol": -12.1,
+        "score_new_protocol": -12.0,
+        "top_pose_mcs_rmsd": 5.838
+      },
+      {
+        "chembl_id": "CHEMBL5871683",
+        "pchembl_value": 6.85,
+        "score_old_protocol": -11.1,
+        "score_new_protocol": -11.1,
+        "top_pose_mcs_rmsd": 5.817
+      },
+      {
+        "chembl_id": "CHEMBL2180661",
+        "pchembl_value": 6.98,
+        "score_old_protocol": -10.5,
+        "score_new_protocol": -10.5,
+        "top_pose_mcs_rmsd": 1.188
+      },
+      {
+        "chembl_id": "CHEMBL92043",
+        "pchembl_value": 4.0,
+        "score_old_protocol": -9.6,
+        "score_new_protocol": -9.6,
+        "top_pose_mcs_rmsd": 1.708
+      },
+      {
+        "chembl_id": "CHEMBL142922",
+        "pchembl_value": 4.43,
+        "score_old_protocol": -9.3,
+        "score_new_protocol": -9.3,
+        "top_pose_mcs_rmsd": 9.508
+      },
+      {
+        "chembl_id": "CHEMBL313143",
+        "pchembl_value": 4.7,
+        "score_old_protocol": -9.0,
+        "score_new_protocol": -9.0,
+        "top_pose_mcs_rmsd": 7.252
+      },
+      {
+        "chembl_id": "CHEMBL189772",
+        "pchembl_value": 5.0,
+        "score_old_protocol": -9.7,
+        "score_new_protocol": -9.7,
+        "top_pose_mcs_rmsd": 8.235
+      },
+      {
+        "chembl_id": "CHEMBL263311",
+        "pchembl_value": 5.12,
+        "score_old_protocol": -10.4,
+        "score_new_protocol": -10.4,
+        "top_pose_mcs_rmsd": 4.486
+      },
+      {
+        "chembl_id": "CHEMBL1778033",
+        "pchembl_value": 5.28,
+        "score_old_protocol": -10.4,
+        "score_new_protocol": -10.5,
+        "top_pose_mcs_rmsd": 6.002
+      },
+      {
+        "chembl_id": "CHEMBL187632",
+        "pchembl_value": 5.46,
+        "score_old_protocol": -10.3,
+        "score_new_protocol": -10.3,
+        "top_pose_mcs_rmsd": 9.958
+      },
+      {
+        "chembl_id": "CHEMBL119506",
+        "pchembl_value": 5.62,
+        "score_old_protocol": -9.8,
+        "score_new_protocol": -9.8,
+        "top_pose_mcs_rmsd": 5.334
+      },
+      {
+        "chembl_id": "CHEMBL63416",
+        "pchembl_value": 5.8,
+        "score_old_protocol": -9.5,
+        "score_new_protocol": -9.3,
+        "top_pose_mcs_rmsd": null
+      },
+      {
+        "chembl_id": "CHEMBL190773",
+        "pchembl_value": 5.99,
+        "score_old_protocol": -9.9,
+        "score_new_protocol": -9.9,
+        "top_pose_mcs_rmsd": 5.487
+      }
+    ],
+    "verdict": "원인은 화합물 집합이다: 같은 30건은 새 프로토콜에서도 상관을 유지한다"
+  },
+  "provenance": {
+    "source": "smina 재도킹 (exhaustiveness 64)",
+    "query": "옛 데이터셋 n=30",
+    "timestamp": "2026-09-04T16:34:17.357263Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "전 화합물 재도킹 성공",
+        "passed": true
+      },
+      {
+        "check": "두 프로토콜 점수 모두 확보",
+        "passed": true
+      },
+      {
+        "check": "동일 화합물 비교",
+        "passed": true
+      }
+    ],
+    "notes": "원인은 화합물 집합이다: 같은 30건은 새 프로토콜에서도 상관을 유지한다"
+  }
+}

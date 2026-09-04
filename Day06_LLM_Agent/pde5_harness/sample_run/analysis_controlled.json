@@ -11,7 +11,9 @@
         ],
         "perm_p": 0.31878,
         "spearman_score_vs_tanimoto": 0.11,
+        "perm_p_score_vs_tanimoto": 0.15809,
         "spearman_pIC50_vs_tanimoto": 0.208,
+        "perm_p_pIC50_vs_tanimoto": 0.0082,
         "partial_spearman_controlling_tanimoto": -0.105,
         "partial_perm_p": 0.19274,
         "spearman_score_vs_heavy_atoms": -0.342,
@@ -112,7 +114,8 @@
             "ci95": [
               0.369,
               0.729
-            ]
+            ],
+            "neg_class_is_single_cell": true
           },
           "mid": {
             "auc": 0.534,
@@ -121,7 +124,8 @@
             "ci95": [
               0.32,
               0.748
-            ]
+            ],
+            "neg_class_is_single_cell": true
           },
           "near": {
             "auc": 0.792,
@@ -130,7 +134,8 @@
             "ci95": [
               0.637,
               0.947
-            ]
+            ],
+            "neg_class_is_single_cell": true
           },
           "all": {
             "auc": 0.574,
@@ -139,7 +144,8 @@
             "ci95": [
               0.463,
               0.685
-            ]
+            ],
+            "neg_class_is_single_cell": false
           }
         },
         "multiplicity": {
@@ -186,6 +192,15 @@
           "mid": -9.627,
           "near": -9.987
         },
+        "mean_score_gap_far_minus_near": {
+          "gap_kcal_mol": -0.215,
+          "perm_p": 0.1799
+        },
+        "top16_expected_similarity": {
+          "far": 5.89,
+          "mid": 5.01,
+          "near": 5.1
+        },
         "near_sensitivity": {
           "full": {
             "n": 52,
@@ -213,6 +228,18 @@
         0.012
       ],
       "partial_controlling_tanimoto": -0.152
+    },
+    "sample_composition": {
+      "n_with_single_measurement": 154,
+      "n_with_replicates": 9,
+      "assay_types": {
+        "IC50": 158,
+        "Ki": 4,
+        "IC50/Ki": 1
+      },
+      "near_bin_assay_types": {
+        "IC50": 52
+      }
     },
     "confound_metrics": {
       "pearson_r_potency_vs_similarity": 0.175,
@@ -243,7 +270,7 @@
   "provenance": {
     "source": "골격 통제 설계 분석",
     "query": "n=163",
-    "timestamp": "2026-09-04T16:08:13.803117Z"
+    "timestamp": "2026-09-04T16:37:38.679603Z"
   },
   "verification": {
     "passed": true,

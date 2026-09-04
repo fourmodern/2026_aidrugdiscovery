@@ -193,7 +193,9 @@ def main() -> int:
         res["arms"][nm] = {
             "spearman": round(rho, 3), "ci95": fisher_ci(rho, n), "perm_p": perm_p(y, sc),
             "spearman_score_vs_tanimoto": round(spearman(sc, tan), 3),
+            "perm_p_score_vs_tanimoto": perm_p(sc, tan),
             "spearman_pIC50_vs_tanimoto": round(spearman(y, tan), 3),
+            "perm_p_pIC50_vs_tanimoto": perm_p(y, tan),
             "partial_spearman_controlling_tanimoto": round(partial_spearman(y, sc, tan), 3),
             "partial_perm_p": partial_perm_p(y, sc, tan),
             "spearman_score_vs_heavy_atoms": round(spearman(sc, hac), 3),
@@ -261,8 +263,13 @@ def main() -> int:
             sub = [r for r in rows if r["potency_bin"] in ("strong", "weak")
                    and (b == "all" or r["similarity_bin"] == b)]
             npos = sum(1 for r in sub if r["potency_bin"] == "strong")
+            # 음성군이 전수(census) 칸으로만 이루어져 있으면 그 AUC 는 그 칸 없이는
+            # 재계산 자체가 불가능하다. 민감도 분석의 한계를 명시하기 위해 표시한다.
+            neg_rows = [r for r in sub if r["potency_bin"] == "weak"]
             cis[b] = {"auc": au, "n_pos": npos, "n_neg": len(sub) - npos,
-                      "ci95": auc_ci(au, npos, len(sub) - npos)}
+                      "ci95": auc_ci(au, npos, len(sub) - npos),
+                      "neg_class_is_single_cell": bool(neg_rows) and len(
+                          {r["similarity_bin"] for r in neg_rows}) == 1 and b != "all"}
         res["arms"][nm]["auc_ci95"] = cis
 
         # 3개 대역 다중비교 보정 — 계산해 보고한다 (미보정 고지만으로는 부족)
@@ -281,11 +288,28 @@ def main() -> int:
             **{b: pose_validity([r for r in rows if r["similarity_bin"] == b])
                for b in ("far", "mid", "near")}}
 
-        # 대역별 평균 점수 — 어느 대역이 좋은 점수를 받는가 (기전 서술의 근거)
+        # 대역별 평균 점수 — 어느 대역이 좋은 점수를 받는가 (기전 서술의 근거).
+        # 차이에 p 를 붙이지 않고 서술하면, 다른 곳에서 p=0.3 을 "신호 없음"이라 한 것과
+        # 기준이 어긋난다. 순열로 검정한다.
+        by_bin = {b: [r["top_pose_score"] for r in rows if r["similarity_bin"] == b]
+                  for b in ("far", "mid", "near")}
         res["arms"][nm]["mean_score_by_bin"] = {
-            b: round(sum(r["top_pose_score"] for r in rows if r["similarity_bin"] == b)
-                     / max(1, sum(1 for r in rows if r["similarity_bin"] == b)), 3)
-            for b in ("far", "mid", "near")}
+            b: round(sum(v) / len(v), 3) for b, v in by_bin.items() if v}
+        _rng = random.Random(42)
+        obs_gap = (sum(by_bin["far"]) / len(by_bin["far"])
+                   - sum(by_bin["near"]) / len(by_bin["near"]))
+        pool = by_bin["far"] + by_bin["near"]; nf = len(by_bin["far"]); cnt = 0
+        for _ in range(20000):
+            _rng.shuffle(pool)
+            g = sum(pool[:nf]) / nf - sum(pool[nf:]) / (len(pool) - nf)
+            if abs(g) >= abs(obs_gap) - 1e-12: cnt += 1
+        res["arms"][nm]["mean_score_gap_far_minus_near"] = {
+            "gap_kcal_mol": round(obs_gap, 3), "perm_p": round((cnt + 1) / 20001, 4)}
+
+        # 상위 k 구성의 귀무 기대값 — 대역 크기가 다르므로 n/3 이 아니다
+        kk = max(1, n // 10)
+        res["arms"][nm][f"top{kk}_expected_similarity"] = {
+            b: round(len(v) * kk / n, 2) for b, v in by_bin.items()}
 
         # near 대역 민감도 — 어세이 바닥값(pChEMBL 5.00)이 결과를 만드는가
         near_idx = [i for i in range(n) if rows[i]["similarity_bin"] == "near"]
@@ -315,6 +339,16 @@ def main() -> int:
             "partial_controlling_tanimoto": round(partial_spearman(yy, ss, tt), 3)}
 
     # 대조
+    # 표본 구성 — 본문에서 "중앙값으로 합쳐 잡음을 줄였다"고 쓰려면 몇 건이 실제로
+    # 합쳐졌는지 적어야 한다.
+    from collections import Counter as _C
+    nmeas = _C(r.get("n_measurements", 1) for r in rows)
+    res["sample_composition"] = {
+        "n_with_single_measurement": nmeas.get(1, 0),
+        "n_with_replicates": sum(v for k, v in nmeas.items() if k > 1),
+        "assay_types": dict(_C(r.get("standard_type", "?") for r in rows)),
+        "near_bin_assay_types": dict(_C(r.get("standard_type", "?") for r in rows
+                                        if r["similarity_bin"] == "near"))}
     res["confound_metrics"] = {
         "pearson_r_potency_vs_similarity": round(pearson(y, tan), 3),
         "spearman_rho_potency_vs_similarity": round(spearman(y, tan), 3),

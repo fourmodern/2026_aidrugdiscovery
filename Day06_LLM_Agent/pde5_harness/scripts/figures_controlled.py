@@ -621,7 +621,7 @@ def fig12(an, old_reg, old_enr, ds, col=None):
         ("v1.0", "“Docking does not\npredict potency.”",
          "Broke: no triage metric\nwas ever computed.", OK["orange"]),
         ("v2.0", "“It triages but does\nnot quantify.”",
-         "Broke: strong compounds\nwere sildenafil analogues.", OK["orange"]),
+         "Broke: did not replicate in a\nlarger, scaffold-decoupled set.", OK["orange"]),
         ("v3.0\ndraft", "“That scaffold bias\nexplains v2.0.”",
          ("Broke: controlling scaffold in\nthe OLD data changes rho by %.1f%%"
           % (100 * att)) if att is not None else "Broke: tested and refuted.", OK["orange"]),

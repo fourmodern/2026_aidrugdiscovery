@@ -45,8 +45,10 @@ def old_dataset():
         if m is None: continue
         out.append({"chembl_id": r["chembl_id"], "y": r["pIC50"],
                     "top": r["top_pose_score"], "sel": r["dock_score"],
-                    "tan": round(DataStructs.TanimotoSimilarity(
-                        ref, gen.GetFingerprint(m)), 3),
+                    # 반올림하지 않는다 — 3자리로 자르면 편상관이 -0.5317 에서 -0.534 로
+                    # 움직여 감쇠가 1.24% 에서 0.81% 로 바뀐다. 헤드라인 수치가 반올림에
+                    # 흔들리면 안 된다.
+                    "tan": DataStructs.TanimotoSimilarity(ref, gen.GetFingerprint(m)),
                     "hac": m.GetNumHeavyAtoms()})
     return out
 
@@ -70,7 +72,10 @@ def main() -> int:
         "perm_p_score_vs_tanimoto": perm_p(osc, otan),
         "spearman_potency_vs_tanimoto": round(spearman(oy, otan), 3),
         "attenuation_from_scaffold_control": round(
-            1 - abs(partial_spearman(oy, osc, otan)) / abs(spearman(oy, osc)), 4)}
+            1 - abs(partial_spearman(oy, osc, otan)) / abs(spearman(oy, osc)), 4),
+        "tanimoto_rounding_note": ("Tanimoto 를 반올림하지 않은 값이다. 3자리로 자르면 "
+                                   "감쇠가 0.8% 로 바뀐다 — 어느 쪽이든 '거의 0' 이라는 "
+                                   "결론은 같지만 수치는 하나로 고정한다.")}
 
     D = json.loads((SR / "docking_controlled.json").read_text())["result"]["rows"]
     new_y = [r["pchembl_value"] for r in D]; new_s = [r["top_pose_score"] for r in D]
