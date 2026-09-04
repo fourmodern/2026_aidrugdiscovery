@@ -9,3 +9,8 @@ requests                    # UniProt/RCSB REST (target_lookup.py, mol_utils.py)
 # smina 또는 vina 바이너리는 pip이 아닌 별도 설치(Dockerfile 참조).
 # MDAnalysis                # 구조 정렬/박스 계산(고급). mol_utils.py 경량 파서는 불필요.
 # openbabel                 # 리간드 포맷 변환(conda 권장: conda install -c conda-forge openbabel)
+
+# --- 실행 검증된 버전 (sample_run/environment.json, scripts/capture_environment.py 로 캡처) ---
+# rdkit==2026.3.5
+# chembl-webresource-client==0.10.9
+# requests==2.32.3

@@ -1,0 +1,107 @@
+{
+  "result": [
+    {
+      "molecule_chembl_id": "CHEMBL90164",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N(CC)CCN(C)C)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "11.0",
+      "standard_units": "nM",
+      "pchembl_value": "7.96"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL87901",
+      "canonical_smiles": "CCCOc1ccccc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "60.0",
+      "standard_units": "nM",
+      "pchembl_value": "7.22"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL313197",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(CCN(C)C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "24.0",
+      "standard_units": "nM",
+      "pchembl_value": "7.62"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL86578",
+      "canonical_smiles": "CC(C)COc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "93.0",
+      "standard_units": "nM",
+      "pchembl_value": "7.03"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL313561",
+      "canonical_smiles": "CCCCCCn1c(=O)n(C)c(=O)c2[nH]c(-c3cc(S(=O)(=O)N4CCN(C)CC4)ccc3OCC)nc21",
+      "standard_type": "IC50",
+      "standard_value": "130.0",
+      "standard_units": "nM",
+      "pchembl_value": "6.89"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL87202",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "10.0",
+      "standard_units": "nM",
+      "pchembl_value": "8.00"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL87954",
+      "canonical_smiles": "CCCCOc1ccccc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "135.0",
+      "standard_units": "nM",
+      "pchembl_value": "6.87"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL327772",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C(=O)N(C)C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "3.5",
+      "standard_units": "nM",
+      "pchembl_value": "8.46"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL433418",
+      "canonical_smiles": "CCCOc1ccc(S(N)(=O)=O)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "5.0",
+      "standard_units": "nM",
+      "pchembl_value": "8.30"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL86743",
+      "canonical_smiles": "CCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(=O)n(C)c(=O)n(CC(C)(C)C)c2[nH]1",
+      "standard_type": "IC50",
+      "standard_value": "91.0",
+      "standard_units": "nM",
+      "pchembl_value": "7.04"
+    }
+  ],
+  "provenance": {
+    "source": "ChEMBL webresource_client",
+    "query": "target_chembl_id=CHEMBL1827; type in (IC50,Ki); n=10",
+    "timestamp": "2026-09-04T13:10:50.765192Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "레코드 존재",
+        "passed": true
+      },
+      {
+        "check": "모든 SMILES RDKit 유효",
+        "passed": true
+      },
+      {
+        "check": "모든 molecule_chembl_id 형식",
+        "passed": true
+      }
+    ],
+    "notes": "활성물질 10건, SMILES유효 10/10, 실ID 10/10. 무-날조: 도구 반환값만."
+  }
+}

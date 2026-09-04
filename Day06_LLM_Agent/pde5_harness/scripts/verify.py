@@ -27,7 +27,12 @@ def make_result(result, source: str, query: str, checks: list[tuple[str, bool]],
 
 
 def gate(envelope: dict, step: str):
-    """검증 게이트: passed=False 면 비정상 종료(다음 단계 진행 차단)."""
+    """검증 게이트: passed 를 판정해 bool 로 돌려준다.
+
+    [정정 2026-09-04] 이전 docstring 은 "비정상 종료"라고 적었으나 이 함수는
+    raise 도 sys.exit 도 하지 않는다. 차단은 전적으로 호출자가 반환값을 보고
+    수행한다. 호출자는 반드시 `if not gate(...): return 1` 형태로 써야 한다.
+    """
     v = envelope.get("verification", {})
     if not v.get("passed"):
         failed = [c["check"] for c in v.get("checks", []) if not c["passed"]]

@@ -1,0 +1,2 @@
+[VERIFY-GATE:target-lookup] PASSED
+[VERIFY-GATE:selectivity-check(주입)] FAILED → 다음 단계 진행 금지. 실패 항목: ['입력 SMILES 유효성 — 파싱 실패']

@@ -70,6 +70,19 @@ def _run(script: str, args=None, stdin_text=None) -> dict | None:
         return None
 
 
+def _archive(step: str, env: dict) -> None:
+    """봉투 전체(result+provenance+verification)를 남긴다.
+
+    [추가 2026-09-04] 이전에는 stdout 에 env["result"] 만 찍어서 provenance 와
+    verification 이 아카이브에서 사라졌다. 그래서 온라인 조회인지 오프라인 폴백인지를
+    사후에 원자료만으로 판별할 수 없었다.
+    """
+    import pathlib
+    d = pathlib.Path(__file__).resolve().parent / "outputs" / "envelopes"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"{step}.json").write_text(json.dumps(env, ensure_ascii=False, indent=2))
+
+
 def cmd_run() -> int:
     print("== PDE5 harness 순차 실행 (검증 게이트) ==\n")
     sys.path.insert(0, SCRIPTS)
@@ -79,12 +92,14 @@ def cmd_run() -> int:
     env = _run("target_lookup.py")
     if env is None or not gate(env, "target-lookup"):
         print("target-lookup 실패 → 중단"); return 1
+    _archive("target-lookup", env)
     print(json.dumps(env["result"], ensure_ascii=False, indent=2))
 
     # (b) chembl actives (limit 10)
     env = _run("chembl_actives.py", ["10"])
     if env is None or not gate(env, "chembl-actives"):
         print("chembl-actives 실패 → 중단"); return 1
+    _archive("chembl-actives", env)
     actives_json = json.dumps(env)
     print(f"활성물질 {len(env['result'])}건 조회")
 
@@ -92,12 +107,18 @@ def cmd_run() -> int:
     env = _run("mol_properties.py", ["--stdin"], stdin_text=actives_json)
     if env is None or not gate(env, "mol-properties"):
         print("mol-properties 실패 → 중단"); return 1
+    _archive("mol-properties", env)
     print(json.dumps(env["result"], ensure_ascii=False, indent=2))
 
     # (d) selectivity
+    # [수정 2026-09-04] 이전에는 gate() 반환값을 버려서 이 단계만 차단되지 않았다.
+    #   또한 _run 이 None 을 돌려주면 게이트 줄이 아예 남지 않아 로그로도 알 수 없었다.
+    #   다른 단계와 동일하게 반환값을 검사한다.
     env = _run("selectivity.py")
-    if env is not None:
-        gate(env, "selectivity-check")
+    if env is None or not gate(env, "selectivity-check"):
+        print("selectivity-check 실패 → 중단"); return 1
+    _archive("selectivity-check", env)
+    print(json.dumps(env["result"], ensure_ascii=False, indent=2))
     print("\n순차 실행 완료. 보고서 작성은 Claude Code report-writer 스킬로 수행하세요.")
     return 0
 

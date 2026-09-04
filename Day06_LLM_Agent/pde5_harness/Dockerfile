@@ -15,7 +15,7 @@ RUN mkdir -p ${BIN_DIR}
 
 # Core conda packages: RDKit + requests + ChEMBL client (경량)
 RUN mamba install -y -c conda-forge \
-    python=3.10 \
+    python=3.12 \
     rdkit \
     requests \
     chembl_webresource_client \

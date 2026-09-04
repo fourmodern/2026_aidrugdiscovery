@@ -1,0 +1,32 @@
+{
+  "result": {
+    "accession": "O76074",
+    "gene": "PDE5A",
+    "protein": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+    "function": "Plays a role in signal transduction by regulating the intracellular concentration of cyclic nucleotides. This phosphodiesterase catalyzes the specific hydrolysis of cGMP to 5'-GMP (PubMed:15489334, PubMed:9714779). Specifically regulates nitric-oxide-generated cGMP (PubMed:15489334)",
+    "length": 875
+  },
+  "provenance": {
+    "source": "UniProt REST",
+    "query": "https://rest.uniprot.org/uniprotkb/O76074.json",
+    "timestamp": "2026-09-04T13:10:48.640586Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "accession == O76074",
+        "passed": true
+      },
+      {
+        "check": "PDE5A/phosphodiesterase 5 언급",
+        "passed": true
+      },
+      {
+        "check": "기능 서술 존재",
+        "passed": true
+      }
+    ],
+    "notes": "표적 실재·기능 확인. cGMP 분해효소, PDE5 저해→cGMP↑→혈관확장."
+  }
+}

@@ -130,5 +130,37 @@
     "gate_pass": true
   }
 ]
+{
+  "quantitative_selectivity_predicted": false,
+  "assessment": "정성(qualitative) — 정량 fold-selectivity 미산출",
+  "isoform_context": {
+    "PDE5": {
+      "gene": "PDE5A",
+      "uniprot": "O76074",
+      "chembl": "CHEMBL1827",
+      "substrate": "cGMP",
+      "tissue": "혈관 평활근, 음경 해면체, 폐혈관",
+      "role": "cGMP 분해 억제 → NO-cGMP 경로 평활근 이완·혈관확장(치료 표적)"
+    },
+    "PDE6": {
+      "gene": "PDE6A/PDE6B/PDE6C 등",
+      "substrate": "cGMP",
+      "tissue": "망막 광수용체(rod/cone) 외절",
+      "role": "광전달(phototransduction) 캐스케이드의 효과기 효소"
+    }
+  },
+  "cross_inhibition_mechanism": "PDE5 저해제는 PDE5와 구조적으로 유사한 망막 PDE6를 부분적으로 교차 억제할 수 있다. PDE6가 억제되면 광수용체 내 cGMP 항상성이 교란되어 일시적 색각 이상(청녹색 색조 변화, cyanopsia)·광민감성이 유발될 수 있다. 이는 PDE5 저해제 계열에서 관찰되는 대표적 표적-외(off-target) 시각 부작용의 기전적 근거로 알려져 있다.",
+  "confirmation_required": [
+    "PDE5 및 PDE6 효소에 대한 동일 조건 IC50/Ki 병렬 어세이 (fold-selectivity 산출의 유일한 근거)",
+    "ChEMBL 등에서 화합물별 PDE5/PDE6 활성값 병렬 조회 (target: PDE6 여러 아이소자임)",
+    "문헌 보고 선택성 비의 출처(PMID/DOI) 명시 — 인용 없이 수치 사용 금지"
+  ],
+  "references": [
+    "Boolell M et al. Sildenafil: an orally active type 5 cyclic GMP-specific phosphodiesterase inhibitor for the treatment of penile erectile dysfunction. Int J Impot Res. 1996;8(2):47-52.",
+    "Ghofrani HA, Osterloh IH, Grimminger F. Sildenafil: from angina to erectile dysfunction to pulmonary hypertension and beyond. Nat Rev Drug Discov. 2006;5(8):689-702. doi:10.1038/nrd2030"
+  ],
+  "input_smiles": null,
+  "caveat": "이 도구는 PDE5/PDE6 선택성을 정량 예측하지 않는다. 화합물별 선택성 결론은 위 confirmation_required 근거(병렬 IC50 어세이 또는 인용된 문헌 수치)가 확보된 뒤에만 내릴 수 있다. 수치·비율 날조 금지."
+}
 
 순차 실행 완료. 보고서 작성은 Claude Code report-writer 스킬로 수행하세요.

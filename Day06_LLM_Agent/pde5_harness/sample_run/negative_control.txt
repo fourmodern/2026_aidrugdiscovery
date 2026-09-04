@@ -1,0 +1,22 @@
+== A. mol_properties.py 에 파싱 불가 SMILES 주입 ==
+  passed = False  실패항목 = ['후보 존재', '값 sanity 범위 내']
+  → PASS — 실제 도구가 실패를 보고함
+
+== B. selectivity.py 에 쓰레기 SMILES 주입 (수정된 입력 의존 술어) ==
+  passed = False  실패항목 = ['입력 SMILES 유효성 — 파싱 실패']
+  → PASS — 입력 의존 술어가 발동함
+
+== C. run_harness 실제 경로가 실패 봉투를 만나면 멈추는가 ==
+   (B 에서 얻은 실제 실패 봉투를 2번 위치에 주입하고 3번이 실행되는지 본다)
+   selectivity-check(주입) 에서 중단. 이후 단계 미실행.
+   실행된 단계: ['target-lookup']
+  → PASS — 실패 봉투가 다음 단계를 막음
+
+============================================================
+  PASS  A mol_properties 실패 보고
+  PASS  B selectivity 반증 가능
+  PASS  C 실패 봉투가 다음 단계 차단
+
+판정: PASS — 실제 도구 수준에서 차단이 관측됨
+한계: C 는 run_harness 의 gate 호출 규약을 재현한 것이며,
+      run_harness.py 프로세스 자체를 실패 입력으로 끝까지 돌린 것은 아니다.

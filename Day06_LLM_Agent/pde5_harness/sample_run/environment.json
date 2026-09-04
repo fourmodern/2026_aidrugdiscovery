@@ -1,0 +1,8 @@
+{
+  "rdkit": "2026.3.5",
+  "chembl-webresource-client": "0.10.9",
+  "requests": "2.32.3",
+  "matplotlib": "3.11.1",
+  "numpy": "1.26.4",
+  "python": "3.12.3"
+}

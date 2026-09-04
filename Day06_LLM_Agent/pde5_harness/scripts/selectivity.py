@@ -10,6 +10,7 @@
 출력: 표준 결과 봉투(JSON) — provenance + verification.
 """
 from __future__ import annotations
+import re
 import sys, json
 from verify import make_result
 
@@ -56,6 +57,45 @@ REFERENCES = [
 ]
 
 
+_RATIO_PAT = re.compile(r"(\d+(?:\.\d+)?)\s*(?:배|[-\s]?fold|x)\b", re.I)
+
+
+def _find_fabricated_ratios(obj, path="result"):
+    """산출물을 재귀적으로 훑어 fold/배수 형태의 정량 선택성 수치를 찾는다.
+
+    이 도구는 정량 예측을 하지 않기로 되어 있으므로, 그런 수치가 하나라도 있으면
+    날조이거나 계약 위반이다. 상수가 아니라 실제 산출물에 의존하는 검사다.
+    """
+    hits = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            hits += _find_fabricated_ratios(v, f"{path}.{k}")
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            hits += _find_fabricated_ratios(v, f"{path}[{i}]")
+    elif isinstance(obj, str):
+        for m in _RATIO_PAT.finditer(obj):
+            hits.append(f"{path}: {m.group(0)}")
+    elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+        if path.endswith(("fold", "ratio", "selectivity")):
+            hits.append(f"{path}: {obj}")
+    return hits
+
+
+def _check_smiles(smiles):
+    """입력 SMILES 가 주어졌으면 실제로 파싱되는지 본다. 없으면 해당 없음으로 통과."""
+    if not smiles:
+        return True, "입력 없음(해당 없음)"
+    try:
+        from rdkit import Chem
+        from rdkit import RDLogger
+        RDLogger.DisableLog("rdApp.*")
+        mol = Chem.MolFromSmiles(smiles)
+        return (mol is not None), ("파싱 성공" if mol is not None else "파싱 실패")
+    except ImportError:
+        return True, "RDKit 미설치 — 검사 생략"
+
+
 def main():
     smiles = None
     if "--smiles" in sys.argv:
@@ -78,15 +118,26 @@ def main():
         ),
     }
 
-    # 검증: 정량 수치를 만들어내지 않았음(정직성) + 기전/근거 서술 존재.
+    # 검증.
+    # [수정 2026-09-04] 이전 검사 4개는 전부 이 모듈의 리터럴 상수를 읽어서,
+    #   어떤 입력을 주어도 FAIL 이 날 수 없는 항진명제였다 (쓰레기 SMILES 로도 passed=True).
+    #   게이트가 통과했다는 사실이 아무 정보도 주지 못했다. 산출물에 실제로 의존하는
+    #   검사로 바꾸고, 이름도 실제 동작에 맞게 정정한다.
+    fold_hits = _find_fabricated_ratios(result)
+    smiles_ok, smiles_note = _check_smiles(smiles)
     checks = [
-        ("정량 fold-selectivity 미날조(정성 보고)",
-         result["quantitative_selectivity_predicted"] is False),
+        # (1) 산출물 전체를 훑어 fold/배수/IC50 비 형태의 수치가 실제로 없는지 확인한다.
+        (f"정량 fold-selectivity 미날조 — 산출물 전수 스캔 (발견 {len(fold_hits)}건)",
+         len(fold_hits) == 0),
+        # (2) 입력 SMILES 가 주어졌다면 RDKit 으로 파싱되는지 확인한다 (입력 의존).
+        (f"입력 SMILES 유효성 — {smiles_note}", smiles_ok),
         ("교차 억제 기전(PDE6 망막) 서술 존재",
          "PDE6" in result["cross_inhibition_mechanism"]
          and "망막" in result["cross_inhibition_mechanism"]),
         ("후속 확인 근거 목록 존재", len(result["confirmation_required"]) > 0),
-        ("참고문헌 실재(Boolell 1996 / Ghofrani 2006)", len(result["references"]) >= 2),
+        # (3) 이름 정정: 실재(DOI/PMID) 조회가 아니라 항목 수 확인일 뿐이다.
+        (f"참고문헌 항목 수 >= 2 (실재 조회는 하지 않음, 현재 {len(result['references'])}건)",
+         len(result["references"]) >= 2),
     ]
     env = make_result(
         result, "PDE5/PDE6 isoform context (public textbook facts) + literature",

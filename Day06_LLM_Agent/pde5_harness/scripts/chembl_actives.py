@@ -16,7 +16,7 @@ OFFLINE = [
     {"molecule_chembl_id": "CHEMBL779",  "pref_name": "TADALAFIL",
      "canonical_smiles": "O=C1N(C)CC(=O)N2[C@@H]1Cc1c([nH]c3ccccc13)[C@H]2c1ccc2c(c1)OCO2"},
     {"molecule_chembl_id": "CHEMBL1520", "pref_name": "VARDENAFIL",
-     "canonical_smiles": "CCCc1nc(C)c2c(=O)[nH]c(-c3cc(S(=O)(=O)N4CCN(CC)CC4)ccc3OCC)nc2n1CC"},
+     "canonical_smiles": "CCCc1nc(C)c2c(=O)nc(-c3cc(S(=O)(=O)N4CCN(CC)CC4)ccc3OCC)[nH]n12"},
 ]
 
 
