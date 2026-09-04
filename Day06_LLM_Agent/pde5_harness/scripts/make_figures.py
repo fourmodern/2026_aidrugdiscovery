@@ -16,6 +16,9 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 OI = {"blue": "#0072B2", "orange": "#E69F00", "green": "#009E73", "vermil": "#D55E00",
       "sky": "#56B4E9", "yellow": "#F0E442", "purple": "#CC79A7", "grey": "#7F7F7F"}
 plt.rcParams.update({"font.family": "DejaVu Sans", "figure.dpi": 300, "savefig.dpi": 300})
+plt.rcParams["font.family"] = "Pretendard"      # 사용자 지정 서체
+plt.rcParams["axes.unicode_minus"] = False         # Pretendard 의 마이너스 글리프 사용
+
 QED_MIN = 0.5
 
 

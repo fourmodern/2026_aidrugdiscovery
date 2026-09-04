@@ -144,6 +144,9 @@ def fig_contacts(pairs, out: Path, title: str):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     plt.rcParams.update({"font.family": "DejaVu Sans", "figure.dpi": 300, "savefig.dpi": 300})
+plt.rcParams["font.family"] = "Pretendard"      # 사용자 지정 서체
+plt.rcParams["axes.unicode_minus"] = False         # Pretendard 의 마이너스 글리프 사용
+
     top = pairs[:14][::-1]
     if not top:
         return None

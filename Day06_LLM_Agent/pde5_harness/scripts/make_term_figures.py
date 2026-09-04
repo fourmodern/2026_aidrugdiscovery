@@ -25,6 +25,9 @@ FIG.mkdir(parents=True, exist_ok=True)
 OK = ["#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00", "#56B4E9", "#F0E442"]
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "figure.dpi": 300, "savefig.bbox": "tight"})
+plt.rcParams["font.family"] = "Pretendard"      # 사용자 지정 서체
+plt.rcParams["axes.unicode_minus"] = False         # Pretendard 의 마이너스 글리프 사용
+
 SHORT = ["gauss1", "gauss2", "repulsion", "hydrophobic", "hbond"]
 
 

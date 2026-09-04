@@ -28,6 +28,9 @@ plt.rcParams.update({
     "axes.titlesize": 10, "axes.titleweight": "bold", "figure.dpi": 300,
     "savefig.bbox": "tight", "savefig.facecolor": "white", "axes.linewidth": .8,
     "xtick.major.width": .8, "ytick.major.width": .8, "legend.frameon": False})
+plt.rcParams["font.family"] = "Pretendard"      # 사용자 지정 서체
+plt.rcParams["axes.unicode_minus"] = False         # Pretendard 의 마이너스 글리프 사용
+
 
 
 def load(name):

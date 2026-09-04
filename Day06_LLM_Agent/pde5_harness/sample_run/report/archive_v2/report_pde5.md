@@ -11,7 +11,7 @@
 **작성일** 2026-09-05 · **버전** 1.0 · **원자료** `sample_run/` (dataset30 `7f8e1038cb919322`,
 docking `fc9d699be0a187c8`, regression `b730f022dae347dc`)
 
-![그래픽 초록](figures/fig1_graphical_abstract.png)
+![그래픽 초록](../figures/fig1_graphical_abstract.png)
 
 **Graphical abstract.**
 
@@ -72,7 +72,7 @@ p < 0.05 이면서 ROC-AUC ≥ 0.7 을 성공으로 본다. 이 기준은 분석
 
 ### 2.1 표적과 구조
 
-![Fig 1](figures/fig2_pathway.png)
+![Fig 1](../figures/fig2_pathway.png)
 
 **Figure 1. 표적 맥락.** PDE5A 가 cGMP 를 분해하고 저해제가 이를 막는다.
 UniProt O76074 (PDE5A, 875 잔기). 수용체는 PDB
@@ -144,7 +144,7 @@ LOO 교차검증과 라벨 섞기 200회(시드 42)를 함께 보고한다.
 
 **Table 1. 재도킹 대조.** 기준 2.0 Å.
 
-![Fig 2](figures/fig12_redock_control.png)
+![Fig 2](../figures/fig12_redock_control.png)
 
 **Figure 2. 모드별 결정 자세 재현도.** 막대는 각 도킹 모드의 결정 자세 대비 RMSD 이며
 가로축은 점수 순위다. 기준을 만족하는 자세가 존재하지만 1위가 아니다.
@@ -213,7 +213,7 @@ MCS-RMSD 가 비어 있는 행(CHEMBL63416)은 공결정 리간드와의 최대�
 **1위 자세 점수로 상위 10건을 고르면 약한 화합물이 한 건도 들어오지 않는다.** 이것이 이
 연구에서 실무적 함의가 가장 큰 관찰이다.
 
-![Fig 3](figures/fig10_score_vs_potency.png)
+![Fig 3](../figures/fig10_score_vs_potency.png)
 
 **Figure 3. 도킹 점수 대 실측 역가.** 색은 역가 층이다. 산점도의 흩어짐이 크다는 사실과
 상위 구간에서 층이 분리된다는 사실이 함께 보인다.
@@ -239,22 +239,22 @@ MCS-RMSD 가 비어 있는 행(CHEMBL63416)은 공결정 리간드와의 최대�
 **Table 6. 항 회귀 계수.** 항마다 스케일이 크게 다르므로(가우스 항은 수백, 수소결합 항은
 1 미만) **비표준화 계수의 절댓값을 서로 비교하면 안 된다.** 부호와 유의성만 읽어야 한다.
 
-![Fig 4](figures/fig11_regression.png)
+![Fig 4](../figures/fig11_regression.png)
 
 **Figure 4. 회귀 성능 비교.** 점선은 라벨을 섞었을 때 얻어지는 R² 의 중앙값과 95 분위다.
 항을 늘린 모델은 교차검증에서 음수 Q² 를 보인다.
 
 ### 3.5 결합 양상
 
-![Fig 5](figures/fig7_binding_overview.png)
+![Fig 5](../figures/fig7_binding_overview.png)
 
 **Figure 5. 결합 부위 위치.** 수용체 카툰, 결정 자세(회색)와 도킹 자세(파랑).
 
-![Fig 6](figures/fig8_binding_pocket.png)
+![Fig 6](../figures/fig8_binding_pocket.png)
 
 **Figure 6. 포켓 근접.** 접촉 잔기와 극성 접촉. 자세는 참조 기준으로 선택한 것이다.
 
-![Fig 7](figures/fig9_contacts.png)
+![Fig 7](../figures/fig9_contacts.png)
 
 **Figure 7. 접촉 잔기 집계.** CHEMBL410215 도킹 자세에서 4.0 Å 이내.
 
