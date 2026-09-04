@@ -118,7 +118,8 @@ def main() -> int:
     oldp = load("old_set_new_protocol.json")
     if not (ds and dk and an):
         raise SystemExit("산출 파일이 없다 — 슬라이드를 만들지 않는다.")
-    T = an["arms"]["top_pose"]; PV = T["pose_validity"]; wb = T["within_similarity_bin"]
+    T = an["arms"]["top_pose"]; PV = T["pose_validity"]; PVI = PV["interpretable_only"]
+    wb = T["within_similarity_bin"]
     ACI = T["auc_ci95"]; NSEN = T["near_sensitivity"]; ctrl = dk["control_redock"]
     d = Deck()
 
@@ -225,8 +226,8 @@ def main() -> int:
            align=PP_ALIGN.CENTER, space=3)
 
     # ── 6 대조 실패 + 81% ───────────────────────────────────────────
-    s = d.slide(f"재도킹 대조를 쪼개니 채점이 실패했다 — {an['n']}개 중 "
-                f"{1 - PV['all']['frac_under_threshold']:.0%}가 같은 실패다", "해석의 상한",
+    s = d.slide(f"재도킹 대조를 쪼개니 채점이 실패했다 — {PVI['n']}개 중 "
+                f"{1 - PVI['frac_under_threshold']:.0%}가 같은 실패다", "해석의 상한",
                 "C1은 상위 모드 중 최선, C2는 점수 1위 자세입니다. 합쳐 하나로 보고하면 탐색 "
                 "실패인지 채점 실패인지 알 수 없습니다. 공결정 리간드에서 C2가 실패했는데, "
                 "이건 한 건짜리 일화가 아닙니다. 163개 전체로 재면 중앙값 4.50 Å, 2 Å 기준을 "
@@ -243,9 +244,9 @@ def main() -> int:
     d.box(s, 196, 88, 132, 46, fill=RGBColor(0xFD, 0xF0, 0xE6), line=ORANGE, lw=1.6)
     d.text(s, 200, 92, 124, 40,
            [[("그리고 이건 n=1 이 아니다", 16, ORANGE, True)],
-            [(f"163개 전체 1위 자세의 MCS-RMSD 중앙값 "
-              f"{PV['all']['median_rmsd']:.2f} Å, 2 Å 기준 통과 "
-              f"{PV['all']['frac_under_threshold']:.1%}", 14, INK)],
+            [(f"해석 가능한 대역 {PVI['n']}건의 MCS-RMSD 중앙값 "
+              f"{PVI['median_rmsd']:.2f} Å, 2 Å 기준 통과 "
+              f"{PVI['frac_under_threshold']:.1%}", 14, INK)],
             [(f"→ 뒤에 나오는 상관은 대부분 틀린 자세에 매긴 점수에 대한 것이다", 14, ORANGE, True)]],
            space=3)
     d.text(s, 10, 140, W - 20, 14,
@@ -342,11 +343,11 @@ def main() -> int:
     d.box(s, 22, 118, W - 44, 40, fill=LGREY, line=NAVY, lw=1.4)
     d.text(s, 28, 122, W - 56, 34,
            [[("그리고 대역별 자세 타당도가 해석을 다시 제한한다", 17, NAVY, True)],
-            [(f"far {PV['far']['frac_under_threshold']:.1%}   ·   "
-              f"mid {PV['mid']['frac_under_threshold']:.1%}   ·   "
+            [(f"mid {PV['mid']['frac_under_threshold']:.1%}   ·   "
               f"near {PV['near']['frac_under_threshold']:.1%} 만 2 Å 기준 안에 있다", 16, INK)],
-            [("이 지표는 “자세가 맞는가” 가 아니라 “공유 부분구조가 공결정 리간드 위에 "
-              "겹치는가” 를 잰다. 골격이 다른 far 대역에서는 해석이 특히 약하다.", 14, GREY)]],
+            [("far 대역은 공유 부분구조가 평균 10.6원자(하한 8)라 이 지표 자체가 성립하지 "
+              "않아 값을 내지 않았다. 이 지표는 “자세가 맞는가” 가 아니라 “공유 부분구조가 "
+              "공결정 리간드 위에 겹치는가” 를 잰다.", 14, GREY)]],
            space=3)
 
     # ── 11 별개 질문: 비재현 ────────────────────────────────────────
@@ -413,8 +414,8 @@ def main() -> int:
     d.text(s, 26, 116, W - 52, 40,
            [[("가져가실 것 셋", 19, GREEN, True)],
             [("①  재도킹 대조를 C1/C2 로 쪼개고 깊이를 흔들어 병목을 특정하라", 16, INK)],
-            [("②  점수를 매긴 자세가 어디에 놓였는지 먼저 보고하라 — 이 연구에서는 19% 였다",
-              16, INK)],
+            [(f"②  점수를 매긴 자세가 어디에 놓였는지 먼저 보고하라 — 여기서는 "
+              f"{PVI['frac_under_threshold']:.0%} 였다", 16, INK)],
             [("③  벤치마크의 골격 분포를 통제하라 (다만 여기서 그 통제가 바꾼 몫은 거의 0 이었다)",
               16, INK)]], space=3)
 

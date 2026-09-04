@@ -161,15 +161,33 @@ def auc_ci(a, n_pos, n_neg):
     return [round(max(0.0, a - 1.96 * se), 3), round(min(1.0, a + 1.96 * se), 3)]
 
 
+MCS_FLOOR = 8          # dock_controlled.py 의 MCS 최소 원자수
+MCS_INTERPRETABLE = 15  # 이보다 적으면 RMSD 를 자세 정확도로 읽을 수 없다
+
+
 def pose_validity(rows, key="top_pose_mcs_rmsd", thr=2.0):
-    """점수를 매긴 자세가 결정 자세의 틀 안에 있는가. 없으면 그 점수의 의미가 약해진다."""
+    """점수를 매긴 자세가 결정 자세의 틀 안에 있는가.
+
+    **주의: 이 지표는 공유 부분구조가 적으면 성립하지 않는다.** MCS 원자수가 하한(8) 근처면
+    RMSD 는 "자세가 맞는가" 가 아니라 "우연히 겹치는 원자 몇 개가 어디 있나" 를 재게 된다.
+    그래서 해석 가능 여부를 함께 돌려주고, 통합값은 해석 가능한 대역만으로도 따로 낸다.
+    """
     v = [r[key] for r in rows if r.get(key) is not None]
     if not v:
         return None
+    a = [r["mcs_atoms"] for r in rows if r.get(key) is not None and r.get("mcs_atoms")]
     v2 = sorted(v)
+    mean_atoms = round(sum(a) / len(a), 1) if a else None
+    at_floor = sum(1 for x in a if x <= MCS_FLOOR)
     return {"n": len(v), "median_rmsd": round(v2[len(v2) // 2], 3),
             "frac_under_threshold": round(sum(1 for x in v if x < thr) / len(v), 3),
-            "threshold_angstrom": thr}
+            "threshold_angstrom": thr,
+            "mean_mcs_atoms": mean_atoms, "n_at_mcs_floor": at_floor,
+            "interpretable": bool(mean_atoms and mean_atoms >= MCS_INTERPRETABLE
+                                  and at_floor == 0),
+            "note": ("MCS 원자수가 적어 RMSD 를 자세 정확도로 읽을 수 없다"
+                     if not (mean_atoms and mean_atoms >= MCS_INTERPRETABLE and at_floor == 0)
+                     else "MCS 원자수가 충분해 해석 가능")}
 
 
 def main() -> int:
@@ -283,10 +301,16 @@ def main() -> int:
                                    for i, (b, pv) in enumerate(ps_sorted)}}
 
         # 자세 타당도 — 점수를 매긴 자세가 결정 자세 틀 안에 있는가
-        res["arms"][nm]["pose_validity"] = {
-            "all": pose_validity(rows),
-            **{b: pose_validity([r for r in rows if r["similarity_bin"] == b])
-               for b in ("far", "mid", "near")}}
+        pv = {"all": pose_validity(rows),
+              **{b: pose_validity([r for r in rows if r["similarity_bin"] == b])
+                 for b in ("far", "mid", "near")}}
+        # 해석 불가한 대역을 뺀 통합값 — 헤드라인은 이 쪽을 써야 한다.
+        # 해석할 수 없다고 적은 대역을 통합값에는 넣어 두면 그 통합값도 오염된다.
+        bad = [b for b in ("far", "mid", "near") if pv[b] and not pv[b]["interpretable"]]
+        keep = [r for r in rows if r["similarity_bin"] not in bad]
+        pv["interpretable_only"] = pose_validity(keep)
+        pv["excluded_bands"] = bad
+        res["arms"][nm]["pose_validity"] = pv
 
         # 대역별 평균 점수 — 어느 대역이 좋은 점수를 받는가 (기전 서술의 근거).
         # 차이에 p 를 붙이지 않고 서술하면, 다른 곳에서 p=0.3 을 "신호 없음"이라 한 것과

@@ -186,15 +186,17 @@ def main() -> int:
         ax.text(.135, yy, a_, transform=ax.transAxes, fontsize=8.2, va="center")
         ax.text(.60, yy, b_, transform=ax.transAxes, fontsize=7.6, va="center",
                 color=OK["grey"])
-    ax.text(.5, .115, f"Ceiling: {1 - PV['all']['frac_under_threshold']:.0%} of scored poses "
+    _PVI = PV["interpretable_only"]
+    ax.text(.5, .115, f"Ceiling: {1 - _PVI['frac_under_threshold']:.0%} of scored poses "
                       f"lie outside 2 Å of the crystal frame",
             transform=ax.transAxes, ha="center", fontsize=8.6, color=OK["orange"],
             fontweight="bold",
             bbox=dict(boxstyle="round,pad=0.32", fc=OK["orange"] + "15",
                       ec=OK["orange"], lw=0.9))
-    ax.text(.5, .042, f"Not an accepted null: the CI still admits |ρ| up to "
+    ax.text(.5, .042, f"(interpretable scaffold bands only, n = {_PVI['n']})   ·   "
+                      f"Not an accepted null: the CI still admits |ρ| up to "
                       f"{abs(T['ci95'][0]):.2f}", transform=ax.transAxes, ha="center",
-            fontsize=8, color=OK["grey"], style="italic")
+            fontsize=7.6, color=OK["grey"], style="italic")
 
     fig.suptitle("Orthogonalising scaffold similarity and potency in a PDE5A docking benchmark",
                  fontsize=15, fontweight="bold", y=0.975, color=OK["ink"])

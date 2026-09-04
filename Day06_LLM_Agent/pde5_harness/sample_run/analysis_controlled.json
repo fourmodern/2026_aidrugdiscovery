@@ -166,26 +166,55 @@
             "n": 158,
             "median_rmsd": 4.505,
             "frac_under_threshold": 0.19,
-            "threshold_angstrom": 2.0
+            "threshold_angstrom": 2.0,
+            "mean_mcs_atoms": 19.0,
+            "n_at_mcs_floor": 16,
+            "interpretable": false,
+            "note": "MCS 원자수가 적어 RMSD 를 자세 정확도로 읽을 수 없다"
           },
           "far": {
             "n": 55,
             "median_rmsd": 5.247,
             "frac_under_threshold": 0.018,
-            "threshold_angstrom": 2.0
+            "threshold_angstrom": 2.0,
+            "mean_mcs_atoms": 10.6,
+            "n_at_mcs_floor": 16,
+            "interpretable": false,
+            "note": "MCS 원자수가 적어 RMSD 를 자세 정확도로 읽을 수 없다"
           },
           "mid": {
             "n": 51,
             "median_rmsd": 5.744,
             "frac_under_threshold": 0.314,
-            "threshold_angstrom": 2.0
+            "threshold_angstrom": 2.0,
+            "mean_mcs_atoms": 19.9,
+            "n_at_mcs_floor": 0,
+            "interpretable": true,
+            "note": "MCS 원자수가 충분해 해석 가능"
           },
           "near": {
             "n": 52,
             "median_rmsd": 3.271,
             "frac_under_threshold": 0.25,
-            "threshold_angstrom": 2.0
-          }
+            "threshold_angstrom": 2.0,
+            "mean_mcs_atoms": 26.9,
+            "n_at_mcs_floor": 0,
+            "interpretable": true,
+            "note": "MCS 원자수가 충분해 해석 가능"
+          },
+          "interpretable_only": {
+            "n": 103,
+            "median_rmsd": 3.792,
+            "frac_under_threshold": 0.282,
+            "threshold_angstrom": 2.0,
+            "mean_mcs_atoms": 23.5,
+            "n_at_mcs_floor": 0,
+            "interpretable": true,
+            "note": "MCS 원자수가 충분해 해석 가능"
+          },
+          "excluded_bands": [
+            "far"
+          ]
         },
         "mean_score_by_bin": {
           "far": -10.202,
@@ -270,7 +299,7 @@
   "provenance": {
     "source": "골격 통제 설계 분석",
     "query": "n=163",
-    "timestamp": "2026-09-04T16:37:38.679603Z"
+    "timestamp": "2026-09-04T22:01:37.170681Z"
   },
   "verification": {
     "passed": true,

@@ -144,7 +144,8 @@ def main() -> int:
     oldp = load("old_set_new_protocol.json")
     if not (ds and dk and an):
         raise SystemExit("산출 파일이 없다 — 포스터를 만들지 않는다.")
-    T = an["arms"]["top_pose"]; PV = T["pose_validity"]; wb = T["within_similarity_bin"]
+    T = an["arms"]["top_pose"]; PV = T["pose_validity"]; PVI = PV["interpretable_only"]
+    wb = T["within_similarity_bin"]
     ACI = T["auc_ci95"]; NSEN = T["near_sensitivity"]; ctrl = dk["control_redock"]
 
     prs = Presentation(); prs.slide_width = Mm(W); prs.slide_height = Mm(H)
@@ -180,7 +181,8 @@ def main() -> int:
            f"{col['old_design']['attenuation_from_scaffold_control']:.1%})",
            T_BODY + 4, INK, True)], align=PP_ALIGN.CENTER, h=22)
     y += 66
-    y += pic(s, "fig01_graphical_abstract.png", M, y, FULLW)
+    # 폭을 조금 줄여 세 단이 하단 띠 안에 들어오게 한다 (넘침 검사가 잡아준다)
+    y += pic(s, "fig01_graphical_abstract.png", M + FULLW * 0.075, y, FULLW * 0.85)
     ytop = y + 2
 
     # ══ 1단 ════════════════════════════════════════════════════════
@@ -275,7 +277,7 @@ def main() -> int:
     # ══ 3단 ════════════════════════════════════════════════════════
     y = ytop
     y += head(s, CX[2], y, COLW, "6", "결과 — 골격 통제 후")
-    y += pic(s, "fig05_forest.png", CX[2] + COLW * 0.05, y, COLW * 0.90)
+    y += pic(s, "fig05_forest.png", CX[2] + COLW * 0.08, y, COLW * 0.84)
     y += kv(s, CX[2], y, COLW,
             [("전체 순위상관", f"{T['spearman']:+.3f}", ORANGE),
              ("골격 통제 편상관", f"{T['partial_spearman_controlling_tanimoto']:+.3f}", ORANGE),
@@ -284,9 +286,9 @@ def main() -> int:
               f"{tc['models']['single_vina_score']['Q2_loo']:+.3f}" if tc else "—", ORANGE)],
             lw=0.58)
     y += text(s, CX[2], y, COLW,
-              [[("위 넷은 모두 상관·Q² 값이다. ", T_SMALL, GREY),
-                (f"순열 검정 p = {T['perm_p']}", T_BODY, ORANGE, True),
-                (" 로 유의하지 않다.", T_SMALL, GREY)]]) + 4
+              [[("위 넷은 상관·Q² 값이다. ", T_SMALL, GREY),
+                (f"순열 p = {T['perm_p']}", T_BODY, ORANGE, True),
+                (" 로 유의하지 않다.", T_SMALL, GREY)]]) + 3
     y += text(s, CX[2], y, COLW,
               [[(f"near 대역만 유의하다 (ρ = {wb['near']['spearman']:+.3f}, "
                  f"p = {wb['near']['perm_p']}). ", T_BODY, INK),
@@ -296,14 +298,15 @@ def main() -> int:
                  f"{NSEN['drop_weak_cell']['spearman']:+.3f} 로 떨어진다.", T_BODY, INK)]]) + 4
     y += head(s, CX[2], y, COLW, "6b", "해석의 상한 — 자세 타당도", ORANGE)
     y += kv(s, CX[2], y, COLW,
-            [("1위 자세 MCS-RMSD 중앙값", f"{PV['all']['median_rmsd']:.2f} Å", ORANGE),
-             ("2 Å 기준 통과 (전체)", f"{PV['all']['frac_under_threshold']:.1%}", ORANGE),
-             ("far 대역 통과율", f"{PV['far']['frac_under_threshold']:.1%}", ORANGE)],
-            lw=0.62)
+            [("1위 자세 MCS-RMSD 중앙값", f"{PVI['median_rmsd']:.2f} Å", ORANGE),
+             ("2 Å 기준 통과", f"{PVI['frac_under_threshold']:.1%}", ORANGE),
+             ("대상", f"해석 가능 대역 {PVI['n']}건", GREY)], lw=0.62)
     y += text(s, CX[2], y, COLW,
-              [[(f"점수를 매긴 자세의 {1 - PV['all']['frac_under_threshold']:.0%} 가 C2 를 "
-                 f"실패시킨 것과 같은 기준 밖이다 — 이것이 모든 상관 해석의 상한이다.",
-                 T_BODY, INK)]]) + 4
+              [[(f"점수를 매긴 자세의 {1 - PVI['frac_under_threshold']:.0%} 가 C2 를 "
+                 f"실패시킨 것과 같은 기준 밖이다 — 이것이 모든 상관 해석의 상한이다. ",
+                 T_BODY, INK),
+                (f"far 대역은 공유 부분구조가 평균 {PV['far']['mean_mcs_atoms']}원자라 "
+                 f"지표가 성립하지 않아 제외했다.", T_SMALL, GREY)]]) + 3
     y += head(s, CX[2], y, COLW, "7", "결론", NAVY)
     y += panel(s, CX[2], y, COLW,
                [[("· 정량 예측은 실패했다.", T_BODY + 2, INK, True),
