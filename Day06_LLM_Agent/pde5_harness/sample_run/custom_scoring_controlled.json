@@ -1,0 +1,365 @@
+{
+  "result": {
+    "design": "가중치는 훈련 집합에서만 적합. 시험 집합은 9칸 층화로 분리했고 가중치 적합에 쓰이지 않았다.",
+    "n_train": 114,
+    "n_test": 49,
+    "n_scored": 49,
+    "test_frac": 0.3,
+    "split_seed": 42,
+    "fitted_weights_raw_scale": {
+      "gauss(o=0,_w=0.5,_c=8)": 0.007656,
+      "gauss(o=3,_w=2,_c=8)": -0.001564,
+      "repulsion(o=0,_c=8)": 0.278323,
+      "hydrophobic(g=0.5,_b=1.5,_c=8)": 0.010277,
+      "non_dir_h_bond(g=-0.7,_b=0,_c=8)": -0.002972
+    },
+    "arm_default": {
+      "spearman": -0.118,
+      "ci95": [
+        -0.386,
+        0.169
+      ]
+    },
+    "arm_custom": {
+      "spearman": 0.028,
+      "ci95": [
+        -0.255,
+        0.307
+      ]
+    },
+    "difference": {
+      "delta_spearman": 0.146,
+      "bootstrap_ci95": [
+        -0.209,
+        0.5
+      ],
+      "frac_resamples_favoring_custom": 0.212,
+      "bootstrap_iters": 10000,
+      "bootstrap_seed": 42
+    },
+    "rows": [
+      {
+        "chembl_id": "CHEMBL70471",
+        "pchembl_value": 6.38,
+        "base_score": -10.3,
+        "custom_score": -1.2
+      },
+      {
+        "chembl_id": "CHEMBL3360412",
+        "pchembl_value": 6.85,
+        "base_score": -10.7,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL553820",
+        "pchembl_value": 6.0,
+        "base_score": -10.4,
+        "custom_score": -1.2
+      },
+      {
+        "chembl_id": "CHEMBL215699",
+        "pchembl_value": 7.1,
+        "base_score": -10.8,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL4280451",
+        "pchembl_value": 6.77,
+        "base_score": -10.6,
+        "custom_score": -1.3
+      },
+      {
+        "chembl_id": "CHEMBL541845",
+        "pchembl_value": 6.12,
+        "base_score": -10.3,
+        "custom_score": -1.3
+      },
+      {
+        "chembl_id": "CHEMBL5187496",
+        "pchembl_value": 6.44,
+        "base_score": -10.1,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL444354",
+        "pchembl_value": 7.4,
+        "base_score": -8.8,
+        "custom_score": -1.3
+      },
+      {
+        "chembl_id": "CHEMBL371343",
+        "pchembl_value": 7.48,
+        "base_score": -10.7,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL459047",
+        "pchembl_value": 7.1,
+        "base_score": -9.0,
+        "custom_score": -2.1
+      },
+      {
+        "chembl_id": "CHEMBL455413",
+        "pchembl_value": 7.0,
+        "base_score": -9.2,
+        "custom_score": -1.9
+      },
+      {
+        "chembl_id": "CHEMBL5203939",
+        "pchembl_value": 6.31,
+        "base_score": -11.0,
+        "custom_score": -1.7
+      },
+      {
+        "chembl_id": "CHEMBL4204679",
+        "pchembl_value": 6.84,
+        "base_score": -11.0,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL2180953",
+        "pchembl_value": 7.24,
+        "base_score": -9.6,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL87777",
+        "pchembl_value": 7.0,
+        "base_score": -9.9,
+        "custom_score": -1.7
+      },
+      {
+        "chembl_id": "CHEMBL2414304",
+        "pchembl_value": 7.11,
+        "base_score": -9.4,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL525436",
+        "pchembl_value": 6.0,
+        "base_score": -9.0,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL3955289",
+        "pchembl_value": 6.92,
+        "base_score": -10.7,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL372917",
+        "pchembl_value": 7.5,
+        "base_score": -11.5,
+        "custom_score": -1.5
+      },
+      {
+        "chembl_id": "CHEMBL108844",
+        "pchembl_value": 9.16,
+        "base_score": -9.3,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL544305",
+        "pchembl_value": 9.3,
+        "base_score": -10.9,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL343345",
+        "pchembl_value": 8.59,
+        "base_score": -11.1,
+        "custom_score": -1.2
+      },
+      {
+        "chembl_id": "CHEMBL4083346",
+        "pchembl_value": 8.51,
+        "base_score": -10.8,
+        "custom_score": -1.5
+      },
+      {
+        "chembl_id": "CHEMBL383202",
+        "pchembl_value": 9.05,
+        "base_score": -9.3,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL4435186",
+        "pchembl_value": 8.81,
+        "base_score": -10.0,
+        "custom_score": -1.5
+      },
+      {
+        "chembl_id": "CHEMBL426650",
+        "pchembl_value": 8.05,
+        "base_score": -10.5,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL4455533",
+        "pchembl_value": 9.27,
+        "base_score": -9.7,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL41004",
+        "pchembl_value": 8.3,
+        "base_score": -9.2,
+        "custom_score": -1.5
+      },
+      {
+        "chembl_id": "CHEMBL209460",
+        "pchembl_value": 8.77,
+        "base_score": -10.3,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL4483406",
+        "pchembl_value": 8.91,
+        "base_score": -8.9,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL3940720",
+        "pchembl_value": 7.66,
+        "base_score": -11.0,
+        "custom_score": -1.7
+      },
+      {
+        "chembl_id": "CHEMBL2180659",
+        "pchembl_value": 7.5,
+        "base_score": -9.8,
+        "custom_score": -1.5
+      },
+      {
+        "chembl_id": "CHEMBL2180945",
+        "pchembl_value": 8.8,
+        "base_score": -9.8,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL457207",
+        "pchembl_value": 8.68,
+        "base_score": -10.1,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL3927691",
+        "pchembl_value": 7.72,
+        "base_score": -10.1,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL4202521",
+        "pchembl_value": 8.15,
+        "base_score": -10.6,
+        "custom_score": -1.7
+      },
+      {
+        "chembl_id": "CHEMBL203324",
+        "pchembl_value": 5.06,
+        "base_score": -10.4,
+        "custom_score": -1.9
+      },
+      {
+        "chembl_id": "CHEMBL1094591",
+        "pchembl_value": 5.47,
+        "base_score": -10.1,
+        "custom_score": -1.0
+      },
+      {
+        "chembl_id": "CHEMBL185203",
+        "pchembl_value": 5.16,
+        "base_score": -9.7,
+        "custom_score": -1.4
+      },
+      {
+        "chembl_id": "CHEMBL363673",
+        "pchembl_value": 4.63,
+        "base_score": -8.5,
+        "custom_score": -0.9
+      },
+      {
+        "chembl_id": "CHEMBL191443",
+        "pchembl_value": 5.58,
+        "base_score": -10.5,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL92043",
+        "pchembl_value": 4.0,
+        "base_score": -9.6,
+        "custom_score": -1.2
+      },
+      {
+        "chembl_id": "CHEMBL327666",
+        "pchembl_value": 5.82,
+        "base_score": -8.5,
+        "custom_score": -1.6
+      },
+      {
+        "chembl_id": "CHEMBL5193660",
+        "pchembl_value": 5.28,
+        "base_score": -10.0,
+        "custom_score": -2.0
+      },
+      {
+        "chembl_id": "CHEMBL5195857",
+        "pchembl_value": 4.54,
+        "base_score": -9.9,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL5916717",
+        "pchembl_value": 5.5,
+        "base_score": -9.4,
+        "custom_score": -1.8
+      },
+      {
+        "chembl_id": "CHEMBL5775385",
+        "pchembl_value": 5.0,
+        "base_score": -10.2,
+        "custom_score": -1.9
+      },
+      {
+        "chembl_id": "CHEMBL5810325",
+        "pchembl_value": 5.0,
+        "base_score": -10.1,
+        "custom_score": -2.0
+      },
+      {
+        "chembl_id": "CHEMBL511513",
+        "pchembl_value": 5.35,
+        "base_score": -8.7,
+        "custom_score": -1.3
+      }
+    ],
+    "reading": "차이의 신뢰구간이 0 을 포함하면 개선을 주장할 수 없다. 점 추정값만 보고하면 우연한 방향 일치를 성능으로 오인한다."
+  },
+  "provenance": {
+    "source": "smina --custom_scoring, 9칸 층화 분할",
+    "query": "훈련 114 / 시험 49",
+    "timestamp": "2026-09-04T16:08:21.357532Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "두 팔 모두 전 시험 화합물 채점",
+        "passed": true
+      },
+      {
+        "check": "훈련/시험 분리",
+        "passed": true
+      },
+      {
+        "check": "시험 집합 20건 이상",
+        "passed": true
+      },
+      {
+        "check": "부트스트랩 5000회 이상",
+        "passed": true
+      }
+    ],
+    "notes": "기본 -0.118 vs 커스텀 +0.028, 차이 +0.146, 부트스트랩 95% CI [-0.209, 0.5]."
+  }
+}

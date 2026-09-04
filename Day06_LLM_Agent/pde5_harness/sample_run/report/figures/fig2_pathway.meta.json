@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/sar.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:58:27.503397Z",
+  "source_sha256": "53f6c24c5c3619a8",
+  "note": "기전 개념도 — 수치는 실측 n 과 IC50 범위만"
+}

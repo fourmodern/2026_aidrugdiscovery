@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/sar.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:58:27.918392Z",
+  "source_sha256": "53f6c24c5c3619a8",
+  "note": "LE·LLE 는 pIC50 과 RDKit 값으로 계산 (analyze_sar.py)"
+}

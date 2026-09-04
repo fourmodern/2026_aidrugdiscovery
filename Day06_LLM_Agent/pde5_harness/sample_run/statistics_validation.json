@@ -1,0 +1,97 @@
+{
+  "result": {
+    "trials": {
+      "spearman": 200,
+      "partial": 100,
+      "auc": 100,
+      "partial_multi": 150
+    },
+    "max_abs_deviation": {
+      "spearman": 2.22e-16,
+      "partial": 2.22e-16,
+      "auc": 0.0,
+      "partial_multi": 2.776e-16
+    },
+    "reference": "scipy.stats (spearmanr / rankdata+pearsonr / mannwhitneyu)",
+    "fisher_ci_check": {
+      "input": "r=0.5, n=30",
+      "mine": [
+        0.17,
+        0.729
+      ],
+      "analytic": [
+        0.17,
+        0.729
+      ]
+    },
+    "sdf_parser_vs_rdkit": {
+      "files_checked": 25,
+      "mismatches": 0,
+      "skipped_in_flight": 0
+    },
+    "partial_permutation_procedure": {
+      "used": "Freedman-Lane (z 로 회귀한 잔차만 섞음)",
+      "why": "y 를 통째로 섞으면 y~z 관계까지 깨져 귀무가설이 달라진다. 본 연구는 올바른 절차를 쓰되, 단순 섞기와의 차이도 함께 확인했다.",
+      "comparison": [
+        {
+          "z_y_strength": 0.1,
+          "freedman_lane_p": 0.0207,
+          "naive_shuffle_p": 0.0215,
+          "abs_diff": 0.0008
+        },
+        {
+          "z_y_strength": 0.5,
+          "freedman_lane_p": 0.4604,
+          "naive_shuffle_p": 0.4646,
+          "abs_diff": 0.0043
+        },
+        {
+          "z_y_strength": 0.8,
+          "freedman_lane_p": 0.0995,
+          "naive_shuffle_p": 0.099,
+          "abs_diff": 0.0005
+        }
+      ]
+    },
+    "note": "동점을 의도적으로 주입해 검정했다. 동점 보정을 빼면 도킹 점수처럼 동점이 많은 데이터에서 값이 달라진다."
+  },
+  "provenance": {
+    "source": "scipy · RDKit 대조 단위검정",
+    "query": "550 회 무작위 시행 + SDF 25개 파일",
+    "timestamp": "2026-09-04T15:51:29.857720Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "Spearman scipy 일치 (동점 포함)",
+        "passed": true
+      },
+      {
+        "check": "편상관 순위잔차 방식 일치",
+        "passed": true
+      },
+      {
+        "check": "다변량 편상관 최소제곱 잔차 일치",
+        "passed": true
+      },
+      {
+        "check": "AUC Mann-Whitney U 일치",
+        "passed": true
+      },
+      {
+        "check": "Fisher CI 해석해 일치",
+        "passed": true
+      },
+      {
+        "check": "SDF 파서 RDKit 일치",
+        "passed": true
+      },
+      {
+        "check": "편상관 순열 절차 두 방식 비교 수행",
+        "passed": true
+      }
+    ],
+    "notes": "최대 편차 {'spearman': 2.22e-16, 'partial': 2.22e-16, 'auc': 0.0, 'partial_multi': 2.776e-16}, SDF 파서 불일치 0건."
+  }
+}

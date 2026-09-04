@@ -1,0 +1,615 @@
+{
+  "result": {
+    "stratum": "strong",
+    "source": "controlled",
+    "n_compounds": 60,
+    "cutoff_angstrom": 4.0,
+    "per_compound": [
+      {
+        "chembl_id": "CHEMBL1916483",
+        "pIC50": 11.0,
+        "selected_mode": 8,
+        "n_res_selected": 17,
+        "n_res_top": 20,
+        "jaccard": 0.542
+      },
+      {
+        "chembl_id": "CHEMBL4759667",
+        "pIC50": 10.6,
+        "selected_mode": 2,
+        "n_res_selected": 15,
+        "n_res_top": 14,
+        "jaccard": 0.611
+      },
+      {
+        "chembl_id": "CHEMBL1916291",
+        "pIC50": 10.1,
+        "selected_mode": 8,
+        "n_res_selected": 19,
+        "n_res_top": 16,
+        "jaccard": 0.522
+      },
+      {
+        "chembl_id": "CHEMBL298295",
+        "pIC50": 10.0,
+        "selected_mode": 1,
+        "n_res_selected": 13,
+        "n_res_top": 13,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL590037",
+        "pIC50": 9.68,
+        "selected_mode": 3,
+        "n_res_selected": 16,
+        "n_res_top": 20,
+        "jaccard": 0.636
+      },
+      {
+        "chembl_id": "CHEMBL566820",
+        "pIC50": 9.49,
+        "selected_mode": 1,
+        "n_res_selected": 19,
+        "n_res_top": 19,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL245323",
+        "pIC50": 9.49,
+        "selected_mode": 3,
+        "n_res_selected": 14,
+        "n_res_top": 16,
+        "jaccard": 0.364
+      },
+      {
+        "chembl_id": "CHEMBL544305",
+        "pIC50": 9.3,
+        "selected_mode": 3,
+        "n_res_selected": 19,
+        "n_res_top": 18,
+        "jaccard": 0.762
+      },
+      {
+        "chembl_id": "CHEMBL4455533",
+        "pIC50": 9.27,
+        "selected_mode": 8,
+        "n_res_selected": 16,
+        "n_res_top": 17,
+        "jaccard": 0.375
+      },
+      {
+        "chembl_id": "CHEMBL108844",
+        "pIC50": 9.16,
+        "selected_mode": 5,
+        "n_res_selected": 15,
+        "n_res_top": 16,
+        "jaccard": 0.824
+      },
+      {
+        "chembl_id": "CHEMBL245922",
+        "pIC50": 9.15,
+        "selected_mode": 3,
+        "n_res_selected": 16,
+        "n_res_top": 16,
+        "jaccard": 0.6
+      },
+      {
+        "chembl_id": "CHEMBL1928260",
+        "pIC50": 9.12,
+        "selected_mode": 7,
+        "n_res_selected": 19,
+        "n_res_top": 21,
+        "jaccard": 0.429
+      },
+      {
+        "chembl_id": "CHEMBL383202",
+        "pIC50": 9.05,
+        "selected_mode": 2,
+        "n_res_selected": 19,
+        "n_res_top": 20,
+        "jaccard": 0.5
+      },
+      {
+        "chembl_id": "CHEMBL514435",
+        "pIC50": 9.05,
+        "selected_mode": 2,
+        "n_res_selected": 17,
+        "n_res_top": 19,
+        "jaccard": 0.895
+      },
+      {
+        "chembl_id": "CHEMBL297864",
+        "pIC50": 9.0,
+        "selected_mode": 1,
+        "n_res_selected": 12,
+        "n_res_top": 12,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL361582",
+        "pIC50": 9.0,
+        "selected_mode": 6,
+        "n_res_selected": 16,
+        "n_res_top": 15,
+        "jaccard": 0.632
+      },
+      {
+        "chembl_id": "CHEMBL551050",
+        "pIC50": 8.92,
+        "selected_mode": 3,
+        "n_res_selected": 18,
+        "n_res_top": 21,
+        "jaccard": 0.56
+      },
+      {
+        "chembl_id": "CHEMBL4483406",
+        "pIC50": 8.91,
+        "selected_mode": 2,
+        "n_res_selected": 13,
+        "n_res_top": 16,
+        "jaccard": 0.611
+      },
+      {
+        "chembl_id": "CHEMBL4435186",
+        "pIC50": 8.81,
+        "selected_mode": 2,
+        "n_res_selected": 12,
+        "n_res_top": 18,
+        "jaccard": 0.364
+      },
+      {
+        "chembl_id": "CHEMBL23123",
+        "pIC50": 8.8,
+        "selected_mode": 1,
+        "n_res_selected": 20,
+        "n_res_top": 20,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL2180945",
+        "pIC50": 8.8,
+        "selected_mode": 2,
+        "n_res_selected": 14,
+        "n_res_top": 16,
+        "jaccard": 0.765
+      },
+      {
+        "chembl_id": "CHEMBL209460",
+        "pIC50": 8.77,
+        "selected_mode": 7,
+        "n_res_selected": 18,
+        "n_res_top": 18,
+        "jaccard": 0.44
+      },
+      {
+        "chembl_id": "CHEMBL416267",
+        "pIC50": 8.7,
+        "selected_mode": 1,
+        "n_res_selected": 15,
+        "n_res_top": 15,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL4539785",
+        "pIC50": 8.7,
+        "selected_mode": 2,
+        "n_res_selected": 15,
+        "n_res_top": 18,
+        "jaccard": 0.375
+      },
+      {
+        "chembl_id": "CHEMBL3654375",
+        "pIC50": 8.68,
+        "selected_mode": 6,
+        "n_res_selected": 18,
+        "n_res_top": 21,
+        "jaccard": 0.56
+      },
+      {
+        "chembl_id": "CHEMBL457207",
+        "pIC50": 8.68,
+        "selected_mode": 3,
+        "n_res_selected": 15,
+        "n_res_top": 16,
+        "jaccard": 0.632
+      },
+      {
+        "chembl_id": "CHEMBL296071",
+        "pIC50": 8.6,
+        "selected_mode": 1,
+        "n_res_selected": 13,
+        "n_res_top": 13,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL343345",
+        "pIC50": 8.59,
+        "selected_mode": 4,
+        "n_res_selected": 16,
+        "n_res_top": 17,
+        "jaccard": 0.32
+      },
+      {
+        "chembl_id": "CHEMBL297763",
+        "pIC50": 8.52,
+        "selected_mode": 2,
+        "n_res_selected": 16,
+        "n_res_top": 19,
+        "jaccard": 0.4
+      },
+      {
+        "chembl_id": "CHEMBL3898716",
+        "pIC50": 8.52,
+        "selected_mode": 5,
+        "n_res_selected": 14,
+        "n_res_top": 23,
+        "jaccard": 0.37
+      },
+      {
+        "chembl_id": "CHEMBL4083346",
+        "pIC50": 8.51,
+        "selected_mode": 6,
+        "n_res_selected": 13,
+        "n_res_top": 19,
+        "jaccard": 0.524
+      },
+      {
+        "chembl_id": "CHEMBL314849",
+        "pIC50": 8.46,
+        "selected_mode": 2,
+        "n_res_selected": 16,
+        "n_res_top": 17,
+        "jaccard": 0.571
+      },
+      {
+        "chembl_id": "CHEMBL456142",
+        "pIC50": 8.4,
+        "selected_mode": 5,
+        "n_res_selected": 13,
+        "n_res_top": 13,
+        "jaccard": 0.529
+      },
+      {
+        "chembl_id": "CHEMBL298294",
+        "pIC50": 8.4,
+        "selected_mode": 1,
+        "n_res_selected": 15,
+        "n_res_top": 15,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL3956031",
+        "pIC50": 8.4,
+        "selected_mode": 4,
+        "n_res_selected": 14,
+        "n_res_top": 16,
+        "jaccard": 0.364
+      },
+      {
+        "chembl_id": "CHEMBL6015625",
+        "pIC50": 8.32,
+        "selected_mode": 1,
+        "n_res_selected": 16,
+        "n_res_top": 16,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL41004",
+        "pIC50": 8.3,
+        "selected_mode": 1,
+        "n_res_selected": 10,
+        "n_res_top": 10,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL6042724",
+        "pIC50": 8.28,
+        "selected_mode": 1,
+        "n_res_selected": 19,
+        "n_res_top": 19,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL5996670",
+        "pIC50": 8.27,
+        "selected_mode": 5,
+        "n_res_selected": 13,
+        "n_res_top": 15,
+        "jaccard": 0.474
+      },
+      {
+        "chembl_id": "CHEMBL460294",
+        "pIC50": 8.25,
+        "selected_mode": 2,
+        "n_res_selected": 15,
+        "n_res_top": 16,
+        "jaccard": 0.824
+      },
+      {
+        "chembl_id": "CHEMBL211015",
+        "pIC50": 8.15,
+        "selected_mode": 5,
+        "n_res_selected": 17,
+        "n_res_top": 21,
+        "jaccard": 0.407
+      },
+      {
+        "chembl_id": "CHEMBL4202521",
+        "pIC50": 8.15,
+        "selected_mode": 5,
+        "n_res_selected": 14,
+        "n_res_top": 18,
+        "jaccard": 0.333
+      },
+      {
+        "chembl_id": "CHEMBL414842",
+        "pIC50": 8.1,
+        "selected_mode": 2,
+        "n_res_selected": 15,
+        "n_res_top": 16,
+        "jaccard": 0.476
+      },
+      {
+        "chembl_id": "CHEMBL426650",
+        "pIC50": 8.05,
+        "selected_mode": 9,
+        "n_res_selected": 13,
+        "n_res_top": 20,
+        "jaccard": 0.375
+      },
+      {
+        "chembl_id": "CHEMBL1650673",
+        "pIC50": 8.0,
+        "selected_mode": 6,
+        "n_res_selected": 12,
+        "n_res_top": 13,
+        "jaccard": 0.389
+      },
+      {
+        "chembl_id": "CHEMBL4212445",
+        "pIC50": 8.0,
+        "selected_mode": 9,
+        "n_res_selected": 15,
+        "n_res_top": 19,
+        "jaccard": 0.36
+      },
+      {
+        "chembl_id": "CHEMBL2414303",
+        "pIC50": 7.99,
+        "selected_mode": 2,
+        "n_res_selected": 14,
+        "n_res_top": 14,
+        "jaccard": 0.647
+      },
+      {
+        "chembl_id": "CHEMBL1928273",
+        "pIC50": 7.97,
+        "selected_mode": 8,
+        "n_res_selected": 16,
+        "n_res_top": 19,
+        "jaccard": 0.4
+      },
+      {
+        "chembl_id": "CHEMBL89670",
+        "pIC50": 7.92,
+        "selected_mode": 2,
+        "n_res_selected": 16,
+        "n_res_top": 20,
+        "jaccard": 0.5
+      },
+      {
+        "chembl_id": "CHEMBL2180949",
+        "pIC50": 7.86,
+        "selected_mode": 1,
+        "n_res_selected": 15,
+        "n_res_top": 15,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL6059124",
+        "pIC50": 7.82,
+        "selected_mode": 8,
+        "n_res_selected": 16,
+        "n_res_top": 13,
+        "jaccard": 0.526
+      },
+      {
+        "chembl_id": "CHEMBL89239",
+        "pIC50": 7.8,
+        "selected_mode": 2,
+        "n_res_selected": 18,
+        "n_res_top": 19,
+        "jaccard": 0.762
+      },
+      {
+        "chembl_id": "CHEMBL3927691",
+        "pIC50": 7.72,
+        "selected_mode": 2,
+        "n_res_selected": 14,
+        "n_res_top": 16,
+        "jaccard": 0.364
+      },
+      {
+        "chembl_id": "CHEMBL336457",
+        "pIC50": 7.7,
+        "selected_mode": 3,
+        "n_res_selected": 12,
+        "n_res_top": 11,
+        "jaccard": 0.353
+      },
+      {
+        "chembl_id": "CHEMBL3940720",
+        "pIC50": 7.66,
+        "selected_mode": 2,
+        "n_res_selected": 14,
+        "n_res_top": 20,
+        "jaccard": 0.36
+      },
+      {
+        "chembl_id": "CHEMBL130612",
+        "pIC50": 7.61,
+        "selected_mode": 6,
+        "n_res_selected": 13,
+        "n_res_top": 18,
+        "jaccard": 0.348
+      },
+      {
+        "chembl_id": "CHEMBL89151",
+        "pIC50": 7.58,
+        "selected_mode": 1,
+        "n_res_selected": 19,
+        "n_res_top": 19,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL47108",
+        "pIC50": 7.52,
+        "selected_mode": 1,
+        "n_res_selected": 10,
+        "n_res_top": 10,
+        "jaccard": 1.0
+      },
+      {
+        "chembl_id": "CHEMBL372917",
+        "pIC50": 7.5,
+        "selected_mode": 3,
+        "n_res_selected": 19,
+        "n_res_top": 17,
+        "jaccard": 0.636
+      },
+      {
+        "chembl_id": "CHEMBL2180659",
+        "pIC50": 7.5,
+        "selected_mode": 5,
+        "n_res_selected": 13,
+        "n_res_top": 17,
+        "jaccard": 0.5
+      }
+    ],
+    "key_residue_frequency": {
+      "GLN817": {
+        "selected": 60,
+        "top": 59,
+        "of_n": 60
+      },
+      "PHE820": {
+        "selected": 60,
+        "top": 60,
+        "of_n": 60
+      },
+      "PHE786": {
+        "selected": 59,
+        "top": 57,
+        "of_n": 60
+      },
+      "LEU804": {
+        "selected": 57,
+        "top": 54,
+        "of_n": 60
+      },
+      "VAL782": {
+        "selected": 60,
+        "top": 60,
+        "of_n": 60
+      },
+      "TYR612": {
+        "selected": 57,
+        "top": 56,
+        "of_n": 60
+      }
+    },
+    "mean_jaccard": 0.619,
+    "top_residues_selected": [
+      [
+        "VAL782",
+        60
+      ],
+      [
+        "GLN817",
+        60
+      ],
+      [
+        "PHE820",
+        60
+      ],
+      [
+        "PHE786",
+        59
+      ],
+      [
+        "TYR612",
+        57
+      ],
+      [
+        "LEU804",
+        57
+      ],
+      [
+        "MET816",
+        52
+      ],
+      [
+        "ALA783",
+        46
+      ]
+    ],
+    "top_residues_top_pose": [
+      [
+        "VAL782",
+        60
+      ],
+      [
+        "PHE820",
+        60
+      ],
+      [
+        "GLN817",
+        59
+      ],
+      [
+        "PHE786",
+        57
+      ],
+      [
+        "TYR612",
+        56
+      ],
+      [
+        "LEU804",
+        54
+      ],
+      [
+        "MET816",
+        44
+      ],
+      [
+        "ALA779",
+        43
+      ]
+    ],
+    "interpretation": "1위 자세는 공결정 리간드를 참조하지 않고 채점 함수만으로 뽑힌다. 1위 자세에서도 같은 잔기가 높은 빈도로 나타나면 접촉 관찰은 자세 선택 규칙의 산물이 아니다."
+  },
+  "provenance": {
+    "source": "좌표 기반 접촉 계산 (참조 선택 자세 vs 점수 1위 자세)",
+    "query": "stratum=strong, cutoff 4.0 A",
+    "timestamp": "2026-09-04T15:51:34.227272Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "강함 층 화합물 8건 이상 처리",
+        "passed": true
+      },
+      {
+        "check": "두 자세 모두 접촉 산출",
+        "passed": true
+      },
+      {
+        "check": "접촉이 좌표에서 계산됨",
+        "passed": true
+      }
+    ],
+    "notes": "평균 Jaccard 0.619, n=60."
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "result": {
+    "n": 30,
+    "standardized_coefficients": {
+      "gauss1": 0.397,
+      "gauss2": 0.162,
+      "repulsion": -0.412,
+      "hydrophobic": -0.013,
+      "hbond": -0.018
+    },
+    "full_model_R2_standardized": 0.121,
+    "full_model_Q2_standardized": -0.545,
+    "univariate": {
+      "gauss1": {
+        "pearson_r": 0.219,
+        "r2_alone": 0.048
+      },
+      "gauss2": {
+        "pearson_r": 0.212,
+        "r2_alone": 0.045
+      },
+      "repulsion": {
+        "pearson_r": 0.002,
+        "r2_alone": 0.0
+      },
+      "hydrophobic": {
+        "pearson_r": -0.035,
+        "r2_alone": 0.001
+      },
+      "hbond": {
+        "pearson_r": 0.017,
+        "r2_alone": 0.0
+      }
+    },
+    "permutation_importance": {
+      "gauss1": {
+        "mean_Q2_drop": -0.011,
+        "n_shuffles": 20
+      },
+      "gauss2": {
+        "mean_Q2_drop": -0.001,
+        "n_shuffles": 20
+      },
+      "repulsion": {
+        "mean_Q2_drop": -0.058,
+        "n_shuffles": 20
+      },
+      "hydrophobic": {
+        "mean_Q2_drop": -0.07,
+        "n_shuffles": 20
+      },
+      "hbond": {
+        "mean_Q2_drop": -0.031,
+        "n_shuffles": 20
+      }
+    },
+    "vif": {
+      "gauss1": 5.2,
+      "gauss2": 4.2,
+      "repulsion": 3.0,
+      "hydrophobic": 1.4,
+      "hbond": 1.1
+    },
+    "term_correlation": {
+      "gauss1": {
+        "gauss1": 1.0,
+        "gauss2": 0.87,
+        "repulsion": 0.76,
+        "hydrophobic": 0.31,
+        "hbond": 0.01
+      },
+      "gauss2": {
+        "gauss1": 0.87,
+        "gauss2": 1.0,
+        "repulsion": 0.71,
+        "hydrophobic": 0.34,
+        "hbond": -0.06
+      },
+      "repulsion": {
+        "gauss1": 0.76,
+        "gauss2": 0.71,
+        "repulsion": 1.0,
+        "hydrophobic": 0.5,
+        "hbond": -0.09
+      },
+      "hydrophobic": {
+        "gauss1": 0.31,
+        "gauss2": 0.34,
+        "repulsion": 0.5,
+        "hydrophobic": 1.0,
+        "hbond": -0.26
+      },
+      "hbond": {
+        "gauss1": 0.01,
+        "gauss2": -0.06,
+        "repulsion": -0.09,
+        "hydrophobic": -0.26,
+        "hbond": 1.0
+      }
+    },
+    "note": "표준화 계수는 서로 비교 가능하지만, VIF 가 높으면 개별 계수의 해석 자체가 불안정하다. 네 지표가 일치하지 않으면 기여를 특정할 수 없다는 뜻이다.",
+    "rank_agreement": {
+      "standardized": {
+        "gauss1": 2,
+        "gauss2": 3,
+        "repulsion": 1,
+        "hydrophobic": 5,
+        "hbond": 4
+      },
+      "univariate": {
+        "gauss1": 1,
+        "gauss2": 2,
+        "repulsion": 5,
+        "hydrophobic": 3,
+        "hbond": 4
+      },
+      "same_top_term": false
+    }
+  },
+  "provenance": {
+    "source": "표준화 OLS + 순열 중요도 + VIF",
+    "query": "n=30, 항 5개",
+    "timestamp": "2026-09-04T15:01:01.733861Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "전 항 표준화 계수 산출",
+        "passed": true
+      },
+      {
+        "check": "전 항 VIF 산출",
+        "passed": true
+      },
+      {
+        "check": "순열 중요도 산출",
+        "passed": true
+      }
+    ],
+    "notes": "최대 VIF 5.2. 표준화·단변량 1위 항 일치: False."
+  }
+}

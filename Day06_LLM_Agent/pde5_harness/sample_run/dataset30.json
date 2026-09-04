@@ -1,0 +1,301 @@
+{
+  "result": [
+    {
+      "molecule_chembl_id": "CHEMBL86602",
+      "canonical_smiles": "C=CCCn1c(=O)n(C)c(=O)c2nc(-c3cc(S(=O)(=O)N4CCN(C)CC4)ccc3OCC)[nH]c21",
+      "standard_type": "IC50",
+      "standard_value": 100.0,
+      "standard_units": "nM",
+      "pchembl_value": 7.0,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL115152",
+      "canonical_smiles": "COc1ccc(CNc2nnc(Cl)c3ccc(Cl)cc23)cc1Cl",
+      "standard_type": "IC50",
+      "standard_value": 54.0,
+      "standard_units": "nM",
+      "pchembl_value": 7.27,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL370241",
+      "canonical_smiles": "CC(C)N1C(=O)c2[nH]c(Cc3ccccc3)nc2N2C[C@@H](Cc3ccccc3)N=C21",
+      "standard_type": "IC50",
+      "standard_value": 22.0,
+      "standard_units": "nM",
+      "pchembl_value": 7.66,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL183150",
+      "canonical_smiles": "CCOc1ccc(S(=O)(=O)N2CCN(CCO)CC2)cc1-c1nc(O)n2c(C)nc(C3CCCC3)c2n1",
+      "standard_type": "IC50",
+      "standard_value": 10.0,
+      "standard_units": "nM",
+      "pchembl_value": 8.0,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL434135",
+      "canonical_smiles": "CCOc1ccc(S(=O)(=O)N2CCN(CCO)CC2)cc1-c1nc(O)c2c(n1)c(C1CCCC1)nn2C",
+      "standard_type": "IC50",
+      "standard_value": 5.0,
+      "standard_units": "nM",
+      "pchembl_value": 8.3,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL544310",
+      "canonical_smiles": "COc1ccc(CNc2nnc(NCc3ccccn3)c3ccc(C#N)cc23)cc1Cl.Cl",
+      "standard_type": "IC50",
+      "standard_value": 2.7,
+      "standard_units": "nM",
+      "pchembl_value": 8.57,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL136498",
+      "canonical_smiles": "O=C(c1cc2ccc(O)cc2o1)N1Cc2c(nc3ccccc3c2O)C1c1ccc2c(c1)CCO2",
+      "standard_type": "Ki",
+      "standard_value": 1.74,
+      "standard_units": "nM",
+      "pchembl_value": 8.76,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL361582",
+      "canonical_smiles": "CCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc(O)c2c(C)nc(C3CCCC3)n2n1",
+      "standard_type": "IC50",
+      "standard_value": 1.0,
+      "standard_units": "nM",
+      "pchembl_value": 9.0,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL553075",
+      "canonical_smiles": "COc1ccc(CNc2nnc(N3CCC(=O)CC3)c3ccc(C#N)cc23)cc1Cl.Cl",
+      "standard_type": "IC50",
+      "standard_value": 0.53,
+      "standard_units": "nM",
+      "pchembl_value": 9.28,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL410215",
+      "canonical_smiles": "CCn1ncc2c3c(NCc4ccc(OC)c(Cl)c4)nnc(N4CCC(C(=O)O)CC4)c3cnc21",
+      "standard_type": "IC50",
+      "standard_value": 0.03,
+      "standard_units": "nM",
+      "pchembl_value": 10.52,
+      "stratum": "strong"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL42713",
+      "canonical_smiles": "CCCOc1ccccc1-c1nc2nc[nH]c2c(=O)[nH]1",
+      "standard_type": "IC50",
+      "standard_value": 1000.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.0,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL4788965",
+      "canonical_smiles": "COc1ccc(CNc2nc(N3CCC[C@H]3CO)ncc2C(=O)N[C@H]2CC[C@@H](OC)CC2)cc1Cl",
+      "standard_type": "IC50",
+      "standard_value": 900.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.05,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL3703685",
+      "canonical_smiles": "CC1(C)C(=O)Nc2nc(-n3nc(Cc4ccccc4F)c4cc(F)ccc43)nc(I)c21",
+      "standard_type": "IC50",
+      "standard_value": 690.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.16,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL361481",
+      "canonical_smiles": "CC(C)(C(=O)NO)c1csc(NC(=O)c2cccc(COc3ccccc3)n2)n1",
+      "standard_type": "IC50",
+      "standard_value": 520.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.28,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL70837",
+      "canonical_smiles": "CN1C(=O)c2c(nc(C(F)(F)F)n2Cc2ccccc2)N2C1=N[C@@H]1CCC[C@@H]12",
+      "standard_type": "IC50",
+      "standard_value": 400.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.4,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL2180662",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc(C(F)(F)F)cc(=O)[nH]1",
+      "standard_type": "IC50",
+      "standard_value": 312.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.51,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL4278092",
+      "canonical_smiles": "CC(C)(C)Oc1ccc(Cc2[nH]c(-c3ccco3)c3c(=O)c4ccccc4oc23)cc1",
+      "standard_type": "IC50",
+      "standard_value": 240.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.62,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL371451",
+      "canonical_smiles": "Cc1nn(Cc2ccccc2)c(=O)c2nc(-c3cccnc3)n3nc(-c4ccccc4)cc3c12",
+      "standard_type": "IC50",
+      "standard_value": 180.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.75,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL5871683",
+      "canonical_smiles": "C=CCC1(C)C(=O)Nc2nc(-c3nn(Cc4ccccc4F)c4ncc(F)cc34)nnc21",
+      "standard_type": "IC50",
+      "standard_value": 140.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.85,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL2180661",
+      "canonical_smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc(-c2ccccc2)cc(=O)[nH]1",
+      "standard_type": "IC50",
+      "standard_value": 104.0,
+      "standard_units": "nM",
+      "pchembl_value": 6.98,
+      "stratum": "medium"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL92043",
+      "canonical_smiles": "COc1cc2cc(CO)c(CO)c(-c3cc(NC(C)=O)c(OC)c(OC)c3)c2cc1OC",
+      "standard_type": "IC50",
+      "standard_value": 100000.0,
+      "standard_units": "nM",
+      "pchembl_value": 4.0,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL142922",
+      "canonical_smiles": "COc1ccc(S(=O)(=O)Nc2nc3c(c(=O)n(CC4CC4)c(=O)n3CC3CC3)n2Cc2cc(OC)c(OC)c(OC)c2)cc1",
+      "standard_type": "IC50",
+      "standard_value": 37000.0,
+      "standard_units": "nM",
+      "pchembl_value": 4.43,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL313143",
+      "canonical_smiles": "COc1cc2cc(CO)c(CO)c(Cc3cc(OC)c(OC)c(OC)c3)c2cc1OC",
+      "standard_type": "IC50",
+      "standard_value": 20000.0,
+      "standard_units": "nM",
+      "pchembl_value": 4.7,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL189772",
+      "canonical_smiles": "O=C(O)CCC(C(=O)O)c1csc(NC(=O)c2cccc(COc3ccccc3)n2)n1",
+      "standard_type": "IC50",
+      "standard_value": 10000.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.0,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL263311",
+      "canonical_smiles": "Cn1nc(-c2ccc(Cl)cc2)s/c1=N\\c1cccc(-c2noc(O)n2)c1",
+      "standard_type": "IC50",
+      "standard_value": 7560.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.12,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL1778033",
+      "canonical_smiles": "CCN1C(=O)c2nc(Cc3ccccc3)n(Cc3ccccc3)c2N2CC3(CCc4ccccc43)N=C12",
+      "standard_type": "IC50",
+      "standard_value": 5200.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.28,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL187632",
+      "canonical_smiles": "COc1ccc(NC(=O)c2cccc(COc3ccccc3)n2)cc1C(=O)NO",
+      "standard_type": "IC50",
+      "standard_value": 3500.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.46,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL119506",
+      "canonical_smiles": "c1ccc(-c2nc(NC3CCCC3)c3ccccc3n2)cc1",
+      "standard_type": "IC50",
+      "standard_value": 2400.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.62,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL63416",
+      "canonical_smiles": "c1nc(NCc2ccc3c(c2)OCO3)c2cc3c(cc2n1)OCO3",
+      "standard_type": "IC50",
+      "standard_value": 1600.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.8,
+      "stratum": "weak"
+    },
+    {
+      "molecule_chembl_id": "CHEMBL190773",
+      "canonical_smiles": "CCc1cc(C(C)=O)c(O)cc1OCc1cccc(C(=O)N[C@H](C)C(=O)O)n1",
+      "standard_type": "IC50",
+      "standard_value": 1030.0,
+      "standard_units": "nM",
+      "pchembl_value": 5.99,
+      "stratum": "weak"
+    }
+  ],
+  "provenance": {
+    "source": "ChEMBL webresource_client",
+    "query": "target=CHEMBL1827; type in (IC50,Ki); relation='='; pchembl not null; 층화 ['strong', 'medium', 'weak'] 각 10건; 정렬 후 균등 간격 선택",
+    "timestamp": "2026-09-04T14:11:03.579907Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "세 층 모두 채워짐",
+        "passed": true
+      },
+      {
+        "check": "전 화합물 SMILES 파싱",
+        "passed": true
+      },
+      {
+        "check": "역가 범위 >= 3 로그",
+        "passed": true
+      },
+      {
+        "check": "중복 ChEMBL ID 없음",
+        "passed": true
+      }
+    ],
+    "notes": "n=30, pChEMBL 4.00–10.52. 음성은 가정된 비활성이 아니라 실측된 약한 활성이다. 층별 후보 수: [{'stratum': 'strong', 'candidates': 400, 'taken': 10, 'pchembl_range': [7.0, 10.52]}, {'stratum': 'medium', 'candidates': 400, 'taken': 10, 'pchembl_range': [6.0, 6.98]}, {'stratum': 'weak', 'candidates': 400, 'taken': 10, 'pchembl_range': [4.0, 5.99]}]"
+  }
+}

@@ -127,27 +127,45 @@ def build_pptx(blocks, base: Path, out: Path):
     s = prs.slides.add_slide(BLANK)
     bg = s.shapes.add_shape(1, PIn(0), PIn(0), PIn(13.333), PIn(7.5))
     bg.fill.solid(); bg.fill.fore_color.rgb = P_NAVY; bg.line.fill.background()
-    _tb(s, 0.8, 0.55, 11.8, 1.0, ["검증 게이트를 갖춘 신약탐색 에이전트 하네스의 단일 실행 기록"],
-        size=25, color=P_WHITE, bold=True)
-    _tb(s, 0.8, 1.45, 11.8, 0.5, ["그리고 그 게이트 중 둘이 반증 불가능했다는 발견"],
-        size=13, color=PRGB(0x9F, 0xC5, 0xE0))
-    ga = (base / "figures/fig1_graphical_abstract.png").resolve()
-    if ga.exists(): s.shapes.add_picture(str(ga), PIn(1.15), PIn(2.15), width=PIn(11.0))
+    # 표지 문구는 본문 제목에서 가져온다 — 하드코딩하면 다른 보고서에 옛 제목이 붙는다
+    hs = [v for k, v, lvl in blocks if k == "heading"]
+    cover_title = hs[0] if hs else "연구 보고서"
+    cover_sub = hs[1] if len(hs) > 1 else ""
+    _tb(s, 0.8, 0.55, 11.8, 1.0, [cover_title], size=25, color=P_WHITE, bold=True)
+    if cover_sub:
+        _tb(s, 0.8, 1.45, 11.8, 0.5, [cover_sub], size=13, color=PRGB(0x9F, 0xC5, 0xE0))
+    ga = next(((base / v).resolve() for k, v, _ in blocks
+               if k == "image" and "graphical_abstract" in v and (base / v).exists()), None)
+    if ga: s.shapes.add_picture(str(ga), PIn(1.15), PIn(2.15), width=PIn(11.0))
 
-    # 그림 슬라이드 (fig2~fig5)
-    caps = {"fig2_pipeline": ("하네스 구조", "계약 · 도구 · 봉투 · 게이트"),
-            "fig3_property_space": ("물성 공간", "게이트 결과로 색을 나눈 실계산값"),
-            "fig4_gate_waterfall": ("단계별 잔존", "앞의 두 조건은 아무것도 탈락시키지 않았다"),
-            "fig5_qed_threshold": ("QED 임계", "임계 하나가 통과와 탈락을 갈랐다"),
-            "fig6_threshold_sweep": ("임계 민감도", "측정값은 그대로, 임계만 옮겨 재집계")}
-    for path, _ in imgs:
-        key = Path(path).stem
-        if key not in caps: continue
-        title, sub = caps[key]
+    # 그림 슬라이드 — 제목·설명을 본문 캡션에서 뽑는다.
+    # 파일명을 표에 하드코딩하면 그림 세트가 바뀔 때 조용히 전부 건너뛴다 (실제로 그랬다).
+    def _caption_for(idx):
+        """이미지 블록 바로 뒤의 문단이 그 그림의 캡션이다."""
+        for k, v, _ in blocks[idx + 1: idx + 3]:
+            if k == "para" and v.lstrip().startswith("**Figure"):
+                return v
+        return ""
+
+    def _split_caption(cap):
+        """'**Figure 3. 재도킹 대조.** 나머지 설명' → ('재도킹 대조', '나머지 설명')"""
+        t = re.sub(r"\*\*", "", cap).strip()
+        m = re.match(r"^Figure\s+[\w.]+\.\s*([^.]{2,60})\.\s*(.*)$", t, re.S)
+        if not m:
+            return (t[:60] or "그림"), ""
+        return m.group(1).strip(), re.sub(r"\s+", " ", m.group(2)).strip()[:150]
+
+    for i, (kind, val, _alt) in enumerate(blocks):
+        if kind != "image":
+            continue
+        f = (base / val).resolve()
+        if not f.exists():
+            continue
+        title, sub = _split_caption(_caption_for(i))
         s = new(title, "결과")
-        _tb(s, 0.6, 1.32, 12.1, 0.36, [sub], size=11, color=P_GREY)
-        p = (base / path).resolve()
-        if p.exists(): s.shapes.add_picture(str(p), PIn(0.9), PIn(1.85), width=PIn(11.5))
+        if sub:
+            _tb(s, 0.6, 1.32, 12.1, 0.5, [sub], size=10.5, color=P_GREY)
+        s.shapes.add_picture(str(f), PIn(0.9), PIn(1.95), width=PIn(11.5))
 
     # 핵심 결과 표
     tbls = [v for k, v, _ in blocks if k == "table"]
@@ -187,7 +205,7 @@ def build_pptx(blocks, base: Path, out: Path):
     # 결론
     s = new("결론", "정리")
     _tb(s, 0.9, 1.7, 11.6, 3.2,
-        ["1.  통과만 본 게이트는 검증된 것이 아니다.",
+        ["1.  자세 생성은 작동했고 채점이 작동하지 않았다.",
          "     단, 호출자가 반환값을 검사할 때만이다. 본 실행에서는 4단계 중 3단계만 그랬다.",
          "",
          "2.  강제되었다고 기준이 옳은 것은 아니다.",
@@ -207,22 +225,27 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--md", default="outputs/report_pde5.md")
     ap.add_argument("--out", default="outputs/docs")
+    ap.add_argument("--stem", default="report_pde5", help="산출 파일 이름 줄기")
     a = ap.parse_args()
     md = Path(a.md); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
+    stem = a.stem
     blocks = parse(md.read_text())
-    ni, nt = build_docx(blocks, md.parent, out / "report_pde5.docx")
-    ns = build_pptx(blocks, md.parent, out / "report_pde5.pptx")
+    ni, nt = build_docx(blocks, md.parent, out / f"{stem}.docx")
+    ns = build_pptx(blocks, md.parent, out / f"{stem}.pptx")
     print(f"  docx: 그림 {ni}장 · 표 {nt}개")
     print(f"  pptx: 슬라이드 {ns}장")
 
     # 신선도 검사 — 리뷰에서 "절차를 넣었다고 했는데 코드가 없다" 는 지적을 받아 실제로 구현.
     # 본문이나 그림이 문서보다 새로우면 배포본이 철회된 주장을 담을 수 있다.
-    figs = list((md.parent / "figures").glob("*.png"))
+    # 본문이 실제로 참조하는 그림만 검사한다 — 디렉토리를 하드코딩하면 새 보고서에서 헛돈다.
+    figs = [md.parent / src for kind, src, _ in blocks if kind == "image"
+            and (md.parent / src).exists()]
     base = max([md.stat().st_mtime] + [f.stat().st_mtime for f in figs])
-    stale = [d.name for d in out.glob("report_pde5*") if d.stat().st_mtime < base]
+    stale = [d.name for d in out.glob(f"{stem}*") if d.stat().st_mtime < base]
     if stale:
         raise SystemExit(f"[신선도 실패] 본문·그림보다 오래된 산출물: {stale} — 재생성이 필요합니다.")
-    print(f"  신선도: 산출물 전부 본문·그림보다 최신 (검사 대상 {len(list(out.glob('report_pde5*')))}건)")
+    print(f"  신선도: 산출물 {len(list(out.glob(stem + '*')))}건 전부 본문·참조 그림 "
+          f"{len(figs)}장보다 최신")
 
 
 if __name__ == "__main__":

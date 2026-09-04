@@ -1,0 +1,5 @@
+-0.035300 gauss(o=0,_w=0.5,_c=8)
+-0.001000 gauss(o=3,_w=2,_c=8)
+0.460800 repulsion(o=0,_c=8)
+0.001500 hydrophobic(g=0.5,_b=1.5,_c=8)
+0.031500 non_dir_h_bond(g=-0.7,_b=0,_c=8)

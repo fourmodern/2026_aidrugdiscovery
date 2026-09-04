@@ -1,0 +1,279 @@
+{
+  "result": {
+    "design": "가중치는 훈련 30건으로만 적합. 시험 10건은 겹치지 않는 독립 세트.",
+    "fitted_weights": {
+      "gauss(o=0,_w=0.5,_c=8)": -0.0353,
+      "gauss(o=3,_w=2,_c=8)": -0.001,
+      "repulsion(o=0,_c=8)": 0.4608,
+      "hydrophobic(g=0.5,_b=1.5,_c=8)": 0.0015,
+      "non_dir_h_bond(g=-0.7,_b=0,_c=8)": 0.0315
+    },
+    "train_n": 30,
+    "test_n": 10,
+    "arm_default": {
+      "rows": [
+        {
+          "chembl_id": "CHEMBL419215",
+          "smiles": "N#Cc1ccc2c(Cl)nnc(NCc3ccc4c(c3)OCO4)c2c1",
+          "ic50_nM": 100.0,
+          "pIC50": 7.0,
+          "stratum": "strong",
+          "score": -9.9,
+          "top_score": -9.9,
+          "selected_mode": 1,
+          "mcs_rmsd_to_ref": null
+        },
+        {
+          "chembl_id": "CHEMBL169843",
+          "smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(ncn2CCC)c(=O)[nH]1",
+          "ic50_nM": 10.0,
+          "pIC50": 8.0,
+          "stratum": "strong",
+          "score": -9.7,
+          "top_score": -9.9,
+          "selected_mode": 4,
+          "mcs_rmsd_to_ref": 1.519
+        },
+        {
+          "chembl_id": "CHEMBL106447",
+          "smiles": "CCn1c(=O)c2c(nc(NC3CCCC3)n2Cc2ccc(O)c(Cl)c2)n(CC)c1=O",
+          "ic50_nM": 1.8,
+          "pIC50": 8.74,
+          "stratum": "strong",
+          "score": -9.1,
+          "top_score": -9.1,
+          "selected_mode": 1,
+          "mcs_rmsd_to_ref": 3.02
+        },
+        {
+          "chembl_id": "CHEMBL38735",
+          "smiles": "CCc1cc(C#N)cc2c(NCc3ccc(OC)c(Cl)c3)c(CO)cnc12",
+          "ic50_nM": 0.05,
+          "pIC50": 10.3,
+          "stratum": "strong",
+          "score": -9.0,
+          "top_score": -9.4,
+          "selected_mode": 4,
+          "mcs_rmsd_to_ref": 3.059
+        },
+        {
+          "chembl_id": "CHEMBL63637",
+          "smiles": "COc1cc2c(OCc3ccc4c(c3)OCO4)ncnc2c(OC)c1OC",
+          "ic50_nM": 1000.0,
+          "pIC50": 6.0,
+          "stratum": "medium",
+          "score": -8.9,
+          "top_score": -9.2,
+          "selected_mode": 4,
+          "mcs_rmsd_to_ref": 2.599
+        },
+        {
+          "chembl_id": "CHEMBL583914",
+          "smiles": "C[C@@H]1CN(Cc2ccc3nccnc3c2)C[C@H]1c1nc2c(cnn2C2CCCC2)c(=O)[nH]1",
+          "ic50_nM": 349.0,
+          "pIC50": 6.46,
+          "stratum": "medium",
+          "score": -10.3,
+          "top_score": -10.5,
+          "selected_mode": 8,
+          "mcs_rmsd_to_ref": 1.863
+        },
+        {
+          "chembl_id": "CHEMBL538031",
+          "smiles": "Cc1ccc2nc(-c3cccnc3)nc(NCc3ccccc3)c2c1.Cl.Cl",
+          "ic50_nM": 105.0,
+          "pIC50": 6.98,
+          "stratum": "medium",
+          "score": -9.8,
+          "top_score": -10.4,
+          "selected_mode": 8,
+          "mcs_rmsd_to_ref": 4.426
+        },
+        {
+          "chembl_id": "CHEMBL112996",
+          "smiles": "COc1cc2c3c(n1)C(c1ccccc1)=NC(NC(=O)c1cccnc1)C(=O)N3CC2",
+          "ic50_nM": 95000.0,
+          "pIC50": 4.02,
+          "stratum": "weak",
+          "score": -7.8,
+          "top_score": -7.8,
+          "selected_mode": 1,
+          "mcs_rmsd_to_ref": 5.166
+        },
+        {
+          "chembl_id": "CHEMBL361476",
+          "smiles": "COc1ccc2c(c1)OC(=O)CC2CC(=O)Nc1nc(CC(=O)NO)cs1",
+          "ic50_nM": 5990.0,
+          "pIC50": 5.22,
+          "stratum": "weak",
+          "score": -9.2,
+          "top_score": -10.0,
+          "selected_mode": 9,
+          "mcs_rmsd_to_ref": 3.225
+        },
+        {
+          "chembl_id": "CHEMBL195600",
+          "smiles": "CCOc1ccccc1-c1nc(O)c2nc3c(C)cccn3c2n1",
+          "ic50_nM": 1050.0,
+          "pIC50": 5.98,
+          "stratum": "weak",
+          "score": -8.9,
+          "top_score": -9.9,
+          "selected_mode": 8,
+          "mcs_rmsd_to_ref": 0.949
+        }
+      ],
+      "spearman": -0.365,
+      "n_scored": 10
+    },
+    "arm_custom": {
+      "rows": [
+        {
+          "chembl_id": "CHEMBL419215",
+          "smiles": "N#Cc1ccc2c(Cl)nnc(NCc3ccc4c(c3)OCO4)c2c1",
+          "ic50_nM": 100.0,
+          "pIC50": 7.0,
+          "stratum": "strong",
+          "score": -4.0,
+          "top_score": -4.0,
+          "selected_mode": 1,
+          "mcs_rmsd_to_ref": null
+        },
+        {
+          "chembl_id": "CHEMBL169843",
+          "smiles": "CCCOc1ccc(S(=O)(=O)N2CCN(C)CC2)cc1-c1nc2c(ncn2CCC)c(=O)[nH]1",
+          "ic50_nM": 10.0,
+          "pIC50": 8.0,
+          "stratum": "strong",
+          "score": -4.8,
+          "top_score": -5.4,
+          "selected_mode": 6,
+          "mcs_rmsd_to_ref": 1.724
+        },
+        {
+          "chembl_id": "CHEMBL106447",
+          "smiles": "CCn1c(=O)c2c(nc(NC3CCCC3)n2Cc2ccc(O)c(Cl)c2)n(CC)c1=O",
+          "ic50_nM": 1.8,
+          "pIC50": 8.74,
+          "stratum": "strong",
+          "score": -4.0,
+          "top_score": -4.1,
+          "selected_mode": 3,
+          "mcs_rmsd_to_ref": 3.438
+        },
+        {
+          "chembl_id": "CHEMBL38735",
+          "smiles": "CCc1cc(C#N)cc2c(NCc3ccc(OC)c(Cl)c3)c(CO)cnc12",
+          "ic50_nM": 0.05,
+          "pIC50": 10.3,
+          "stratum": "strong",
+          "score": -4.2,
+          "top_score": -4.4,
+          "selected_mode": 5,
+          "mcs_rmsd_to_ref": 4.133
+        },
+        {
+          "chembl_id": "CHEMBL63637",
+          "smiles": "COc1cc2c(OCc3ccc4c(c3)OCO4)ncnc2c(OC)c1OC",
+          "ic50_nM": 1000.0,
+          "pIC50": 6.0,
+          "stratum": "medium",
+          "score": -4.1,
+          "top_score": -4.4,
+          "selected_mode": 4,
+          "mcs_rmsd_to_ref": 2.436
+        },
+        {
+          "chembl_id": "CHEMBL583914",
+          "smiles": "C[C@@H]1CN(Cc2ccc3nccnc3c2)C[C@H]1c1nc2c(cnn2C2CCCC2)c(=O)[nH]1",
+          "ic50_nM": 349.0,
+          "pIC50": 6.46,
+          "stratum": "medium",
+          "score": -4.0,
+          "top_score": -4.4,
+          "selected_mode": 6,
+          "mcs_rmsd_to_ref": 1.988
+        },
+        {
+          "chembl_id": "CHEMBL538031",
+          "smiles": "Cc1ccc2nc(-c3cccnc3)nc(NCc3ccccc3)c2c1.Cl.Cl",
+          "ic50_nM": 105.0,
+          "pIC50": 6.98,
+          "stratum": "medium",
+          "score": -4.0,
+          "top_score": -4.4,
+          "selected_mode": 9,
+          "mcs_rmsd_to_ref": 4.056
+        },
+        {
+          "chembl_id": "CHEMBL112996",
+          "smiles": "COc1cc2c3c(n1)C(c1ccccc1)=NC(NC(=O)c1cccnc1)C(=O)N3CC2",
+          "ic50_nM": 95000.0,
+          "pIC50": 4.02,
+          "stratum": "weak",
+          "score": -2.7,
+          "top_score": -3.0,
+          "selected_mode": 7,
+          "mcs_rmsd_to_ref": 5.154
+        },
+        {
+          "chembl_id": "CHEMBL361476",
+          "smiles": "COc1ccc2c(c1)OC(=O)CC2CC(=O)Nc1nc(CC(=O)NO)cs1",
+          "ic50_nM": 5990.0,
+          "pIC50": 5.22,
+          "stratum": "weak",
+          "score": -4.3,
+          "top_score": -4.3,
+          "selected_mode": 1,
+          "mcs_rmsd_to_ref": 3.057
+        },
+        {
+          "chembl_id": "CHEMBL195600",
+          "smiles": "CCOc1ccccc1-c1nc(O)c2nc3c(C)cccn3c2n1",
+          "ic50_nM": 1050.0,
+          "pIC50": 5.98,
+          "stratum": "weak",
+          "score": -3.5,
+          "top_score": -3.6,
+          "selected_mode": 7,
+          "mcs_rmsd_to_ref": 0.944
+        }
+      ],
+      "spearman": -0.4,
+      "n_scored": 10
+    },
+    "custom_better": true,
+    "exhaustiveness": 16,
+    "seed": 42,
+    "difference": {
+      "delta_spearman": -0.035,
+      "bootstrap_ci95": [
+        -0.93,
+        0.734
+      ],
+      "frac_resamples_favoring_custom": 0.542,
+      "bootstrap_iters": 9999,
+      "bootstrap_seed": 42,
+      "interpretation": "CI 가 0 을 포함하고 재표본의 절반가량만 커스텀을 지지한다 — 구분 불가"
+    }
+  },
+  "provenance": {
+    "source": "smina --custom_scoring",
+    "query": "held-out 10",
+    "timestamp": "2026-09-04T14:53:10.834619Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "두 팔 모두 전 화합물 점수 산출",
+        "passed": true
+      },
+      {
+        "check": "시험 세트가 훈련과 분리됨",
+        "passed": true
+      }
+    ],
+    "notes": "기본 Spearman -0.365 vs 커스텀 -0.4. 커스텀이 개선. 점수는 낮을수록 좋으므로 더 음수인 쪽이 낫다. 차이 -0.035, 부트스트랩 95% CI [-0.93, 0.734] — 0 을 포함하므로 개선을 주장할 수 없다."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/sar.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:58:27.677470Z",
+  "source_sha256": "53f6c24c5c3619a8",
+  "note": "ChEMBL 보고 IC50/pIC50 실측"
+}

@@ -1,4 +1,6 @@
-structures/
-*.pdb
-report_pde5.md
-plan.json
+# outputs/ 는 사용자가 하네스를 직접 돌렸을 때 쌓이는 디렉토리다.
+# 배포용 예제 산출물은 sample_run/ 에 있으므로 여기 내용은 커밋하지 않는다.
+# 예외는 실행 흔적을 보여주는 run_gatelog.txt 하나뿐이다.
+*
+!.gitignore
+!run_gatelog.txt

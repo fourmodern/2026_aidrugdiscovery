@@ -1,0 +1,8 @@
+{
+  "source": "/home/hjpark/lecture_drug1/0905_agent/pde5_harness/sample_run/regression.json",
+  "script": "scripts/make_docking_figures.py",
+  "n_records": 30,
+  "generated_at": "2026-09-04T14:33:00.774210Z",
+  "source_sha256": "c46716a1d45a024b",
+  "note": "R2/Q2 및 라벨섞기 귀무분포"
+}

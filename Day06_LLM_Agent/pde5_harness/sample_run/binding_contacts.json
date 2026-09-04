@@ -1,0 +1,114 @@
+{
+  "result": {
+    "compound": "CHEMBL1916483",
+    "cutoff_angstrom": 4.0,
+    "contacts": [
+      [
+        "MET816",
+        5
+      ],
+      [
+        "PHE820",
+        5
+      ],
+      [
+        "GLN817",
+        4
+      ],
+      [
+        "TYR612",
+        3
+      ],
+      [
+        "ILE768",
+        3
+      ],
+      [
+        "VAL782",
+        3
+      ],
+      [
+        "ILE813",
+        3
+      ],
+      [
+        "ASN661",
+        2
+      ],
+      [
+        "GLU682",
+        2
+      ],
+      [
+        "THR723",
+        2
+      ],
+      [
+        "ASP764",
+        2
+      ],
+      [
+        "LEU765",
+        2
+      ],
+      [
+        "GLN775",
+        2
+      ],
+      [
+        "ALA779",
+        2
+      ],
+      [
+        "PHE786",
+        2
+      ],
+      [
+        "HIS657",
+        1
+      ],
+      [
+        "ASN662",
+        1
+      ],
+      [
+        "LEU725",
+        1
+      ],
+      [
+        "ALA767",
+        1
+      ],
+      [
+        "MG1002",
+        1
+      ]
+    ],
+    "source": "controlled",
+    "pose_rule": "top",
+    "pose_selection_note": "자세는 점수 1위다 — 공결정 리간드를 참조하지 않았다. 따라서 접촉 잔기 일치는 선택 규칙의 귀결이 아니다. 다만 상자를 포켓에 지정했으므로 포켓 잔기 접촉 자체는 거의 자동이다."
+  },
+  "provenance": {
+    "source": "PyMOL 좌표 기반 접촉 계산",
+    "query": "CHEMBL1916483, cutoff 4.0 A",
+    "timestamp": "2026-09-04T16:19:02.453005Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "접촉 잔기 검출됨",
+        "passed": true
+      },
+      {
+        "check": "접촉이 좌표에서 계산됨 (하드코딩 아님)",
+        "passed": true
+      },
+      {
+        "check": "그림 3장 렌더됨",
+        "passed": true
+      }
+    ],
+    "notes": "n=1 이므로 어느 방향으로도 일반화할 수 없다."
+  }
+}

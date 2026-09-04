@@ -1,0 +1,69 @@
+{
+  "result": {
+    "old_design": {
+      "n": 30,
+      "spearman_top_pose": -0.538,
+      "perm_p": 0.00285,
+      "partial_controlling_tanimoto": -0.534,
+      "spearman_score_vs_tanimoto": -0.125,
+      "perm_p_score_vs_tanimoto": 0.50747,
+      "spearman_potency_vs_tanimoto": 0.372,
+      "attenuation_from_scaffold_control": 0.0081
+    },
+    "new_overall_spearman": -0.079,
+    "test_1_design": {
+      "description": "새 163건에서 옛 설계(역가 3층, 층당 10건, 골격 무시)로 4000회 반복 추출한 Spearman 분포",
+      "pool_sizes": {
+        "strong": 88,
+        "medium": 32,
+        "weak": 43
+      },
+      "n_draws": 4000,
+      "median": -0.148,
+      "p2.5": -0.446,
+      "p97.5": 0.154,
+      "frac_below_-0.4": 0.047,
+      "old_observed": -0.538
+    },
+    "test_2_sample_size": {
+      "description": "새 163건에서 층화 없이 무작위 30건 추출",
+      "median": -0.082,
+      "p2.5": -0.381,
+      "p97.5": 0.242,
+      "frac_below_-0.4": 0.0192
+    },
+    "test_3_protocol_on_shared_compounds": {
+      "n_shared_compounds": 3,
+      "shared_ids": [
+        "CHEMBL361582",
+        "CHEMBL42713",
+        "CHEMBL92043"
+      ]
+    },
+    "verdict": "표본 설계만으로는 설명되지 않는다: 옛 설계를 새 데이터에 적용해도 옛 상관이 재현되지 않는다. 화합물 집합 또는 프로토콜 차이가 남는다",
+    "what_this_refutes": "이전 판은 '옛 상관은 골격 유사성이 만든 것'이라고 적었다. 옛 데이터에서 골격을 통제해도 상관은 0.8% 밖에 줄지 않으므로 그 설명은 성립하지 않는다."
+  },
+  "provenance": {
+    "source": "옛/새 산출물 재분석 (새 도킹 없음)",
+    "query": "draws=4000, seed=42",
+    "timestamp": "2026-09-04T16:10:53.251403Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "옛 데이터 편상관 산출",
+        "passed": true
+      },
+      {
+        "check": "설계 재현 추출 1000회 이상",
+        "passed": true
+      },
+      {
+        "check": "표본 크기 대조 수행",
+        "passed": true
+      }
+    ],
+    "notes": "표본 설계만으로는 설명되지 않는다: 옛 설계를 새 데이터에 적용해도 옛 상관이 재현되지 않는다. 화합물 집합 또는 프로토콜 차이가 남는다"
+  }
+}

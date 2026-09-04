@@ -1,0 +1,105 @@
+{
+  "result": {
+    "n": 30,
+    "arms": {
+      "selected_pose": {
+        "spearman": -0.474,
+        "spearman_ci95": [
+          -0.713,
+          -0.137
+        ],
+        "auc_strong_vs_weak": 0.765,
+        "auc_perm_p": 0.0457,
+        "bedroc_a20": 1.806,
+        "ef_top10of20": 1.4,
+        "top10_strata": {
+          "strong": 3,
+          "medium": 5,
+          "weak": 2
+        }
+      },
+      "top_pose": {
+        "spearman": -0.538,
+        "spearman_ci95": [
+          -0.752,
+          -0.22
+        ],
+        "auc_strong_vs_weak": 0.775,
+        "auc_perm_p": 0.0366,
+        "bedroc_a20": 1.996,
+        "ef_top10of20": 1.4,
+        "top10_strata": {
+          "strong": 5,
+          "medium": 5,
+          "weak": 0
+        }
+      }
+    },
+    "within_stratum": {
+      "strong": {
+        "n": 10,
+        "spearman_selected": -0.305,
+        "pIC50_range": [
+          7.0,
+          10.52
+        ]
+      },
+      "medium": {
+        "n": 10,
+        "spearman_selected": -0.529,
+        "pIC50_range": [
+          6.0,
+          6.98
+        ]
+      },
+      "weak": {
+        "n": 10,
+        "spearman_selected": -0.479,
+        "pIC50_range": [
+          4.0,
+          5.99
+        ]
+      }
+    },
+    "mcs_by_stratum": {
+      "strong": {
+        "mean_mcs_atoms": 16.6,
+        "mean_mcs_rmsd": 2.33,
+        "at_8atom_floor": 3
+      },
+      "medium": {
+        "mean_mcs_atoms": 14.5,
+        "mean_mcs_rmsd": 2.37,
+        "at_8atom_floor": 2
+      },
+      "weak": {
+        "mean_mcs_atoms": 9.4,
+        "mean_mcs_rmsd": 3.2,
+        "at_8atom_floor": 4
+      }
+    }
+  },
+  "provenance": {
+    "source": "regression.json 재계산",
+    "query": "n=30",
+    "timestamp": "2026-09-04T14:57:47.431319Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "두 자세 팔 모두 AUC 산출",
+        "passed": true
+      },
+      {
+        "check": "상위10 층 구성 합 = 10",
+        "passed": true
+      },
+      {
+        "check": "층별 MCS 통계 산출",
+        "passed": true
+      }
+    ],
+    "notes": "AUC(strong vs weak) 선택 0.765 / 1위 0.775. 1위 자세 점수 상위10 층구성 {'strong': 5, 'medium': 5, 'weak': 0}. 정량 예측과 순위 분리는 서로 다른 질문이며 답도 다르다."
+  }
+}

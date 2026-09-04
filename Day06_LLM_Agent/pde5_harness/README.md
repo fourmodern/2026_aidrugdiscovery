@@ -69,7 +69,18 @@
 | `chembl-actives` | CHEMBL1827 활성물질 조회 (실 ID·SMILES) | `scripts/chembl_actives.py` |
 | `mol-properties` | 물성·QED·SA·Lipinski 게이트 | `scripts/mol_properties.py` |
 | `selectivity-check` | PDE5 vs PDE6 선택성 (정직한 한계) | `scripts/selectivity.py` |
-| `report-writer` | IMRAD 보고서 종합 → `outputs/report_pde5.md` | (봉투 종합 + `verify.py`) |
+| `dataset-builder` | 역가 × 골격유사도 직교 데이터셋 (9칸 격자) | `scripts/build_controlled_dataset.py` |
+| `structure-fetch` | RCSB 결정 구조 + 공결정 리간드 확보 | `scripts/dock_controlled.py` (내장) |
+| `docking-validation` | 도킹 + 재도킹 대조 C1(샘플링)/C2(채점) 분리 | `scripts/dock_controlled.py` |
+| `exhaustiveness-sweep` | 탐색 깊이를 바꿔 자세 실패와 채점 실패를 가름 | `scripts/exhaustiveness_sweep.py` |
+| `confound-control` | 골격 유사성 통제 — 편상관·구간내 상관 필수 | `scripts/analyze_controlled.py` |
+| `score-regression` | 항 회귀 — 표준화 계수·VIF·Q²·라벨섞기 | `scripts/terms_controlled.py` |
+| `statistics-validation` | 직접 구현한 통계 함수를 scipy 와 대조 | `scripts/test_statistics.py` |
+| `binding-mode` | PyMOL 결합 양상 + 좌표 기반 접촉 집계 | `scripts/render_binding_mode.py` |
+| `figure-builder` | 논문급 그림 세트 (PNG + SVG, 색각 안전) | `scripts/figures_controlled.py` |
+| `report-writer` | IMRAD 보고서 종합 → `sample_run/report/` | `scripts/report_controlled.py` |
+| `report-docs` | 본문 → docx · pptx (신선도 검사 포함) | `scripts/make_docs.py` |
+| `pi-review` / `devils-advocate` / `galley-proof` | 외부 critic 리뷰 게이트 | (Agent tool) |
 
 ## 스크립트 (`scripts/`)
 
@@ -82,6 +93,16 @@
 | `selectivity.py` | PDE5/PDE6 정성 선택성 | 표준 봉투 |
 | `mol_utils.py` (옵션) | RCSB PDB 다운로드 + 구조 정보 | 표준 봉투 |
 | `docking.py` (옵션) | smina 도킹(없으면 graceful 스킵) | 표준 봉투 |
+| `build_controlled_dataset.py` | ChEMBL 전수 → 중앙값 집계 → 9칸 격자 추출 | 표준 봉투 |
+| `dock_controlled.py` | 병렬 도킹 + 재도킹 대조 (C1/C2) | 표준 봉투 |
+| `exhaustiveness_sweep.py` | 깊이 × 시드 스윕, 자세/채점 진단 | 표준 봉투 |
+| `analyze_controlled.py` | 편상관·구간내 상관·이중회귀·ROC | 표준 봉투 |
+| `terms_controlled.py` | 항 추출 + 표준화 OLS + VIF + 순열 중요도 | 표준 봉투 |
+| `test_statistics.py` | 통계 함수 scipy 대조 (동점 주입) | 표준 봉투 |
+| `contact_concordance.py` | 접촉 잔기 — 두 자세 규칙 비교 | 표준 봉투 |
+| `figures_controlled.py` | 논문급 그림 12종 (PNG + SVG) | 파일 |
+| `report_controlled.py` | v3.0 보고서 생성 (수치 전량 주입) | 파일 |
+| `make_docs.py` | 마크다운 → docx · pptx + 신선도 검사 | 파일 |
 
 모든 과학 스크립트는 `{result, provenance, verification}` 표준 봉투(JSON)를 반환한다.
 
@@ -128,6 +149,52 @@ python scripts/mol_utils.py 1UDT      # (옵션) PDE5A 구조 확보
 - **smina 미설치 시**: `docking.py` 는 도킹을 실행하지 않고 "도킹 미실행(구조·smina 필요)"을
   표준 봉투로 반환한다(스코어 날조 금지).
 - 모든 스크립트는 import/네트워크 실패에서 **죽지 않고** 무-날조 안내로 graceful 폴백한다.
+
+---
+
+## 연구 산출물 (`sample_run/`)
+
+이 하네스가 실제로 수행한 연구 결과가 들어 있다. **세 판본이 모두 보존되어 있으며, 그 자체가
+이 하네스의 가장 중요한 교육 자료다** — 자동 게이트를 전부 통과한 결론이 두 번 틀렸다.
+
+| 판본 | 설계 | 결론 | 무엇이 무너뜨렸나 |
+|------|------|------|-------------------|
+| v1.0 | n=30, 역가로만 층화 | "도킹은 역가를 예측하지 못한다" | 선별 지표를 하나도 계산하지 않았다 |
+| v2.0 | 같은 데이터 + 선별 지표 | "선별은 되고 정량은 안 된다" | 강한 화합물이 전부 공결정 리간드 유사체였다 |
+| **v3.0** | n=163, 역가 × 골격 직교 설계 | `report_controlled.md` 참조 | — (현행) |
+
+```
+sample_run/
+├── dataset_controlled.json     역가 3구간 × Tanimoto 3구간 9칸 격자 (v3.0)
+├── docking_controlled.json     도킹 결과 + 재도킹 대조 (C1/C2 분리)
+├── exhaustiveness_sweep.json   탐색 깊이 스윕 — 자세 실패와 채점 실패를 가른다
+├── analysis_controlled.json    편상관 · 구간내 상관 · 선별 지표
+├── terms_controlled.json       스코어 항 회귀 (표준화 계수 · VIF · 순열 중요도)
+├── statistics_validation.json  직접 구현한 통계 함수의 scipy 대조 결과
+├── contact_concordance.json    접촉 잔기 — 참조 선택 자세 vs 점수 1위 자세
+├── structures/work_controlled/ 도킹 자세 SDF 전수 (재현 검증용)
+└── report/
+    ├── report_controlled.md    v3.0 본문 (현행)
+    ├── report_pde5.md          v2.0 본문 (대체됨 — 감사 추적용 보존)
+    ├── figures_controlled/     v3.0 그림 (PNG + SVG)
+    └── docs/                   docx · pptx
+```
+
+모든 산출 파일은 표준 봉투 `{result, provenance, verification}` 형식이다. 보고서의 모든
+수치는 이 파일들에서 스크립트가 주입한 값이며, 사람이 타이핑한 것은 서술문과 절 제목뿐이다.
+
+### 재현
+
+```bash
+python scripts/build_controlled_dataset.py --per-cell 20      # ChEMBL 전수 → 9칸 추출
+python scripts/dock_controlled.py --exhaustiveness 64 --workers 24
+python scripts/exhaustiveness_sweep.py                        # 탐색 깊이 진단
+python scripts/analyze_controlled.py                          # 교란 통제 분석
+python scripts/terms_controlled.py                            # 항 기여도
+python scripts/test_statistics.py                             # 통계 함수 검증
+python scripts/figures_controlled.py                          # 그림 전체
+python scripts/report_controlled.py                           # 보고서
+```
 
 ---
 

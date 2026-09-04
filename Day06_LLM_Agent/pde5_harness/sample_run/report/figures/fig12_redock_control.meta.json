@@ -1,0 +1,8 @@
+{
+  "source": "/home/hjpark/lecture_drug1/0905_agent/pde5_harness/sample_run/docking.json",
+  "script": "scripts/make_docking_figures.py",
+  "n_records": 9,
+  "generated_at": "2026-09-04T14:33:00.927709Z",
+  "source_sha256": "fc9d699be0a187c8",
+  "note": "모드별 결정 자세 대비 RMSD"
+}

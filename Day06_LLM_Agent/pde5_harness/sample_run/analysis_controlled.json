@@ -1,0 +1,286 @@
+{
+  "result": {
+    "n": 163,
+    "design": "주 결과는 점수 1위 자세(top). 공결정 리간드 참조 없이 채점 함수만으로 결정된다. 참조 기준 자세(reference)는 민감도 분석으로만 쓴다.",
+    "arms": {
+      "top_pose": {
+        "spearman": -0.079,
+        "ci95": [
+          -0.23,
+          0.076
+        ],
+        "perm_p": 0.31878,
+        "spearman_score_vs_tanimoto": 0.11,
+        "spearman_pIC50_vs_tanimoto": 0.208,
+        "partial_spearman_controlling_tanimoto": -0.105,
+        "partial_perm_p": 0.19274,
+        "spearman_score_vs_heavy_atoms": -0.342,
+        "spearman_pIC50_vs_heavy_atoms": 0.136,
+        "partial_spearman_controlling_size": -0.034,
+        "partial_spearman_controlling_both": -0.088,
+        "within_similarity_bin": {
+          "far": {
+            "n": 60,
+            "spearman": -0.082,
+            "ci95": [
+              -0.329,
+              0.176
+            ],
+            "perm_p": 0.53387,
+            "pIC50_range": [
+              4.0,
+              11.0
+            ]
+          },
+          "mid": {
+            "n": 51,
+            "spearman": -0.024,
+            "ci95": [
+              -0.298,
+              0.253
+            ],
+            "perm_p": 0.86546,
+            "pIC50_range": [
+              4.37,
+              10.0
+            ]
+          },
+          "near": {
+            "n": 52,
+            "spearman": -0.397,
+            "ci95": [
+              -0.605,
+              -0.139
+            ],
+            "perm_p": 0.00365,
+            "pIC50_range": [
+              5.0,
+              10.6
+            ]
+          }
+        },
+        "within_bin_mean_spearman": -0.168,
+        "dual_regression_standardized": {
+          "intercept": 0.0,
+          "beta_score": -0.088,
+          "beta_tanimoto": 0.182
+        },
+        "auc_strong_vs_weak": 0.574,
+        "auc_within_similarity_bin": {
+          "far": 0.549,
+          "mid": 0.534,
+          "near": 0.792
+        },
+        "top16_potency_bins": {
+          "strong": 7,
+          "medium": 7,
+          "weak": 2
+        },
+        "top16_similarity_bins": {
+          "far": 11,
+          "mid": 1,
+          "near": 4
+        },
+        "within_bin_partial": {
+          "far": {
+            "n": 60,
+            "raw": -0.082,
+            "controlling_size": 0.178,
+            "controlling_tanimoto": -0.155,
+            "controlling_both": 0.05
+          },
+          "mid": {
+            "n": 51,
+            "raw": -0.024,
+            "controlling_size": 0.033,
+            "controlling_tanimoto": 0.017,
+            "controlling_both": -0.116
+          },
+          "near": {
+            "n": 52,
+            "raw": -0.397,
+            "controlling_size": -0.437,
+            "controlling_tanimoto": -0.421,
+            "controlling_both": -0.459
+          }
+        },
+        "auc_ci95": {
+          "far": {
+            "auc": 0.549,
+            "n_pos": 20,
+            "n_neg": 20,
+            "ci95": [
+              0.369,
+              0.729
+            ]
+          },
+          "mid": {
+            "auc": 0.534,
+            "n_pos": 20,
+            "n_neg": 11,
+            "ci95": [
+              0.32,
+              0.748
+            ]
+          },
+          "near": {
+            "auc": 0.792,
+            "n_pos": 20,
+            "n_neg": 12,
+            "ci95": [
+              0.637,
+              0.947
+            ]
+          },
+          "all": {
+            "auc": 0.574,
+            "n_pos": 60,
+            "n_neg": 43,
+            "ci95": [
+              0.463,
+              0.685
+            ]
+          }
+        },
+        "multiplicity": {
+          "family": "유사도 3대역 내 상관 검정",
+          "bonferroni": {
+            "far": 1.0,
+            "mid": 1.0,
+            "near": 0.0109
+          },
+          "benjamini_hochberg": {
+            "near": 0.0109,
+            "far": 0.8008,
+            "mid": 0.8655
+          }
+        },
+        "pose_validity": {
+          "all": {
+            "n": 158,
+            "median_rmsd": 4.505,
+            "frac_under_threshold": 0.19,
+            "threshold_angstrom": 2.0
+          },
+          "far": {
+            "n": 55,
+            "median_rmsd": 5.247,
+            "frac_under_threshold": 0.018,
+            "threshold_angstrom": 2.0
+          },
+          "mid": {
+            "n": 51,
+            "median_rmsd": 5.744,
+            "frac_under_threshold": 0.314,
+            "threshold_angstrom": 2.0
+          },
+          "near": {
+            "n": 52,
+            "median_rmsd": 3.271,
+            "frac_under_threshold": 0.25,
+            "threshold_angstrom": 2.0
+          }
+        },
+        "mean_score_by_bin": {
+          "far": -10.202,
+          "mid": -9.627,
+          "near": -9.987
+        },
+        "near_sensitivity": {
+          "full": {
+            "n": 52,
+            "spearman": -0.397
+          },
+          "drop_pchembl_5.00": {
+            "n": 44,
+            "n_dropped": 8,
+            "spearman": -0.37
+          },
+          "drop_weak_cell": {
+            "n": 40,
+            "n_dropped": 12,
+            "spearman": -0.219
+          },
+          "note": "weak x near 칸은 풀 전수(census)라 표본이 아니다. 그 칸의 pChEMBL 이 어세이 바닥값에 몰려 있으면 상관이 그 한 점에 얹힌다."
+        }
+      }
+    },
+    "sensitivity_reference_pose": {
+      "n": 158,
+      "spearman": -0.144,
+      "ci95": [
+        -0.294,
+        0.012
+      ],
+      "partial_controlling_tanimoto": -0.152
+    },
+    "confound_metrics": {
+      "pearson_r_potency_vs_similarity": 0.175,
+      "spearman_rho_potency_vs_similarity": 0.208,
+      "spearman_tanimoto_vs_heavy_atoms": 0.403,
+      "note": "두 지표를 모두 적는다. 작은 쪽만 골라 보고하면 게이트를 통과시키려고 고른 것으로 읽힌다. Tanimoto 와 중원자수의 상관이 높으면 '두 교란'이 사실상 한 축이므로 동시 통제의 의미가 줄어든다."
+    },
+    "control_redock": {
+      "score_kcal_mol": -9.6,
+      "rmsd_top_pose_angstrom": 8.368,
+      "rmsd_best_of_modes_angstrom": 1.077,
+      "best_mode_index": 5,
+      "n_modes": 9,
+      "threshold_angstrom": 2.0,
+      "sampling_control_passed": true,
+      "ranking_control_passed": false
+    },
+    "verdict": {
+      "raw_signal": -0.079,
+      "partial_signal": -0.105,
+      "partial_controlling_size": -0.034,
+      "partial_controlling_both": -0.088,
+      "within_bin_mean": -0.168,
+      "confound_share": -0.329,
+      "reading": "편상관과 구간내 상관이 원상관과 비슷하면 신호는 역가에서 온 것이다. 크게 줄면 골격 유사성이 원인이었다는 뜻이다."
+    }
+  },
+  "provenance": {
+    "source": "골격 통제 설계 분석",
+    "query": "n=163",
+    "timestamp": "2026-09-04T16:08:13.803117Z"
+  },
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "전 화합물 상관 산출",
+        "passed": true
+      },
+      {
+        "check": "크기·골격 동시 통제 편상관 산출",
+        "passed": true
+      },
+      {
+        "check": "세 유사도 구간 모두 분석됨",
+        "passed": true
+      },
+      {
+        "check": "편상관 산출",
+        "passed": true
+      },
+      {
+        "check": "순열 p 산출",
+        "passed": true
+      },
+      {
+        "check": "자세 타당도 산출",
+        "passed": true
+      },
+      {
+        "check": "AUC 신뢰구간 산출",
+        "passed": true
+      },
+      {
+        "check": "다중비교 보정 산출",
+        "passed": true
+      }
+    ],
+    "notes": "원상관 -0.079, 편상관 -0.105, 구간내 평균 -0.168."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "source": "sample_run/sar.json",
+  "script": "scripts/make_figures.py",
+  "n_records": 10,
+  "generated_at": "2026-09-04T13:58:28.335172Z",
+  "source_sha256": "53f6c24c5c3619a8",
+  "note": "RDKit 실계산 물성 + ChEMBL IC50"
+}

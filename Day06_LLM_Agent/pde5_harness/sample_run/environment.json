@@ -4,5 +4,39 @@
   "requests": "2.32.3",
   "matplotlib": "3.11.1",
   "numpy": "1.26.4",
-  "python": "3.12.3"
+  "python": "3.12.3",
+  "external_tools": {
+    "smina": "Smina Oct 15 2019.  Based on AutoDock Vina 1.1.2.",
+    "open_babel": "Open Babel 3.1.0 -- Oct 12 2020 -- 14:16:24",
+    "pymol": "2.5.1"
+  },
+  "docking_parameters": {
+    "exhaustiveness": 64,
+    "seed": 42,
+    "num_modes": 9,
+    "autobox_add_angstrom": 3,
+    "scoring_function": "AutoDock Vina 1.1.2 (smina default)",
+    "note": "v3.0 골격 통제 실행 기준. v1/v2 는 exhaustiveness 16 이었다."
+  },
+  "receptor_preparation": {
+    "source": "PDB 1UDT",
+    "waters_removed": "all HOH",
+    "metals_kept": [
+      "ZN",
+      "MG"
+    ],
+    "reference_ligand_resname": "VIA",
+    "pdbqt_conversion": "obabel -ipdb -opdbqt -xr -p 7.4 (수용체 전용)"
+  },
+  "ligand_preparation": {
+    "embedding": "RDKit ETKDGv3 단일 배좌 + MMFF 최적화",
+    "hydrogens": "Chem.AddHs (중성 형태)",
+    "protonation_note": "리간드에는 pH 기반 프로토네이션을 적용하지 않았다",
+    "desalting": "가장 큰 프래그먼트만 유지 (dock_controlled.py 에서 명시적으로 수행)"
+  },
+  "rmsd_definition": {
+    "method": "MCS 기반 RMSD",
+    "symmetry_corrected": false,
+    "note": "GetSubstructMatch 단일 매핑을 쓰므로 대칭 보정이 없다. 대칭 분자에서 값이 과대평가될 수 있다."
+  }
 }
