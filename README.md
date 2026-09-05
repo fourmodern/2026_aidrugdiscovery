@@ -22,6 +22,34 @@
 
 ---
 
+## 에이전트 하네스 (`Day06_LLM_Agent/pde5_harness/`)
+
+노트북과 별개로, **검증 게이트를 갖춘 연구 에이전트 하네스**와 그 하네스가 실제로 수행한
+연구가 들어 있다. 실습 없이 파일과 결과만 읽는 용도다.
+
+| 무엇 | 어디 |
+|------|------|
+| 하네스 계약·게이트·스킬 19종 | [`pde5_harness/CLAUDE.md`](Day06_LLM_Agent/pde5_harness/CLAUDE.md) · [`.claude/skills/`](Day06_LLM_Agent/pde5_harness/.claude/skills) |
+| **연구 보고서** (논문 형식 28쪽, n=163) | [`sample_run/report/report_controlled.md`](Day06_LLM_Agent/pde5_harness/sample_run/report/report_controlled.md) |
+| 학회 포스터 (A0) · 구두발표 덱 (16:9) | [`sample_run/report/docs/`](Day06_LLM_Agent/pde5_harness/sample_run/report/docs) |
+| **⭐ Claude for Science 용 프롬프트** | [`prompts/claude_for_science.md`](Day06_LLM_Agent/pde5_harness/prompts/claude_for_science.md) |
+
+### 프롬프트만 필요하다면
+
+[**`prompts/claude_for_science.md`**](Day06_LLM_Agent/pde5_harness/prompts/claude_for_science.md)
+하나만 열면 된다. 로컬 하네스 파일 없이(Claude for Science, 일반 Claude 대화 등) 같은
+연구를 수행하기 위한 프롬프트로, 하네스가 파일로 강제하던 계약을 프롬프트 본문이 대신 진다.
+
+- **A. 마스터 프롬프트** (약 2,000단어) — 그대로 붙여넣는다
+- **B. 각 조항이 무엇을 막는가** — 21개 조항을 실제 실패 사건과 짝지은 표
+- **C. 다른 표적으로 바꿀 때** — 치환할 자리 · 이 연구에 맞춰진 값 · 바꾸면 안 되는 다섯
+
+> 이 연구는 같은 표적·같은 도구로 **세 판본**을 냈고 결론이 세 번 달랐다. 세 번 모두 자동
+> 검증 게이트를 전부 통과했으며, 오류를 잡은 것은 매번 외부 비평이었다. 프롬프트의 조항은
+> 전부 그 과정에서 한 번씩 틀린 뒤에 추가된 것이다.
+
+---
+
 ## 실행 환경
 
 - 모든 노트북은 **Google Colab**에서 바로 실행됩니다(각 노트북 첫 셀에서 필요한 패키지 자동 설치).
