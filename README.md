@@ -64,7 +64,6 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | 1교시 p54–57 · 화학 LM | t042_molt5 | MolT5 | T5 기반 분자↔텍스트 상호 변환(분자 설명 생성 / 텍스트→분자) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t042_molt5.ipynb) |
 | 1교시 p48–50 · 단백질 LM (자율 과제) | t110_esm2 | ESM-2 | ESM-2 단백질 언어모델로 펩타이드 결합 최적화(masked LM 스코어링) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t110_esm2_peptide_optimization_tutorial.ipynb) |
 | 1교시 p48–50 · 단백질 LM | t111_esm3 | ESM3 | 생성형 멀티모달 단백질 모델 — 서열 설계(inpainting) + 구조 예측 + 신뢰도(pTM/pLDDT) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t111_esm3_protein_design.ipynb) |
-| 2교시 p45–48 · RAG 구현·chunking·유사도 | t050_rag | RAG | PDF 문서 기반 로컬 RAG 파이프라인 구축(신약개발 질의응답) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t050_simple-local-rag.ipynb) |
 | 3교시 p7–14 · ReAct·도구 (2교시 p67–70 재방문) | nb1_scientific_agent | 직접 만드는 과학 에이전트 | 프레임워크 없이 ReAct 루프·도구 호출·메모리를 손으로 구현 (PubMed·UniProt·ChEMBL·RDKit + 사내 위키 도구). 무-키 경로로 전체 실행 가능 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/nb1_scientific_agent.ipynb) |
 | 3교시 p28 · AI co-scientist | T004_llm_coscientist | LLM Co-Scientist | LangChain + LLM 기반 PDE5/PAH 표적 탐색 AI 에이전트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/T004_pde5_llm_coscientist.ipynb) |
 
@@ -112,7 +111,6 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | `t042_molt5` | 선택 (CPU 가능) | 불필요 | 약 6GB (molt5-large 2종) | CPU에서 프롬프트 1건당 약 15초 |
 | `t110_esm2` | 권장 (CPU 가능) | 불필요 | 약 2.6GB (PepMLM-650M) | CPU에서 binder 1개당 약 40초 |
 | `t111_esm3` | 선택 (CPU 가능) | 불필요 | 약 2.8GB (esm3-sm-open-v1) | CPU에서 각 생성 단계 15초 내외 |
-| `t050_rag` | **강력 권장** | 불필요 (기본 Qwen3) | 약 3.9GB + PDF 27MB | Gemma를 쓰려면 HF 라이선스 동의 + 토큰 필요 |
 | `nb1_scientific_agent` | 불필요 | 불필요 (무-키 경로) · Gemini 무료 티어 키는 선택 | 없음 (`rdkit`·`requests` 만) | 외부 호출은 전부 무료 공개 API — 실시간 시연에 가장 안전 |
 | `T004_llm_coscientist` | 불필요 | **Google Gemini API 키 필수** | — | https://aistudio.google.com/app/apikey |
 
@@ -121,7 +119,7 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 ### 수업 중 시연할 때 (Colab 기준)
 
 1. **콜드 스타트를 미리 끝내 두세요.** 시연 시점에 노트북을 처음 열면 설치와 모델 내려받기만
-   몇 분 걸립니다(t042 약 6GB · t050 약 3.9GB + PDF 27MB · t111 약 2.8GB · t110 약 2.6GB).
+   몇 분 걸립니다(t042 약 6GB · t111 약 2.8GB · t110 약 2.6GB).
    1교시 시작할 때 쓸 노트북 탭을 모두 열어 첫 셀만 돌려 두면 됩니다. 무료 Colab 은 유휴 상태로
    약 90분이면 런타임이 끊기니 탭을 가끔 만져 주세요.
 2. **파인튜닝(DPO/ORPO)은 노트북 없이 다룹니다.** 2교시 PEFT·비용 비교(p29–30)는 슬라이드로만
@@ -131,7 +129,7 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
    입력해 런타임을 살려 두거나, 저장된 출력만 넘기세요.
 4. **라이브로 돌릴 것은 `nb1` 하나로 좁히는 편이 안전합니다.** GPU·API 키가 모두 불필요하고
    외부 호출이 전부 무료 공개 API(PubMed·UniProt·ChEMBL·RDKit) 라 실패 지점이 거의 없습니다.
-   무료 GPU 할당은 보장되지 않으므로 t050 은 CPU 로 떨어질 경우를 대비해 저장 출력(38셀 중 31)을
+   나머지 세 종은 무료 GPU 할당이 보장되지 않으므로, CPU 로 떨어질 경우를 대비해 저장된 출력을
    그대로 넘기는 경로를 준비해 두세요.
 
 ## 출처
