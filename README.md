@@ -12,15 +12,34 @@
 
 | 무엇 | 어디 |
 |------|------|
-| **⭐ 실습 핸드북 (PDF, 25쪽)** — 설치(Windows 상세)부터 프롬프트 전문까지 | [`1128_실습핸드북.pdf`](Day06_LLM_Agent/1128_실습핸드북.pdf) |
+| **⭐ 실습 핸드북 (PDF, 28쪽)** — 설치(Windows 상세)부터 프롬프트 전문까지 | [`1128_실습핸드북.pdf`](Day06_LLM_Agent/1128_실습핸드북.pdf) |
 | 실습 교재 (Markdown, 단계별 프롬프트 + '확인할 것') | [`claude_science_pde5_practice.md`](Day06_LLM_Agent/claude_science_pde5_practice.md) |
 | 강의 화면용 덱 (PDF, 40쪽) | [`1128_실습_클로드사이언스.pdf`](Day06_LLM_Agent/1128_실습_클로드사이언스.pdf) |
 | 도구 사실 근거 (공식 문서 확인 2026-11-27) | [`claude_science_facts_202611.md`](Day06_LLM_Agent/claude_science_facts_202611.md) |
 
-> **수강생은 핸드북 PDF 하나만 있으면 된다.** 0장 준비물 → 1장 설치(Windows 단계별, macOS·Linux 요약)
-> → 2장 수업 전 설정 4개 → 3장 다섯 단계 프롬프트 → 4장 막히는 곳·더 해볼 것.
+> **수강생은 핸드북 PDF 하나만 있으면 된다.** 0장 준비물 6개 → 1장 설치(Windows 단계별, macOS·Linux 요약)
+> → 2장 수업 전 설정(커넥터 2 · 키 1 · 이메일 1 · 검토와 Auto mode) → 3장 여덟 번의 복사·붙여넣기
+> → 4장 막히는 곳·더 해볼 것.
 
-동향 정리 → 선행 논문 → 활성·decoy 데이터셋 → 1UDT 도킹 → **점수 분포로 판정** 까지 다섯 단계.
+## 이론 강의 덱 (5교시, 292장)
+
+이론 덱은 **미러 저장소**에 있다 —
+[`fourmodern/2025_aidrugdiscovery` → `20260905/이론덱_1128/`](https://github.com/fourmodern/2025_aidrugdiscovery/tree/main/20260905/%EC%9D%B4%EB%A1%A0%EB%8D%B1_1128)
+
+| 교시 | 장수 | 주제 |
+|------|------|------|
+| 1교시 | 66 | LLM 원리 · 단백질/오믹스 언어모델 · 분자 언어모델 · 범용과 전용의 경계 |
+| 2교시 | 71 | 프롬프트·커스터마이징 4방법 · 환각과 RAG · 검색 대 기억 · 벤치마크 판별 |
+| 3교시 | 53 | 에이전트 원리(ReAct·도구·계획·메모리) · 사례 · 폐루프와 한계 |
+| 4교시 | 47 | 컨텍스트 엔지니어링 · 서브에이전트 · MCP · 평가 · Agentic 보안 |
+| 5교시 | 55 | 자율 과학 · 자율실험실 · world model과 가상세포 · lab in the loop |
+
+> 이 저장소가 아니라 미러에 둔 이유: 이 저장소는 수강생이 Claude Science 로 **가져오는**
+> 대상이라 100 MB 제한을 지켜야 한다([`skills/README.md`](Day06_LLM_Agent/skills/README.md)).
+> 이론 덱 5종이 약 16 MB 라서 여기 넣으면 제한을 넘어 스킬 가져오기가 막힌다.
+
+동향 정리 → 선행 논문 → 활성·decoy 데이터셋 → 1UDT 도킹 → **점수 분포로 판정** →
+보고서(docx·pptx) → **리뷰어 통과까지 반복**.
 공개 DB(FDA·ChEMBL·PubChem·PDB·OpenAlex·PubMed)와 DUD-E 벤치마크만 쓰고, 도킹은 CPU 에서 도는
 smina 를 쓴다(Windows·macOS·Linux 모두 conda-forge 빌드 있음).
 
@@ -31,8 +50,10 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 직접 만드는 경로(Add skill > Chat with Claude)는 핸드북 ⑥-0 장에 있다.
 
 수강생 준비물: **Pro 이상 Claude 플랜 + 앱 설치·로그인**(첫 실행에 약 5 GB 다운로드 — 수업 전에 끝낼 것).
-수업 직전 체크 4개 — ChEMBL·PubMed 디렉터리 커넥터 추가 / OpenAlex 무료 키 / 연락 이메일 /
-**Auto-review 켜기**(Pro 는 기본 off).
+수업 직전 체크 5개 — ChEMBL·PubMed 디렉터리 커넥터 추가 / OpenAlex 무료 키 / 연락 이메일 /
+**Auto-review 켜기**(Pro 는 기본 off) / **Auto mode 확인**(꺼져 있으면 코드 셀마다 승인을 눌러야 한다).
+둘은 다른 장치다 — Auto-review 는 주장이 실행 기록과 맞는지 사후 검사하고, Auto mode 는 매 단계
+승인을 묻지 않는 실행 권한이다.
 
 ---
 
