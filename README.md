@@ -3,7 +3,25 @@
 재직자 과정 **6일차: 대규모 언어모델과 신약개발(LLM·에이전트)** 의 실습 자료입니다.
 2025 워크숍(`fourmodern/2025_aidrugdiscovery`)에서 **LLM·에이전트 관련 실습만** 선별해 재구성했습니다.
 
-이론(슬라이드) 5교시 + 본 실습(3H) 구성이며, 모든 노트북은 Google Colab에서 바로 실행됩니다.
+이론(슬라이드) 5교시 + 실습 4H 구성입니다. **2026-11-28 회차부터 메인 실습은 Claude Science** 로 진행하며,
+아래 노트북들은 무료 대안·보조 실습으로 남습니다. 모든 노트북은 Google Colab에서 바로 실행됩니다.
+
+---
+
+## ⭐ 메인 실습 — Claude Science 로 PDE5 저해제 선별
+
+| 무엇 | 어디 |
+|------|------|
+| **실습 교재** (단계별 프롬프트 + '확인할 것') | [`claude_science_pde5_practice.md`](Day06_LLM_Agent/claude_science_pde5_practice.md) |
+| 도구 사실 근거 (공식 문서 확인 2026-11-27) | [`claude_science_facts_202611.md`](Day06_LLM_Agent/claude_science_facts_202611.md) |
+
+동향 정리 → 선행 논문 → 활성·decoy 데이터셋 → 1UDT 도킹 → **점수 분포로 판정** 까지 다섯 단계.
+공개 DB(FDA·ChEMBL·PubChem·PDB·OpenAlex·PubMed)와 DUD-E 벤치마크만 쓰고, 도킹은 CPU 에서 도는
+smina 를 쓴다(Windows·macOS·Linux 모두 conda-forge 빌드 있음).
+
+수강생 준비물: **Pro 이상 Claude 플랜 + 앱 설치·로그인**(첫 실행에 약 5 GB 다운로드 — 수업 전에 끝낼 것).
+수업 직전 체크 4개 — ChEMBL·PubMed 디렉터리 커넥터 추가 / OpenAlex 무료 키 / 연락 이메일 /
+**Auto-review 켜기**(Pro 는 기본 off).
 
 ---
 

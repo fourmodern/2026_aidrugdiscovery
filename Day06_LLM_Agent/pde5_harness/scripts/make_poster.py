@@ -215,7 +215,7 @@ def main() -> int:
                  f"격자에서 균등 추출.", T_BODY, INK)],
                [(f"교란 상관을 Pearson "
                  f"{ds['confound_pearson_r_potency_vs_similarity']:+.3f} 까지 낮췄다 "
-                 f"(역가로만 층화한 옛 설계: +0.281).", T_BODY, GREEN, True)]], space=4) + 6
+                 f"(역가로만 층화한 옛 설계: Spearman +0.366).", T_BODY, GREEN, True)]], space=4) + 6
     y += text(s, CX[0], y, COLW,
               [[("도킹", T_HEAD - 6, NAVY, True)],
                [(f"{dk['engine']}, seed {dk['seed']}, num_modes 9, autobox_add 3. "
