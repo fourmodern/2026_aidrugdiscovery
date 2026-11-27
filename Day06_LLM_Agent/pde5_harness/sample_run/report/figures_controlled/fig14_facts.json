@@ -1,0 +1,67 @@
+{
+ "receptor": "PDB 1UDT chain A (waters removed, ZN/MG retained)",
+ "pocket_cutoff_angstrom": 4.5,
+ "pocket_residues": [
+  "TYR612",
+  "HIS613",
+  "ASN661",
+  "SER663",
+  "TYR664",
+  "LEU765",
+  "ALA767",
+  "ILE768",
+  "ALA779",
+  "VAL782",
+  "ALA783",
+  "PHE786",
+  "LEU804",
+  "MET816",
+  "GLN817",
+  "GLY819",
+  "PHE820"
+ ],
+ "pocket_residues_rendered": [
+  "TYR612",
+  "HIS613",
+  "ASN661",
+  "SER663",
+  "TYR664",
+  "LEU765",
+  "ALA767",
+  "ILE768",
+  "ALA779",
+  "VAL782",
+  "ALA783",
+  "PHE786",
+  "LEU804",
+  "MET816",
+  "GLN817",
+  "GLY819",
+  "PHE820"
+ ],
+ "polar_contacts": [
+  {
+   "distance_angstrom": 2.768,
+   "ligand_atom": "VIA N22",
+   "residue_atom": "GLN817 OE1"
+  },
+  {
+   "distance_angstrom": 3.119,
+   "ligand_atom": "VIA O3",
+   "residue_atom": "GLN817 OE1"
+  },
+  {
+   "distance_angstrom": 3.215,
+   "ligand_atom": "VIA O27",
+   "residue_atom": "GLN817 NE2"
+  }
+ ],
+ "polar_contact_cutoff_angstrom": 3.3,
+ "n_terminus_residue": 537,
+ "panels": {
+  "C_compound": "CHEMBL3944571",
+  "C_extra_mode": 5,
+  "D_compound": "CHEMBL47108"
+ },
+ "renderer": "PyMOL open-source 3.2.0a"
+}

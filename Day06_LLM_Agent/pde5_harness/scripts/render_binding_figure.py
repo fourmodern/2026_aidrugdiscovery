@@ -11,7 +11,7 @@
 
 패널 A  결합 부위 — 실데나필과 포켓, 핵심 잔기와 수소결합
 패널 B  공결정 리간드 재도킹 — 샘플링 vs 채점
-패널 C  점수 1위 화합물 CHEMBL536568
+패널 C  해석 가능 대역(mid·near)의 점수 1위 CHEMBL3944571
 패널 D  공결정에 가장 가까운 자세 CHEMBL47108
 
 실행: SAMPLE_RUN=<...>/sample_run python -m pymol -cq render_binding_figure.py
@@ -106,7 +106,13 @@ def base_scene(label=False, contacts=False, surface=True):
 
     # 포켓 잔기 — 좌표에서 계산 (VIA 4.5 Å 이내)
     cmd.select("pocket", "byres (rec within 4.5 of via)")
-    cmd.show("sticks", "pocket and sidechain")
+    # ALA 는 곁사슬이 CB 하나, GLY 는 곁사슬이 없어 "sidechain" 만으로는
+    # 막대가 그려지지 않는다(결합이 없으면 stick 이 렌더되지 않는다).
+    # 캡션이 잔기 17개를 열거하므로 17개가 모두 보이도록 CA 를 함께 켠다.
+    cmd.show("sticks", "pocket and (sidechain or name CA)")
+    # GLY 는 CA 하나뿐이라 결합이 없어 막대가 되지 않는다 — 비결합 구로 표시한다
+    cmd.show("nb_spheres", "pocket and resn GLY and name CA")
+    cmd.set("nonbonded_size", 0.28)
     cmd.set("stick_radius", 0.135, "pocket")
     cmd.color(C_POCK, "pocket")
     cmd.util.cnc("pocket")
@@ -172,6 +178,13 @@ def base_scene(label=False, contacts=False, surface=True):
     print(f"  방향: N-말단 {n_resi}번 위 · 포켓 정면 · slab {SLAB}")
     return cmd.get_view()
 
+
+
+def _nterm_resi():
+    """수용체 전체에서 가장 낮은 잔기 번호 = 촉매 도메인 N-말단."""
+    cas = []
+    cmd.iterate("rec and name CA", "cas.append(int(resi))", space={"cas": cas})
+    return min(cas) if cas else None
 
 
 def polar_contacts(cutoff=3.3):
@@ -322,5 +335,36 @@ cmd.set_view(view)
 load_pose(f"{SR}/structures/work_controlled/CHEMBL47108_poses.sdf",
           "closest", 1, C_BEST)
 png(f"{OUT}/panelD_closest.png")
+
+# 캡션이 인용하는 사실을 파일로 남긴다 — 보고서 생성기가 이 파일에서 주입한다.
+_res = []
+cmd.iterate("pocket and name CA", "_res.append((int(resi), resn))",
+            space={"_res": _res})
+_vis = sorted({(i, n) for i, n in _res
+               if cmd.count_atoms(f"pocket and resi {i} and (sidechain or name CA)") >= 2
+               or n == "GLY"})   # GLY 는 비결합 구로 표시된다
+_facts = {
+    "receptor": "PDB 1UDT chain A (waters removed, ZN/MG retained)",
+    "pocket_cutoff_angstrom": 4.5,
+    "pocket_residues": [f"{n}{i}" for i, n in sorted(set(_res))],
+    "pocket_residues_rendered": [f"{n}{i}" for i, n in _vis],
+    "polar_contacts": [
+        {"distance_angstrom": round(d, 3), "ligand_atom": a, "residue_atom": b}
+        for d, a, b in polar_contacts()
+    ],
+    "polar_contact_cutoff_angstrom": 3.3,
+    # [주의] _res 는 포켓 잔기다. N-말단은 수용체 전체에서 구해야 한다
+    #        (포켓의 최저 번호를 쓰면 TYR612 가 나와 틀린다 — 실제로 한 번 그랬다).
+    "n_terminus_residue": _nterm_resi(),
+    "panels": {"C_compound": "CHEMBL3944571", "C_extra_mode": 5,
+               "D_compound": "CHEMBL47108"},
+    "renderer": "PyMOL open-source 3.2.0a",
+}
+import json as _jf
+with open(os.path.join(OUT, "fig14_facts.json"), "w", encoding="utf-8") as _f:
+    _jf.dump(_facts, _f, ensure_ascii=False, indent=1)
+print(f"  사실 기록: 포켓 {len(_facts['pocket_residues'])}개 중 "
+      f"막대 {len(_facts['pocket_residues_rendered'])}개 · "
+      f"접촉 {len(_facts['polar_contacts'])}건")
 
 print("PYMOL-DONE")

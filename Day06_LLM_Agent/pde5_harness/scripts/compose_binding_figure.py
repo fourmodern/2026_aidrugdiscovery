@@ -188,10 +188,15 @@ meta = {
         "A": "co-crystal binding mode with Gln817 hydrogen bonds",
         "B": f"reference redock: top pose {cr['rmsd_top_pose_angstrom']} A, "
              f"best mode {cr['best_mode_index']} {cr['rmsd_best_of_modes_angstrom']} A",
-        "C": f"{TOP_ID} top-scoring pose, score {rt['top_pose_score']}, "
-             f"MCS-RMSD {rt['top_pose_mcs_rmsd']} A",
+        "C": f"{TOP_ID} top-scoring pose **within the interpretable bands "
+             f"(mid/near)**, score {rt['top_pose_score']}, "
+             f"MCS-RMSD {rt['top_pose_mcs_rmsd']} A; mode {best_mode_of_top + 1} "
+             f"is {n_modes_top[best_mode_of_top]} A. The overall best score belongs "
+             f"to a far-band compound, deliberately not used (see revision item 13)",
         "D": f"{NEAR_ID} top pose, score {rn['top_pose_score']}, "
-             f"MCS-RMSD {rn['top_pose_mcs_rmsd']} A (minimum of 163)",
+             f"MCS-RMSD {rn['top_pose_mcs_rmsd']} A (minimum of the "
+             f"{N_MEASURABLE} compounds with a defined MCS-RMSD; "
+             f"for this compound the top-scoring pose is also the closest)",
     },
     "source_data": "sample_run/docking_controlled.json",
     "anchors_normalised": anchors,
@@ -206,3 +211,7 @@ _pc = os.path.join(PANELS, "polar_contacts.json")
 if os.path.exists(_pc):
     shutil.copy2(_pc, os.path.join(OUTDIR, "polar_contacts.json"))
     print("saved polar_contacts.json")
+_ff = os.path.join(PANELS, "fig14_facts.json")
+if os.path.exists(_ff):
+    shutil.copy2(_ff, os.path.join(OUTDIR, "fig14_facts.json"))
+    print("saved fig14_facts.json")

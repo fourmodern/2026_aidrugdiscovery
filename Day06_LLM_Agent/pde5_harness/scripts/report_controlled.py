@@ -28,6 +28,12 @@ def res(env):
     return None if env is None else env.get("result", env)
 
 
+def load_fig14():
+    """결합 구조 그림(Figure 14)이 좌표에서 기록한 사실. 없으면 그림 절을 비운다."""
+    p = SR / "report" / "figures_controlled" / "fig14_facts.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
 def gate(env):
     if not env: return "N/A"
     v = env.get("verification")
@@ -38,6 +44,86 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(SR / "report" / "report_controlled.md"))
     a = ap.parse_args()
+
+    f14 = load_fig14()
+
+    def fig14_block() -> str:
+        """결합 구조 그림 절. 수치는 전부 산출 파일에서 주입한다."""
+        if not f14 or not dkE:
+            return "*(결합 구조 그림은 이 실행에 포함되지 않았다.)*"
+        dk = res(dkE)
+        rows = {r["chembl_id"]: r for r in dk["rows"]}
+        cr = dk["control_redock"]
+        cid = f14["panels"]["C_compound"]
+        did = f14["panels"]["D_compound"]
+        if cid not in rows or did not in rows:
+            return "*(결합 구조 그림의 대상 화합물이 이 실행에 없다.)*"
+        rt, rn = rows[cid], rows[did]
+        meas = [r for r in dk["rows"] if r.get("top_pose_mcs_rmsd") is not None]
+        n_meas = len(meas)
+        n_null = len(dk["rows"]) - n_meas
+        srt = sorted(meas, key=lambda r: r["top_pose_mcs_rmsd"])
+        runners = " · ".join(str(r["top_pose_mcs_rmsd"]) for r in srt[1:4])
+        mm = rt["all_mode_mcs_rmsd"]
+        bi = min(range(len(mm)), key=lambda k: mm[k])
+        pocket = f14["pocket_residues"]
+        shown = f14["pocket_residues_rendered"]
+        cts = f14["polar_contacts"]
+        ct_txt = " · ".join(
+            f"{c['distance_angstrom']} Å({c['ligand_atom'].split()[1]}···"
+            f"{c['residue_atom'].split()[1]})" for c in cts)
+        resn = {c["residue_atom"].split()[0] for c in cts}
+        resn_txt = "·".join(r[:3].title() + r[3:] for r in sorted(resn))
+        gap = abs(rt["top_pose_score"] - rn["top_pose_score"])
+        shown_note = ("" if len(shown) == len(pocket) else
+                      f" 이 중 {len(shown)}개만 막대로 보인다.")
+        # 상위 유사도 하한을 올리면 최소가 바뀌는지 — 주장하기 전에 계산한다
+        alt = [r for r in meas if (r.get("mcs_atoms") or 0) >= 17]
+        alt_min = min(alt, key=lambda r: r["top_pose_mcs_rmsd"]) if alt else None
+        alt_txt = ("" if not alt_min or alt_min["chembl_id"] == did else
+                   f" 공유 원자수가 더 많은 쪽을 신뢰해 하한을 17원자로 올리면 최소가 "
+                   f"{alt_min['chembl_id']}({alt_min['top_pose_mcs_rmsd']} Å, "
+                   f"{alt_min['mcs_atoms']}원자)로 바뀐다.")
+        return f"""![Fig 14]({F}/fig14_pymol_poses.png)
+
+**Figure 14. 결합 구조와 도킹 자세 — 채점이 고른 자세와 공결정에 맞는 자세는 같지 않다.**
+**(A)** PDB 1UDT 의 공결정 결합 양상. 회색 막대는 공결정 리간드(VIA, 실데나필)
+{f14["pocket_cutoff_angstrom"]} Å 이내 잔기 {len(pocket)}개다 — {"·".join(pocket)}.{shown_note}
+빨간 점선은 **{resn_txt} 과의 극성 접촉** {len(cts)}개이며, 좌표에서 잰 거리는 {ct_txt} 다
+({f14["polar_contact_cutoff_angstrom"]} Å 이내 기준, `{F}/polar_contacts.json`).
+구는 촉매 금속 Zn·Mg 이고 물은 제거했다(§2 수용체 준비와 동일).
+**(B)** 공결정 리간드 재도킹. {cr["n_modes"]}개 모드 중 {cr["best_mode_index"]}번 모드는 결정
+자세와 {cr["rmsd_best_of_modes_angstrom"]} Å 로 겹치지만(C1 통과), 채점이 1위로 고른 자세는
+{cr["rmsd_top_pose_angstrom"]} Å 떨어져 있다(C2 실패). §3.2 의 결론(병목은 채점이다)이
+좌표에서 그대로 보인다 — 탐색이 만든 모드 안에 맞는 자세가 있는데 채점이 그것을 고르지
+않았다. **단 이것은 리간드 한 종에 대한 관찰이며**(§4.1 의 n=1 한계가 그대로 적용된다),
+아래 (C)가 다른 화합물에서 같은 양상을 보이는지만 덧붙인다.
+**(C)** 해석 가능 대역(mid·near)의 점수 1위 {cid} ({rt["top_pose_score"]} kcal/mol).
+1위 자세(주황)는 공결정 기준 MCS-RMSD {rt["top_pose_mcs_rmsd"]} Å 인데, 같은 탐색이 만든
+{bi + 1}번 모드(파랑)는 {mm[bi]} Å 다 — 채점이 그것을 {bi + 1}위로 밀었다. 공유 부분구조가
+{rt["mcs_atoms"]}원자로 커서 이 RMSD 는 §3.6 의 기준에서 해석 가능하다. **far 대역 화합물은
+쓰지 않았다** — 그 대역의 자세 타당도 값은 개정 항목 13 에서 해석 불가로 판단해 본문 표에서
+삭제했고, 삭제한 값을 그림에서 되살리지 않는다.
+**(D)** 공결정에 가장 가까운 자세 {did}. 1위 자세의 MCS-RMSD 가
+{rn["top_pose_mcs_rmsd"]} Å 로 **측정 가능한 {n_meas}종 중 최소**다(공유 부분구조가 하한
+8원자 미만이면 계산되지 않아 {len(dk["rows"])}종 중 {n_null}종은 값이 없다). 이 화합물에서는
+점수 1위 자세가 곧 최근접 자세이므로 그림에서도 파랑 하나만 보인다. 점수는
+{rn["top_pose_score"]} kcal/mol 로 (C) 보다 {gap:.1f} kcal/mol 나쁘다.
+**다만 "최소"에 무게를 싣지 말 것** — 2~4위가 {runners} Å 로
+{srt[3]["top_pose_mcs_rmsd"] - srt[0]["top_pose_mcs_rmsd"]:.3f} Å 안에 모여 있고, 이 RMSD 는
+§3.6 에 적은 대로 대칭 보정이 없는 단일 매핑이다.{alt_txt}
+
+**이 그림은 예시이지 증명이 아니다.** (C)와 (D)는 각각 점수 최대와 RMSD 최소로 **뽑은**
+화합물이므로 둘이 다른 것 자체는 선택 방식의 결과다. 채점과 자세 정확도가 어긋난다는
+**정량적 근거는 §3.4 의 상관과 §3.6 의 집계**이며, 이 그림은 그 숫자가 좌표에서 어떤
+모양인지 보여줄 뿐이다.
+
+네 패널은 같은 방향·같은 배율이다. 방향은 임의로 고른 것이 아니라 좌표에서 계산했다 —
+촉매 도메인 N-말단({f14["n_terminus_residue"]}번)이 화면 위, 리간드 포켓이 정면이다.
+잔기 이름표의 위치는 각 잔기를 고유 색 구로 한 번 더 렌더링해 그 색의 픽셀 중심에서
+얻었다(투영 계산 없음). 도킹 수치는 `docking_controlled.json`, 포켓 잔기와 접촉 거리는
+`structures/1UDT.pdb` 좌표에서 각각 계산했고, 렌더링은 **{f14["renderer"]}** 로 했다
+(그림 메타: `{F}/fig14_pymol_poses.meta.json`, 사실 기록: `{F}/fig14_facts.json`)."""
 
     dsE, dkE, anE = load("dataset_controlled.json"), load("docking_controlled.json"), \
                     load("analysis_controlled.json")
@@ -829,6 +915,8 @@ smina `--custom_scoring` 파일로 내보내고, 9칸 격자에서 **층화 분�
 {conc["mean_jaccard"]} 로 서로 다른데도 상위 잔기는 양쪽 모두에서 거의 전 화합물이 접촉한다
 (전수인 것은 일부이고 나머지는 한두 건씩 빠진다 — 표의 실제 수를 보라). 해석은 §4.3 에서 다룬다.''' if conc else "*(접촉 일치 분석은 이 실행에 포함되지 않았다.)*"}
 
+{fig14_block()}
+
 ## 4. 논의
 
 ### 4.1 탐색 깊이는 병목이 아니다 — 그 이상은 말할 수 없다
@@ -1079,6 +1167,7 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
 |---|---|---|---|
 | 데이터셋 (골격 통제) | `dataset_controlled.json` | 9칸 충족 · 역가 3로그 · 교란 r < 0.35 · 중복 | {gate(dsE)} |
 | 도킹 | `docking_controlled.json` | 성공률 95% · C1 대조 · 전 화합물 점수 · 9칸 대표 | {gate(dkE)} |
+| 결합 구조 그림 (Fig 14) | `{F}/fig14_pymol_poses.png` · `fig14_facts.json` · `polar_contacts.json` | 수치 재계산 일치 · 접촉 거리 좌표 측정 · 캡션 수치를 사실 파일에서 주입 · 번호 상호참조 | {'PASS' if f14 else 'N/A'} |
 | 탐색 깊이 스윕 | `exhaustiveness_sweep.json` | 전 조건 실행 · 4단계 이상 · 복수 시드 | {gate(swE)} |
 | 통제 분석 | `analysis_controlled.json` | 상관 · 3구간 · 편상관 · 순열 p | {gate(anE)} |
 | 항 분석 | `terms_controlled.json` | 추출률 95% · 4모델 · VIF · 섞기 1000회 | {gate(tcE)} |
@@ -1102,9 +1191,9 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
 계산하니 AUC 0.775, 점수 상위 10건에 약한 화합물 0건이었다. 결론을 "선별에는 쓸 수 있고
 정량에는 쓸 수 없다"로 바꾸고, 접촉 잔기 논증의 순환성을 철회했다.
 
-![Fig 14]({F}/fig12_version_history.png)
+![Fig 15]({F}/fig12_version_history.png)
 
-**Figure 14. 판본별 결론과 그것을 무너뜨린 관찰.** (A) 판본별 헤드라인 수치, (B) 각 판본의
+**Figure 15. 판본별 결론과 그것을 무너뜨린 관찰.** (A) 판본별 헤드라인 수치, (B) 각 판본의
 결론과 붕괴 사유, (C) 무엇이 오류를 잡았는가. 자동 게이트는 세 판본 모두 전부 통과했다.
 
 **v3.0 (본 판)** — v2.0 의 표본에서 역가와 골격이 얽혀 있다는 **우려**에 따라 재설계했다
@@ -1150,8 +1239,23 @@ RDKit(BSD-3-Clause), PyMOL(오픈소스판).
    2×2 로 돌린 결과 원인이 아니었고, 기본 Vina 함수에 정전기 항이 없어 **원리적으로**
    원인이 될 수 없음까지 확인했다 (§3.2b).
 15. **전 그림·문서 재생성** — 본문이 바뀌면 그림과 배포 문서도 바뀌어야 한다.
-   이 판에서는 Figure 14 의 v2.0 설명이 철회된 인과 주장을 그대로 담고 있던 것도 함께
+   이 판에서는 Figure 15 의 v2.0 설명이 철회된 인과 주장을 그대로 담고 있던 것도 함께
    고쳤다 — 2차 리뷰가 잡았고, 같은 유형(본문은 고치고 그림은 두는)이 세 번째 재발이었다.
+
+16. **Figure 14 신설과 재번호** — 결합 구조와 도킹 자세를 좌표에서 렌더링한 그림을 §3.11 에
+   넣고 기존 Figure 14(판본 이력)를 15 로 밀었다. 초안이 외부 리뷰에서 **두 번** 반려됐다.
+   1차: (a) Gln817 수소결합 거리를 2.99 Å 로 적었는데 그 값은 PyMOL `cmd.distance()` 의
+   반환값인 **평균**이었고 그런 접촉은 없었다, (b) 패널 사례로 far 대역 화합물을 써서
+   개정 항목 13 이 해석 불가로 삭제한 값을 되살렸다, (c) 모수를 163종으로 적었다.
+   2차: (d) 캡션이 열거한 포켓 잔기 17개 중 4개(ALA 3개·GLY 1개)는 곁사슬이 작아 그림에
+   막대로 그려지지 않았다, (e) 그림 메타 파일에 (c) 의 163 과 (b) 의 철회된 화합물명이
+   남아 있었다, (f) §3.2 의 문장이라며 **보고서에 없는 문장**을 따옴표로 인용했다,
+   (g) 그림 절 전체가 이 생성기에 없어 재생성하면 사라졌다 — 무-날조 선언이 명시한
+   "스크립트 주입" 이 이 캡션에 대해서만 성립하지 않았다.
+   → 접촉은 좌표에서 개별로 재어 기록하고 그림의 점선도 같은 집합으로 그린다. 사례는
+   해석 가능 대역 1위로 교체했다. 캡션의 모든 수치는 `fig14_facts.json` 과
+   `docking_controlled.json` 에서 주입한다. 잔기는 17개가 모두 보이게 렌더한다.
+   두 번 다 같은 유형이었다 — **본문이 폐기한 값을 주변 산출물이 되살리는 것.**
 
 ## 무-날조 선언
 

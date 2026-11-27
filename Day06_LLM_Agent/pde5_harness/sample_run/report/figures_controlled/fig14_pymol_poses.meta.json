@@ -9,8 +9,8 @@
   "panels": {
     "A": "co-crystal binding mode with Gln817 hydrogen bonds",
     "B": "reference redock: top pose 8.368 A, best mode 5 1.077 A",
-    "C": "CHEMBL3944571 top-scoring pose, score -11.6, MCS-RMSD 5.54 A",
-    "D": "CHEMBL47108 top pose, score -8.7, MCS-RMSD 0.551 A (minimum of 163)"
+    "C": "CHEMBL3944571 top-scoring pose **within the interpretable bands (mid/near)**, score -11.6, MCS-RMSD 5.54 A; mode 5 is 1.332 A. The overall best score belongs to a far-band compound, deliberately not used (see revision item 13)",
+    "D": "CHEMBL47108 top pose, score -8.7, MCS-RMSD 0.551 A (minimum of the 158 compounds with a defined MCS-RMSD; for this compound the top-scoring pose is also the closest)"
   },
   "source_data": "sample_run/docking_controlled.json",
   "anchors_normalised": {

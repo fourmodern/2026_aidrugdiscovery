@@ -35,7 +35,7 @@
 | 5교시 | 55 | 자율 과학 · 자율실험실 · world model과 가상세포 · lab in the loop |
 
 > 이 저장소가 아니라 미러에 둔 이유: 이 저장소는 수강생이 Claude Science 로 **가져오는**
-> 대상이라 100 MB 제한을 지켜야 한다([`skills/README.md`](Day06_LLM_Agent/skills/README.md)).
+> 대상이라 100 MB 제한을 지켜야 한다([`skills/README.md`](skills/README.md)).
 > 이론 덱 5종이 약 16 MB 라서 여기 넣으면 제한을 넘어 스킬 가져오기가 막힌다.
 
 동향 정리 → 선행 논문 → 활성·decoy 데이터셋 → 1UDT 도킹 → **점수 분포로 판정** →
@@ -44,7 +44,7 @@
 smina 를 쓴다(Windows·macOS·Linux 모두 conda-forge 빌드 있음).
 
 실습에 쓰는 과학 스킬 5종(scientific-writing · scientific-visualization · citation-management ·
-peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day06_LLM_Agent/skills)
+peer-review · scientific-critical-thinking)은 [`skills/`](skills)
 에 담아 두었다 — 원본 저장소가 약 471 MB 라 Claude Science 의 가져오기 100 MB 제한을 넘기 때문이다.
 `Settings > Skills > Add skill > Import from GitHub` 에서 이 저장소를 지정하면 된다.
 직접 만드는 경로(Add skill > Chat with Claude)는 핸드북 ⑥-0 장에 있다.
