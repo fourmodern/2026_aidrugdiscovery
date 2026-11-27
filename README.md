@@ -12,8 +12,13 @@
 
 | 무엇 | 어디 |
 |------|------|
-| **실습 교재** (단계별 프롬프트 + '확인할 것') | [`claude_science_pde5_practice.md`](Day06_LLM_Agent/claude_science_pde5_practice.md) |
+| **⭐ 실습 핸드북 (PDF, 25쪽)** — 설치(Windows 상세)부터 프롬프트 전문까지 | [`1128_실습핸드북.pdf`](Day06_LLM_Agent/1128_실습핸드북.pdf) |
+| 실습 교재 (Markdown, 단계별 프롬프트 + '확인할 것') | [`claude_science_pde5_practice.md`](Day06_LLM_Agent/claude_science_pde5_practice.md) |
+| 강의 화면용 덱 (PDF, 40쪽) | [`1128_실습_클로드사이언스.pdf`](Day06_LLM_Agent/1128_실습_클로드사이언스.pdf) |
 | 도구 사실 근거 (공식 문서 확인 2026-11-27) | [`claude_science_facts_202611.md`](Day06_LLM_Agent/claude_science_facts_202611.md) |
+
+> **수강생은 핸드북 PDF 하나만 있으면 된다.** 0장 준비물 → 1장 설치(Windows 단계별, macOS·Linux 요약)
+> → 2장 수업 전 설정 4개 → 3장 다섯 단계 프롬프트 → 4장 막히는 곳·더 해볼 것.
 
 동향 정리 → 선행 논문 → 활성·decoy 데이터셋 → 1UDT 도킹 → **점수 분포로 판정** 까지 다섯 단계.
 공개 DB(FDA·ChEMBL·PubChem·PDB·OpenAlex·PubMed)와 DUD-E 벤치마크만 쓰고, 도킹은 CPU 에서 도는
