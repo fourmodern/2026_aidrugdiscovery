@@ -21,3 +21,6 @@ Day06_LLM_Agent/outputs/
 .omc/
 **/.omc/
 .Rhistory
+
+# make_docs.py 의 기계적 pptx — 발표에는 talk_16x9 를 쓴다 (make_talk.py)
+Day06_LLM_Agent/pde5_harness/sample_run/report/docs/report_controlled.pptx
