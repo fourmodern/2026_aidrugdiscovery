@@ -67,7 +67,6 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | 2교시 p45–48 · RAG 구현·chunking·유사도 | t050_rag | RAG | PDF 문서 기반 로컬 RAG 파이프라인 구축(신약개발 질의응답) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t050_simple-local-rag.ipynb) |
 | 3교시 p7–14 · ReAct·도구 (2교시 p67–70 재방문) | nb1_scientific_agent | 직접 만드는 과학 에이전트 | 프레임워크 없이 ReAct 루프·도구 호출·메모리를 손으로 구현 (PubMed·UniProt·ChEMBL·RDKit + 사내 위키 도구). 무-키 경로로 전체 실행 가능 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/nb1_scientific_agent.ipynb) |
 | 3교시 p28 · AI co-scientist | T004_llm_coscientist | LLM Co-Scientist | LangChain + LLM 기반 PDE5/PAH 표적 탐색 AI 에이전트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/T004_pde5_llm_coscientist.ipynb) |
-| (심화) 2교시 p29–30 에서 언급만 | qwen_tcga | Qwen 파인튜닝 | Qwen3를 TCGA 데이터에 선호도 최적화(DPO/ORPO)로 파인튜닝. GPU 필수 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/qwen_tcga_advanced_2024.ipynb) |
 
 > 이론 흐름(참고): ① LLM 원리 & 과학 언어모델 → ② 활용 & 환각 통제(RAG) → ③ 에이전트 → ④ 하네스·보안 → ⑤ 자율 과학.
 > 쪽수는 이론 덱 PDF 기준이다(미러 저장소 `20260905/이론덱_1128/`). 4교시(하네스·보안)와 5교시(자율 과학)에는 끼우는 노트북이 없다 —
@@ -116,7 +115,6 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | `t050_rag` | **강력 권장** | 불필요 (기본 Qwen3) | 약 3.9GB + PDF 27MB | Gemma를 쓰려면 HF 라이선스 동의 + 토큰 필요 |
 | `nb1_scientific_agent` | 불필요 | 불필요 (무-키 경로) · Gemini 무료 티어 키는 선택 | 없음 (`rdkit`·`requests` 만) | 외부 호출은 전부 무료 공개 API — 실시간 시연에 가장 안전 |
 | `T004_llm_coscientist` | 불필요 | **Google Gemini API 키 필수** | — | https://aistudio.google.com/app/apikey |
-| `qwen_tcga` | **필수** | 불필요 | 대용량 | 심화 자료 |
 
 - API 키는 노트북 안에서 `getpass` 로 입력하며 파일에 저장되지 않습니다.
 
@@ -126,9 +124,8 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
    몇 분 걸립니다(t042 약 6GB · t050 약 3.9GB + PDF 27MB · t111 약 2.8GB · t110 약 2.6GB).
    1교시 시작할 때 쓸 노트북 탭을 모두 열어 첫 셀만 돌려 두면 됩니다. 무료 Colab 은 유휴 상태로
    약 90분이면 런타임이 끊기니 탭을 가끔 만져 주세요.
-2. **`qwen_tcga` 는 화면에 보여줄 것이 없습니다.** 코드 셀 12개 중 저장된 출력이 2개뿐이어서
-   GPU 로 직접 돌리지 않으면 빈 셀만 넘기게 됩니다. 2교시 PEFT·비용 비교에서 언급만 하고
-   심화 자료로 남기는 편이 낫습니다.
+2. **파인튜닝(DPO/ORPO)은 노트북 없이 다룹니다.** 2교시 PEFT·비용 비교(p29–30)는 슬라이드로만
+   진행합니다 — 수업 시간 안에 돌 수 있는 정렬 학습 실습이 없습니다.
 3. **`T004` 는 수업 중에 키를 입력하게 됩니다.** `getpass` 로 Gemini 키를 받는 화면이 그대로
    투사되는데, 이것은 4교시에서 "하지 말 것"으로 가르치는 항목과 부딪칩니다. 수업 전에 미리
    입력해 런타임을 살려 두거나, 저장된 출력만 넘기세요.
