@@ -65,6 +65,7 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | 1교시 · 과학 언어모델(단백질) | t110_esm2 | ESM-2 | ESM-2 단백질 언어모델로 펩타이드 결합 최적화(masked LM 스코어링) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t110_esm2_peptide_optimization_tutorial.ipynb) |
 | 1교시 · 과학 언어모델(단백질) | t111_esm3 | ESM3 | 생성형 멀티모달 단백질 모델 — 서열 설계(inpainting) + 구조 예측 + 신뢰도(pTM/pLDDT) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t111_esm3_protein_design.ipynb) |
 | 2교시 · 활용·RAG | t050_rag | RAG | PDF 문서 기반 로컬 RAG 파이프라인 구축(신약개발 질의응답) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/t050_simple-local-rag.ipynb) |
+| 3교시 · 에이전트 | nb1_scientific_agent | 직접 만드는 과학 에이전트 | 프레임워크 없이 ReAct 루프·도구 호출·메모리를 손으로 구현 (PubMed·UniProt·ChEMBL·RDKit + 사내 위키 도구). 무-키 경로로 전체 실행 가능 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/nb1_scientific_agent.ipynb) |
 | 3교시 · 에이전트 | T004_llm_coscientist | LLM Co-Scientist | LangChain + LLM 기반 PDE5/PAH 표적 탐색 AI 에이전트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/T004_pde5_llm_coscientist.ipynb) |
 | (심화) LLM 정렬·파인튜닝 | qwen_tcga | Qwen 파인튜닝 | Qwen3를 TCGA 데이터에 선호도 최적화(DPO/ORPO)로 파인튜닝. GPU 필수 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fourmodern/2026_aidrugdiscovery/blob/main/Day06_LLM_Agent/notebooks/qwen_tcga_advanced_2024.ipynb) |
 
@@ -111,6 +112,7 @@ peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day0
 | `t110_esm2` | 권장 (CPU 가능) | 불필요 | 약 2.6GB (PepMLM-650M) | CPU에서 binder 1개당 약 40초 |
 | `t111_esm3` | 선택 (CPU 가능) | 불필요 | 약 2.8GB (esm3-sm-open-v1) | CPU에서 각 생성 단계 15초 내외 |
 | `t050_rag` | **강력 권장** | 불필요 (기본 Qwen3) | 약 3.9GB + PDF 27MB | Gemma를 쓰려면 HF 라이선스 동의 + 토큰 필요 |
+| `nb1_scientific_agent` | 불필요 | 불필요 (무-키 경로) · Gemini 무료 티어 키는 선택 | 없음 (`rdkit`·`requests` 만) | 외부 호출은 전부 무료 공개 API — 실시간 시연에 가장 안전 |
 | `T004_llm_coscientist` | 불필요 | **Google Gemini API 키 필수** | — | https://aistudio.google.com/app/apikey |
 | `qwen_tcga` | **필수** | 불필요 | 대용량 | 심화 자료 |
 
