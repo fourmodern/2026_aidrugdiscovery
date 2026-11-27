@@ -23,7 +23,9 @@ GitHub 가져오기 제한(저장소 다운로드 100 MB · 스킬 폴더 합계
 
 Claude Science → `Settings > Skills > Add skill > Import from GitHub` →
 `fourmodern/2026_aidrugdiscovery` 를 지정한다. 가져온 뒤 목록에서 위 5종을 켜 둔다.
-(같은 저장소의 `pde5_harness/.claude/skills/` 19종도 함께 보인다 — 강사 데모 하네스의 스킬이다.)
+가져오기는 **저장소 루트의 `skills/<이름>/SKILL.md` 만** 읽는다. 그래서 위 5종만 올라오고,
+`Day06_LLM_Agent/pde5_harness/.claude/skills/` 의 19종은 **가져와지지 않는다** — 그쪽은
+하네스가 자기 디렉토리에서 쓰는 것이라 읽기용으로만 보면 된다.
 
 **B. 직접 만들기 (제한 없음 · 4교시 Agent Skills 실습)**
 
