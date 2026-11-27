@@ -9,7 +9,7 @@
   "panels": {
     "A": "co-crystal binding mode with Gln817 hydrogen bonds",
     "B": "reference redock: top pose 8.368 A, best mode 5 1.077 A",
-    "C": "CHEMBL536568 top-scoring pose, score -12.0, MCS-RMSD 7.126 A",
+    "C": "CHEMBL3944571 top-scoring pose, score -11.6, MCS-RMSD 5.54 A",
     "D": "CHEMBL47108 top pose, score -8.7, MCS-RMSD 0.551 A (minimum of 163)"
   },
   "source_data": "sample_run/docking_controlled.json",

@@ -1,0 +1,17 @@
+[
+ {
+  "distance_angstrom": 2.768,
+  "ligand_atom": "VIA N22",
+  "residue_atom": "GLN817 OE1"
+ },
+ {
+  "distance_angstrom": 3.119,
+  "ligand_atom": "VIA O3",
+  "residue_atom": "GLN817 OE1"
+ },
+ {
+  "distance_angstrom": 3.215,
+  "ligand_atom": "VIA O27",
+  "residue_atom": "GLN817 NE2"
+ }
+]

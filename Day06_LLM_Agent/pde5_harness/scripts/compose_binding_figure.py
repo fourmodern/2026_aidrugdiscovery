@@ -35,12 +35,14 @@ INK, SUB = "#1A2733", "#55606B"
 d = json.load(open(f"{SR}/docking_controlled.json"))["result"]
 cr = d["control_redock"]
 rows = {r["chembl_id"]: r for r in d["rows"]}
-TOP_ID, NEAR_ID = "CHEMBL536568", "CHEMBL47108"
+TOP_ID, NEAR_ID = "CHEMBL3944571", "CHEMBL47108"
 rt, rn = rows[TOP_ID], rows[NEAR_ID]
 anchors = json.load(open(f"{PANELS}/anchors.json"))
 
 n_modes_top = rt["all_mode_mcs_rmsd"]
 best_mode_of_top = min(range(len(n_modes_top)), key=lambda i: n_modes_top[i])
+# MCS-RMSD 가 정의된 화합물 수 — 공유 부분구조가 하한(8원자) 미만이면 계산되지 않는다
+N_MEASURABLE = sum(1 for r in d["rows"] if r.get("top_pose_mcs_rmsd") is not None)
 
 panels = [
     ("panelA_1udt.png", "A",
@@ -53,14 +55,17 @@ panels = [
      f"최소 RMSD 모드 {cr['best_mode_index']}번(파랑, {cr['rmsd_best_of_modes_angstrom']} Å)\n"
      f"판정 기준 {cr['threshold_angstrom']} Å"),
     ("panelC_top_scorer.png", "C",
-     f"점수 1위 화합물 {TOP_ID}",
-     f"점수 {rt['top_pose_score']} kcal/mol (163종 중 1위) · "
-     f"공결정 기준 MCS-RMSD {rt['top_pose_mcs_rmsd']} Å · "
-     f"공유 부분구조 {rt['mcs_atoms']}원자 · {rt['similarity_bin']}/{rt['potency_bin']} 칸"),
+     f"해석 가능 대역의 점수 1위 {TOP_ID} — 같은 문제가 반복된다",
+     f"점수 {rt['top_pose_score']} kcal/mol 인 1위 자세(주황)는 공결정 기준 "
+     f"MCS-RMSD {rt['top_pose_mcs_rmsd']} Å\n"
+     f"같은 화합물의 {best_mode_of_top + 1}번 모드(파랑)는 "
+     f"{n_modes_top[best_mode_of_top]} Å 인데 채점이 "
+     f"{best_mode_of_top + 1}위로 밀었다 · 공유 부분구조 {rt['mcs_atoms']}원자 · "
+     f"{rt['similarity_bin']}/{rt['potency_bin']} 칸"),
     ("panelD_closest.png", "D",
      f"공결정에 가장 가까운 자세 {NEAR_ID}",
      f"점수 {rn['top_pose_score']} kcal/mol · "
-     f"MCS-RMSD {rn['top_pose_mcs_rmsd']} Å (163종 최소) · "
+     f"MCS-RMSD {rn['top_pose_mcs_rmsd']} Å (측정 가능한 {N_MEASURABLE}종 중 최소) · "
      f"공유 부분구조 {rn['mcs_atoms']}원자 · {rn['similarity_bin']}/{rn['potency_bin']} 칸"),
 ]
 
@@ -144,7 +149,7 @@ for idx, (ax, (fn, letter, title, sub)) in enumerate(zip(axes.ravel(), panels)):
 handles = [
     Line2D([0], [0], color=C_REF, lw=6, label="공결정 리간드 (1UDT VIA, 실험 결정 자세)"),
     Line2D([0], [0], color=C_TOP, lw=6, label="점수 1위 자세 (채점 함수가 고른 자세)"),
-    Line2D([0], [0], color=C_BEST, lw=6, label="공결정에 가장 가까운 자세"),
+    Line2D([0], [0], color=C_BEST, lw=6, label="같은 화합물에서 공결정에 가장 가까운 자세"),
 ]
 fig.legend(handles=handles, loc="lower center", ncol=3, frameon=False,
            fontsize=9.4, bbox_to_anchor=(0.5, 0.030),
@@ -160,7 +165,7 @@ fig.subplots_adjust(left=0.008, right=0.992, top=0.935, bottom=0.075,
                     wspace=0.02, hspace=0.155)
 
 os.makedirs(OUTDIR, exist_ok=True)
-for ext in ("png", "svg"):
+for ext in ("png",):   # SVG 는 래스터를 감싼 것이라 이점이 없고 용량만 든다
     out = f"{OUTDIR}/fig14_pymol_poses.{ext}"
     fig.savefig(out, dpi=300, facecolor="white")
     print("saved", out, os.path.getsize(out) // 1024, "KB")
@@ -194,3 +199,10 @@ meta = {
 with open(f"{OUTDIR}/fig14_pymol_poses.meta.json", "w", encoding="utf-8") as f:
     json.dump(meta, f, ensure_ascii=False, indent=2)
 print("saved meta.json")
+
+# 캡션이 인용하는 접촉 거리 기록을 그림 옆에 둔다
+import shutil
+_pc = os.path.join(PANELS, "polar_contacts.json")
+if os.path.exists(_pc):
+    shutil.copy2(_pc, os.path.join(OUTDIR, "polar_contacts.json"))
+    print("saved polar_contacts.json")

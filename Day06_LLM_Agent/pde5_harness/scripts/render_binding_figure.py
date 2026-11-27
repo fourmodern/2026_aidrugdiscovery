@@ -128,11 +128,31 @@ def base_scene(label=False, contacts=False, surface=True):
 
     if contacts:
         # 리간드–포켓 극성 접촉 (PyMOL 기본 기하 기준)
-        n = cmd.distance("polar", "via", "pocket", mode=2)
-        cmd.hide("labels", "polar")
-        cmd.show("dashes", "polar")
-        cmd.enable("polar")
-        print(f"  극성 접촉: {n:.2f} Å")
+        # 그림에 그리는 점선과 캡션에 적는 거리가 같은 집합이어야 한다.
+        # PyMOL mode=2 는 자체 기준으로 일부만 그려서 둘이 어긋날 수 있으므로,
+        # 아래에서 좌표로 잰 접촉을 그대로 하나씩 그린다.
+        contacts_found = polar_contacts()
+        for k, (dist, a, b) in enumerate(contacts_found):
+            la = a.split()[1]
+            rn, ri = b.split()[0][:3], b.split()[0][3:]
+            rb = b.split()[1]
+            cmd.distance(f"polar{k}",
+                         f"via and name {la}",
+                         f"pocket and resn {rn} and resi {ri} and name {rb}")
+            cmd.hide("labels", f"polar{k}")
+            cmd.show("dashes", f"polar{k}")
+            cmd.enable(f"polar{k}")
+        # [주의] cmd.distance() 의 반환값은 생성된 측정들의 **평균 거리**다.
+        # 그것을 단일 수소결합 거리로 적으면 존재하지 않는 값을 보고하게 된다
+        # (실제로 한 번 그렇게 적었다). 그래서 접촉을 하나씩 좌표에서 다시 잰다.
+        for dist, a, b in contacts_found:
+            print(f"  극성 접촉 {dist:.3f} Å — {a} ··· {b}")
+        import json as _j
+        with open(os.path.join(OUT, "polar_contacts.json"), "w",
+                  encoding="utf-8") as _f:
+            _j.dump([{"distance_angstrom": round(d, 3), "ligand_atom": a,
+                      "residue_atom": b} for d, a, b in contacts_found],
+                    _f, ensure_ascii=False, indent=1)
 
     if label:
         for resn_resi, text in LABELLED.items():
@@ -151,6 +171,27 @@ def base_scene(label=False, contacts=False, surface=True):
     cmd.clip("slab", SLAB)
     print(f"  방향: N-말단 {n_resi}번 위 · 포켓 정면 · slab {SLAB}")
     return cmd.get_view()
+
+
+
+def polar_contacts(cutoff=3.3):
+    """리간드와 포켓 잔기 사이의 극성 접촉을 좌표에서 하나씩 잰다.
+
+    평균이 아니라 개별 거리를 돌려준다. 반환: [(거리, 리간드원자, 잔기원자), ...]
+    """
+    lig, poc = [], []
+    cmd.iterate_state(1, "via and elem N+O",
+                      "lig.append((name, x, y, z))", space={"lig": lig})
+    cmd.iterate_state(1, "pocket and elem N+O",
+                      "poc.append((resn, resi, name, x, y, z))",
+                      space={"poc": poc})
+    out = []
+    for ln, lx, ly, lz in lig:
+        for rn, ri, pn, px, py, pz in poc:
+            d = float(np.linalg.norm(np.array([lx - px, ly - py, lz - pz])))
+            if d <= cutoff:
+                out.append((d, f"VIA {ln}", f"{rn}{ri} {pn}"))
+    return sorted(out)
 
 
 def load_pose(path, name, state, color):
@@ -266,10 +307,13 @@ load_pose(cp, "redock_best", 5, C_BEST)
 png(f"{OUT}/panelB_redock.png")
 
 # ------------------------------------------------------------------ C
+# 해석 가능 대역(mid·near)의 점수 1위. far 대역은 공유 부분구조가 작아 RMSD 가
+# 자세 정확도를 재지 못하므로(§3.6) 이 패널에 쓰지 않는다.
 base_scene(surface=False)
 cmd.set_view(view)
-load_pose(f"{SR}/structures/work_controlled/CHEMBL536568_poses.sdf",
-          "top_scorer", 1, C_TOP)
+_c = f"{SR}/structures/work_controlled/CHEMBL3944571_poses.sdf"
+load_pose(_c, "top_scorer", 1, C_TOP)    # 점수 1위 자세
+load_pose(_c, "top_best", 5, C_BEST)     # 같은 화합물에서 RMSD 가 가장 작은 모드
 png(f"{OUT}/panelC_top_scorer.png")
 
 # ------------------------------------------------------------------ D
