@@ -1,0 +1,42 @@
+{
+  "figure": "fig14_pymol_poses",
+  "renderer": "PyMOL open-source 3.2.0a (pymol-open-source==3.2.0a0.post5859, PyPI)",
+  "receptor": "PDB 1UDT chain A, waters removed, ZN/MG retained",
+  "reference_ligand": "VIA (sildenafil, co-crystal)",
+  "orientation": "N-terminus (residue 537) up, ligand pocket facing viewer; camera axes computed from coordinates, identical in all panels",
+  "pocket_definition": "byres (receptor within 4.5 A of VIA) — 17 residues",
+  "labels": "anchors measured by re-rendering each residue as a uniquely coloured sphere and taking that colour's pixel centroid (no projection math)",
+  "panels": {
+    "A": "co-crystal binding mode with Gln817 hydrogen bonds",
+    "B": "reference redock: top pose 8.368 A, best mode 5 1.077 A",
+    "C": "CHEMBL536568 top-scoring pose, score -12.0, MCS-RMSD 7.126 A",
+    "D": "CHEMBL47108 top pose, score -8.7, MCS-RMSD 0.551 A (minimum of 163)"
+  },
+  "source_data": "sample_run/docking_controlled.json",
+  "anchors_normalised": {
+    "Gln817": [
+      0.624,
+      0.3645
+    ],
+    "Phe820": [
+      0.5495,
+      0.4975
+    ],
+    "Val782": [
+      0.4278,
+      0.3029
+    ],
+    "Tyr612": [
+      0.3354,
+      0.2294
+    ],
+    "Zn": [
+      0.257,
+      0.3258
+    ],
+    "Mg": [
+      0.1999,
+      0.428
+    ]
+  }
+}
