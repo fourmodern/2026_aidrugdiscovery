@@ -24,6 +24,12 @@
 공개 DB(FDA·ChEMBL·PubChem·PDB·OpenAlex·PubMed)와 DUD-E 벤치마크만 쓰고, 도킹은 CPU 에서 도는
 smina 를 쓴다(Windows·macOS·Linux 모두 conda-forge 빌드 있음).
 
+실습에 쓰는 과학 스킬 5종(scientific-writing · scientific-visualization · citation-management ·
+peer-review · scientific-critical-thinking)은 [`Day06_LLM_Agent/skills/`](Day06_LLM_Agent/skills)
+에 담아 두었다 — 원본 저장소가 약 471 MB 라 Claude Science 의 가져오기 100 MB 제한을 넘기 때문이다.
+`Settings > Skills > Add skill > Import from GitHub` 에서 이 저장소를 지정하면 된다.
+직접 만드는 경로(Add skill > Chat with Claude)는 핸드북 ⑥-0 장에 있다.
+
 수강생 준비물: **Pro 이상 Claude 플랜 + 앱 설치·로그인**(첫 실행에 약 5 GB 다운로드 — 수업 전에 끝낼 것).
 수업 직전 체크 4개 — ChEMBL·PubMed 디렉터리 커넥터 추가 / OpenAlex 무료 키 / 연락 이메일 /
 **Auto-review 켜기**(Pro 는 기본 off).
